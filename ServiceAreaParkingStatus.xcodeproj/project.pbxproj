@@ -14,6 +14,9 @@
 		478750122AB9B086003E7F6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478750102AB9B086003E7F6A /* LaunchScreen.storyboard */; };
 		478750212AB9C878003E7F6A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750202AB9C878003E7F6A /* SearchBar.swift */; };
 		478750242AB9CBEF003E7F6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 478750232AB9CBEF003E7F6A /* SnapKit */; };
+		478750272ABAE6D3003E7F6A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750262ABAE6D3003E7F6A /* SearchViewController.swift */; };
+		4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750292ABC8232003E7F6A /* ParkingManager.swift */; };
+		4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502B2ABC8E74003E7F6A /* ParkingData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		478750112AB9B086003E7F6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		478750132AB9B086003E7F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		478750202AB9C878003E7F6A /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		478750262ABAE6D3003E7F6A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		478750292ABC8232003E7F6A /* ParkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingManager.swift; sourceTree = "<group>"; };
+		4787502B2ABC8E74003E7F6A /* ParkingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +38,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478750242AB9CBEF003E7F6A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +66,7 @@
 				478750132AB9B086003E7F6A /* Info.plist */,
 				478750192AB9C301003E7F6A /* Application */,
 				4787501A2AB9C326003E7F6A /* Presentation */,
+				478750282ABC821B003E7F6A /* UseCase */,
 				4787501D2AB9C34F003E7F6A /* Resources */,
 			);
 			path = ServiceAreaParkingStatus;
@@ -80,6 +86,7 @@
 			children = (
 				4787501F2AB9C846003E7F6A /* Common */,
 				4787501C2AB9C33C003E7F6A /* Main */,
+				478750252ABAE6BE003E7F6A /* Search */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -88,25 +95,28 @@
 			isa = PBXGroup;
 			children = (
 				478750092AB9B086003E7F6A /* ViewController.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
-		4787501D2AB9C34F003E7F6A /* Resources */ = {
-			isa = PBXGroup;
-			children = (
 				4787500E2AB9B086003E7F6A /* Assets.xcassets */,
 				478750102AB9B086003E7F6A /* LaunchScreen.storyboard */,
+				478750132AB9B086003E7F6A /* Info.plist */,
 			);
-			path = Resources;
+			path = ServiceAreaParkingStatus;
 			sourceTree = "<group>";
 		};
-		4787501F2AB9C846003E7F6A /* Common */ = {
+		478750252ABAE6BE003E7F6A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				478750202AB9C878003E7F6A /* SearchBar.swift */,
+				478750262ABAE6D3003E7F6A /* SearchViewController.swift */,
 			);
-			path = Common;
+			path = Search;
+			sourceTree = "<group>";
+		};
+		478750282ABC821B003E7F6A /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				478750292ABC8232003E7F6A /* ParkingManager.swift */,
+				4787502B2ABC8E74003E7F6A /* ParkingData.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +135,6 @@
 			dependencies = (
 			);
 			name = ServiceAreaParkingStatus;
-			packageProductDependencies = (
-				478750232AB9CBEF003E7F6A /* SnapKit */,
-			);
 			productName = ServiceAreaParkingStatus;
 			productReference = 478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */;
 			productType = "com.apple.product-type.application";
@@ -156,9 +163,6 @@
 				Base,
 			);
 			mainGroup = 47874FF92AB9B086003E7F6A;
-			packageReferences = (
-				478750222AB9CBEF003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */,
-			);
 			productRefGroup = 478750032AB9B086003E7F6A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -185,8 +189,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				478750272ABAE6D3003E7F6A /* SearchViewController.swift in Sources */,
+				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
+				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
 				4787500A2AB9B086003E7F6A /* ViewController.swift in Sources */,
-				478750212AB9C878003E7F6A /* SearchBar.swift in Sources */,
 				478750062AB9B086003E7F6A /* AppDelegate.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
 			);
@@ -404,25 +410,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		478750222AB9CBEF003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				branch = develop;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		478750232AB9CBEF003E7F6A /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 478750222AB9CBEF003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47874FFA2AB9B086003E7F6A /* Project object */;
 }
