@@ -11,19 +11,14 @@ class ViewController: UIViewController {
     
     let tableView = UITableView()
     let searchViewController = UISearchController(searchResultsController: nil)
-    var parkingArray = [Parking]()
+    let serviceAreaArray = ["구리", "기흥", "안성"]
     var filteredServiceAreaArray = [String]()
-    var serviceAreaArray = [String]()
-    var largeCarCount = Int()
-    var smallCarCount = Int()
-    var disabledCarCount = Int()
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
         let isActive = searchViewController?.isActive ?? false
         let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
-    var parkingManager = ParkingManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +28,16 @@ class ViewController: UIViewController {
         searchControllerSetup()
         tableViewSetup()
         tableViewLayout()
-        parkingManagerSetup()
-        
     }
     
     // MARK: Setup
     func searchControllerSetup() {
         self.navigationItem.searchController = searchViewController
+        
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 0.4314983444)
         navigationItem.title = "휴게소 주차 현황"
+        
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchResultsUpdater = self
     }
@@ -64,28 +59,6 @@ class ViewController: UIViewController {
         }
     }
     
-}
-
-// MARK: API Response
-extension ViewController: ParkingManagerDelegate {
-    func didFailWithError(error: Error) {
-        print(error)
-    }
-    
-    func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
-        
-        self.serviceAreaArray = parking.data.map{ String($0.휴게소명) }
-        self.parkingArray = parking.data
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
-    func parkingManagerSetup() {
-        parkingManager.delegate = self
-        parkingManager.fetchParking()
-    }
 }
 
 // MARK: UISearchController ResultsUpdating
