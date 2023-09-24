@@ -13,16 +13,13 @@ protocol ParkingManagerDelegate {
 }
 
 struct ParkingManager {
-    let url = "https://api.odcloud.kr/api/15043716/v1"
-    let uddi = "/uddi:82a523ae-4e2d-4c59-9371-93fece61d290"
-    let pageIndex = "?page=1"
-    let pageSize = "&perPage=10"
-    let serviceKey = "&serviceKey=ZtyZh2K9tt4JLRmlA0TvcdtHtrwlCQkAXMKJgx2jix27OviIlHsx4NGS1nn3OnYN5v9v3niuEpt2UaKUDdC9cw%3D%3D"
     
+    let key = Bundle.main.apiKey
+    var url = "https://api.odcloud.kr/api/15043716/v1/uddi:82a523ae-4e2d-4c59-9371-93fece61d290?page=1&perPage=12"
     var delegate: ParkingManagerDelegate?
     
     func fetchParking() {
-        let urlString = url + uddi + pageIndex + pageSize + serviceKey
+        let urlString = url + "&serviceKey=\(key)"
         performRequest(with: urlString)
     }
     
@@ -40,12 +37,14 @@ struct ParkingManager {
                     }
                 }
             }
+            
             task.resume()
         }
     }
     
     func parseJSON(_ parkingData: Data) -> ParkingData? {
         let decoder = JSONDecoder()
+        
         do {
             let decodedData = try decoder.decode(ParkingData.self, from: parkingData)
             return decodedData
