@@ -7,21 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		478750062AB9B086003E7F6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750052AB9B086003E7F6A /* AppDelegate.swift */; };
 		478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750072AB9B086003E7F6A /* SceneDelegate.swift */; };
-		4787500A2AB9B086003E7F6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750092AB9B086003E7F6A /* ViewController.swift */; };
-		4787500F2AB9B086003E7F6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4787500E2AB9B086003E7F6A /* Assets.xcassets */; };
-		478750122AB9B086003E7F6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478750102AB9B086003E7F6A /* LaunchScreen.storyboard */; };
+		4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750292ABC8232003E7F6A /* ParkingManager.swift */; };
+		4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502B2ABC8E74003E7F6A /* ParkingData.swift */; };
+		478750302ABEE291003E7F6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502F2ABEE291003E7F6A /* ViewController.swift */; };
+		478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750322ABEE29C003E7F6A /* SearchBar.swift */; };
+		478750362ABEE34A003E7F6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478750352ABEE34A003E7F6A /* LaunchScreen.storyboard */; };
+		478750382ABEE5FF003E7F6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 478750372ABEE5FF003E7F6A /* Assets.xcassets */; };
+		4787503B2ABEF1B3003E7F6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4787503A2ABEF1B3003E7F6A /* SnapKit */; };
+		4787503D2AC02A19003E7F6A /* CarCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787503C2AC02A19003E7F6A /* CarCountView.swift */; };
+		4787503F2AC03636003E7F6A /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787503E2AC03636003E7F6A /* Car.swift */; };
+		478750412AC03AA2003E7F6A /* CarCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */; };
+		478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478750442AC0964C003E7F6A /* ParkingInfo.plist */; };
+		478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */; };
+		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceAreaParkingStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		478750052AB9B086003E7F6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		478750072AB9B086003E7F6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		478750092AB9B086003E7F6A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4787500E2AB9B086003E7F6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		478750112AB9B086003E7F6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		478750132AB9B086003E7F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		478750292ABC8232003E7F6A /* ParkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingManager.swift; sourceTree = "<group>"; };
+		4787502B2ABC8E74003E7F6A /* ParkingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingData.swift; sourceTree = "<group>"; };
+		4787502F2ABEE291003E7F6A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		478750322ABEE29C003E7F6A /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		478750352ABEE34A003E7F6A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		478750372ABEE5FF003E7F6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4787503C2AC02A19003E7F6A /* CarCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCountView.swift; sourceTree = "<group>"; };
+		4787503E2AC03636003E7F6A /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCountTableViewCell.swift; sourceTree = "<group>"; };
+		478750442AC0964C003E7F6A /* ParkingInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ParkingInfo.plist; sourceTree = "<group>"; };
+		478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceAreaParkingStatus++Bundle.swift"; sourceTree = "<group>"; };
+		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4787503B2ABEF1B3003E7F6A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +72,70 @@
 		478750042AB9B086003E7F6A /* ServiceAreaParkingStatus */ = {
 			isa = PBXGroup;
 			children = (
-				478750052AB9B086003E7F6A /* AppDelegate.swift */,
-				478750072AB9B086003E7F6A /* SceneDelegate.swift */,
-				478750092AB9B086003E7F6A /* ViewController.swift */,
-				4787500E2AB9B086003E7F6A /* Assets.xcassets */,
-				478750102AB9B086003E7F6A /* LaunchScreen.storyboard */,
 				478750132AB9B086003E7F6A /* Info.plist */,
+				478750192AB9C301003E7F6A /* Application */,
+				4787501A2AB9C326003E7F6A /* Presentation */,
+				478750342ABEE2B2003E7F6A /* Resources */,
+				478750282ABC821B003E7F6A /* UseCase */,
 			);
 			path = ServiceAreaParkingStatus;
+			sourceTree = "<group>";
+		};
+		478750192AB9C301003E7F6A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */,
+				478750072AB9B086003E7F6A /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		4787501A2AB9C326003E7F6A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				478750312ABEE29C003E7F6A /* Common */,
+				4787502E2ABEE291003E7F6A /* Main */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		478750282ABC821B003E7F6A /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				478750292ABC8232003E7F6A /* ParkingManager.swift */,
+				4787502B2ABC8E74003E7F6A /* ParkingData.swift */,
+				478750442AC0964C003E7F6A /* ParkingInfo.plist */,
+				478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		4787502E2ABEE291003E7F6A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4787502F2ABEE291003E7F6A /* ViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		478750312ABEE29C003E7F6A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				478750322ABEE29C003E7F6A /* SearchBar.swift */,
+				4787503C2AC02A19003E7F6A /* CarCountView.swift */,
+				4787503E2AC03636003E7F6A /* Car.swift */,
+				478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		478750342ABEE2B2003E7F6A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				478750372ABEE5FF003E7F6A /* Assets.xcassets */,
+				478750352ABEE34A003E7F6A /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +154,9 @@
 			dependencies = (
 			);
 			name = ServiceAreaParkingStatus;
+			packageProductDependencies = (
+				4787503A2ABEF1B3003E7F6A /* SnapKit */,
+			);
 			productName = ServiceAreaParkingStatus;
 			productReference = 478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */;
 			productType = "com.apple.product-type.application";
@@ -108,6 +185,9 @@
 				Base,
 			);
 			mainGroup = 47874FF92AB9B086003E7F6A;
+			packageReferences = (
+				478750392ABEF1B3003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 478750032AB9B086003E7F6A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -122,8 +202,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478750122AB9B086003E7F6A /* LaunchScreen.storyboard in Resources */,
-				4787500F2AB9B086003E7F6A /* Assets.xcassets in Resources */,
+				478750362ABEE34A003E7F6A /* LaunchScreen.storyboard in Resources */,
+				478750382ABEE5FF003E7F6A /* Assets.xcassets in Resources */,
+				478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,24 +215,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4787500A2AB9B086003E7F6A /* ViewController.swift in Sources */,
-				478750062AB9B086003E7F6A /* AppDelegate.swift in Sources */,
+				47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */,
+				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
+				478750412AC03AA2003E7F6A /* CarCountTableViewCell.swift in Sources */,
+				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
+				478750302ABEE291003E7F6A /* ViewController.swift in Sources */,
+				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
+				4787503F2AC03636003E7F6A /* Car.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
+				4787503D2AC02A19003E7F6A /* CarCountView.swift in Sources */,
+				478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		478750102AB9B086003E7F6A /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				478750112AB9B086003E7F6A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		478750142AB9B086003E7F6A /* Debug */ = {
@@ -204,7 +281,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -258,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -352,6 +429,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		478750392ABEF1B3003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4787503A2ABEF1B3003E7F6A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 478750392ABEF1B3003E7F6A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47874FFA2AB9B086003E7F6A /* Project object */;
 }
