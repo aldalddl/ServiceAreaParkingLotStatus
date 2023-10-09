@@ -10,13 +10,14 @@ import UIKit
 
 struct Car {
     let type: String
-    let icon: UIImageView
+    let remainNumber: Int?
+    let totalNumber: Int?
 }
 
 extension Car {
     static var list = [
-        Car(type: "대형", icon: UIImageView(image: UIImage(named: "largeCar"))),
-        Car(type: "소형", icon: UIImageView(image: UIImage(named: "smallCar"))),
-        Car(type: "장애인", icon: UIImageView(image: UIImage(named: "disabledCar")))
+        Car(type: "대형", remainNumber: nil, totalNumber: nil),
+        Car(type: "소형", remainNumber: nil, totalNumber: nil),
+        Car(type: "장애인", remainNumber: nil, totalNumber: nil)
     ]
 }
