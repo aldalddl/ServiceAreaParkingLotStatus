@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     
     let tableView = UITableView()
     let searchViewController = UISearchController(searchResultsController: nil)
-    let serviceAreaArray = ["구리", "기흥", "안성"]
+    var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
+    var parkingLotArray = [Parking]()
+    var parkingManager = ParkingManager()
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
         let isActive = searchViewController?.isActive ?? false
@@ -23,19 +26,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .systemBackground
-    
+        setup()
         searchControllerSetup()
         tableViewSetup()
         tableViewLayout()
+        parkingManagerSetup()
     }
     
     // MARK: Setup
+    func setup() {
+        self.view.backgroundColor = .systemBackground
+    }
+    
     func searchControllerSetup() {
         self.navigationItem.searchController = searchViewController
         
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 0.4314983444)
         navigationItem.title = "휴게소 주차 현황"
         
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
@@ -46,7 +52,7 @@ class ViewController: UIViewController {
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        tableView.backgroundColor = .systemBackground
     }
     
     // MARK: Layout
@@ -60,6 +66,28 @@ class ViewController: UIViewController {
     }
     
 }
+
+// MARK: API Response
+extension ViewController: ParkingManagerDelegate {
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+    
+    func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
+        self.serviceAreaArray = parking.data.map{ String($0.휴게소명) }
+        self.parkingLotArray = parking.data
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func parkingManagerSetup() {
+        parkingManager.delegate = self
+        parkingManager.fetchParking()
+    }
+}
+
 
 // MARK: UISearchController ResultsUpdating
 extension ViewController: UISearchResultsUpdating {
@@ -82,11 +110,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return self.serviceAreaArray.count
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-
-        cell.backgroundColor = #colorLiteral(red: 0.757620573, green: 0.6714900136, blue: 0.9552794099, alpha: 0.4531767384)
         
         if isFiltering {
             cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row]
@@ -95,5 +121,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searceViewController = SearchViewController()
+        
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].대형)
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].소형)
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].장애인)
+        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].노선.rawValue)
+        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].본부.rawValue)
+        
+        self.navigationController?.pushViewController(searceViewController, animated: true)
     }
 }
