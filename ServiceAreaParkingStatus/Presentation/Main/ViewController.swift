@@ -110,7 +110,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return self.serviceAreaArray.count
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
@@ -121,5 +121,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searceViewController = SearchViewController()
+        
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].대형)
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].소형)
+        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].장애인)
+        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].노선.rawValue)
+        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].본부.rawValue)
+        
+        self.navigationController?.pushViewController(searceViewController, animated: true)
     }
 }
