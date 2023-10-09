@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */; };
+		477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */; };
 		478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750072AB9B086003E7F6A /* SceneDelegate.swift */; };
 		4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750292ABC8232003E7F6A /* ParkingManager.swift */; };
 		4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502B2ABC8E74003E7F6A /* ParkingData.swift */; };
@@ -17,13 +19,14 @@
 		4787503B2ABEF1B3003E7F6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4787503A2ABEF1B3003E7F6A /* SnapKit */; };
 		4787503D2AC02A19003E7F6A /* CarCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787503C2AC02A19003E7F6A /* CarCountView.swift */; };
 		4787503F2AC03636003E7F6A /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787503E2AC03636003E7F6A /* Car.swift */; };
-		478750412AC03AA2003E7F6A /* CarCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */; };
 		478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478750442AC0964C003E7F6A /* ParkingInfo.plist */; };
 		478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */; };
 		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewCell.swift; sourceTree = "<group>"; };
+		477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceAreaParkingStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478750072AB9B086003E7F6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		478750132AB9B086003E7F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,7 +38,6 @@
 		478750372ABEE5FF003E7F6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4787503C2AC02A19003E7F6A /* CarCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCountView.swift; sourceTree = "<group>"; };
 		4787503E2AC03636003E7F6A /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
-		478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCountTableViewCell.swift; sourceTree = "<group>"; };
 		478750442AC0964C003E7F6A /* ParkingInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ParkingInfo.plist; sourceTree = "<group>"; };
 		478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceAreaParkingStatus++Bundle.swift"; sourceTree = "<group>"; };
 		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,8 +125,9 @@
 			children = (
 				478750322ABEE29C003E7F6A /* SearchBar.swift */,
 				4787503C2AC02A19003E7F6A /* CarCountView.swift */,
+				477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */,
+				477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */,
 				4787503E2AC03636003E7F6A /* Car.swift */,
-				478750402AC03AA2003E7F6A /* CarCountTableViewCell.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -215,13 +218,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */,
 				47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */,
 				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
-				478750412AC03AA2003E7F6A /* CarCountTableViewCell.swift in Sources */,
 				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
 				478750302ABEE291003E7F6A /* ViewController.swift in Sources */,
 				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
 				4787503F2AC03636003E7F6A /* Car.swift in Sources */,
+				477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
 				4787503D2AC02A19003E7F6A /* CarCountView.swift in Sources */,
 				478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */,
