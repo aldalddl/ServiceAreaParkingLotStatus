@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    
-    let tableView = UITableView()
-    let searchViewController = UISearchController(searchResultsController: nil)
+//    let tableView = UITableView()
+    let resultTableViewController = ResultTableViewController()
+    var searchViewController = UISearchController()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
@@ -22,49 +22,44 @@ class ViewController: UIViewController {
         let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.text = "휴게소 주차 현황"
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
         searchControllerSetup()
-        tableViewSetup()
-        tableViewLayout()
         parkingManagerSetup()
     }
     
     // MARK: Setup
     func setup() {
         self.view.backgroundColor = .systemBackground
+        searchViewController = UISearchController(searchResultsController: resultTableViewController)
+        resultTableViewController.tableView.delegate = self
     }
     
     func searchControllerSetup() {
         self.navigationItem.searchController = searchViewController
         
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.title = "휴게소 주차 현황"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(clickSettingButton(_ :)))
         
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchResultsUpdater = self
     }
-    
-    func tableViewSetup() {
-        self.view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .systemBackground
+        
+    @objc func clickSettingButton(_ sender: UIBarButtonItem) {
+        let settingViewController = SettingViewController()
+        self.navigationController?.pushViewController(settingViewController, animated: true)
     }
-    
-    // MARK: Layout
-    func tableViewLayout() {
-        tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-        }
-    }
-    
 }
 
 // MARK: API Response
@@ -76,9 +71,10 @@ extension ViewController: ParkingManagerDelegate {
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
         self.serviceAreaArray = parking.data.map{ String($0.휴게소명) }
         self.parkingLotArray = parking.data
+        self.resultTableViewController.parkingLotArray = parking.data
         
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.resultTableViewController.tableView.reloadData()
         }
     }
     
@@ -95,43 +91,33 @@ extension ViewController: UISearchResultsUpdating {
         if let text = searchController.searchBar.text {
             self.filteredServiceAreaArray = self.serviceAreaArray.filter{ $0.contains(text) }
         }
-//        dump(self.filteredTextArray)
         
-        self.tableView.reloadData()
+        if let resultVC = searchController.searchResultsController as? ResultTableViewController {
+            resultVC.filteredServiceAreaArray = self.filteredServiceAreaArray
+            resultVC.tableView.reloadData()
+        }
     }
 }
 
 // MARK: UITableView Delegate, DataSource
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count = 0
+        
         if isFiltering {
-            return self.filteredServiceAreaArray.count
-        } else {
-            return self.serviceAreaArray.count
+            count = self.resultTableViewController.filteredServiceAreaArray.count
         }
+        
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        
+
         if isFiltering {
-            cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row]
-        } else {
-            cell.textLabel?.text = self.serviceAreaArray[indexPath.row]
+            cell.textLabel?.text = self.resultTableViewController.filteredServiceAreaArray[indexPath.row]
         }
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let searceViewController = SearchViewController()
-        
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].대형)
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].소형)
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].장애인)
-        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].노선.rawValue)
-        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].본부.rawValue)
-        
-        self.navigationController?.pushViewController(searceViewController, animated: true)
     }
 }
