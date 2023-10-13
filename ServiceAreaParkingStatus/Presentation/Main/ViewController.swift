@@ -9,13 +9,13 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-//    let tableView = UITableView()
-    let resultTableViewController = ResultTableViewController()
+    var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
+    var parkingManager = ParkingManager()
+    var nearAreaStackView = LabelStackView()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
-    var parkingManager = ParkingManager()
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
         let isActive = searchViewController?.isActive ?? false
@@ -29,20 +29,41 @@ class ViewController: UIViewController {
         label.text = "휴게소 주차 현황"
         return label
     }()
-    
+    var nearAreaCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 8.0
+        layout.itemSize = CGSize(width: 250, height: 150)
+        
+        var view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.isScrollEnabled = true
+        view.showsVerticalScrollIndicator = true
+        view.showsHorizontalScrollIndicator = false
+        view.contentInset = .zero
+        view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: "NearAreaCollectionViewCell")
+        return view
+    }()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
+        layout()
         searchControllerSetup()
+        stackViewSetup()
         parkingManagerSetup()
     }
     
     // MARK: Setup
     func setup() {
         self.view.backgroundColor = .systemBackground
-        searchViewController = UISearchController(searchResultsController: resultTableViewController)
-        resultTableViewController.tableView.delegate = self
+        
+        searchViewController = UISearchController(searchResultsController: searchResultsController)
+        searchResultsController.tableView.delegate = self
+
+        view.addSubview(nearAreaStackView)
+        nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
+        nearAreaCollectionView.dataSource = self
     }
     
     func searchControllerSetup() {
@@ -50,13 +71,34 @@ class ViewController: UIViewController {
         
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(clickSettingButton(_ :)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
         
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchResultsUpdater = self
     }
+    
+    func stackViewSetup() {
+        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
+        nearAreaStackView.rightLabel.text = "더보기"
+    }
+    
+    // MARK: Layout
+    func layout() {
+        nearAreaStackView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.left.equalToSuperview().inset(20)
+            make.right.equalToSuperview().inset(20)
+        }
         
-    @objc func clickSettingButton(_ sender: UIBarButtonItem) {
+        nearAreaCollectionView.snp.makeConstraints { make in
+            make.height.equalTo(150)
+        }
+    }
+}
+
+// MARK: Button Action
+extension ViewController {
+    @objc func settingButtonClicked(_ sender: UIBarButtonItem) {
         let settingViewController = SettingViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
@@ -71,10 +113,11 @@ extension ViewController: ParkingManagerDelegate {
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
         self.serviceAreaArray = parking.data.map{ String($0.휴게소명) }
         self.parkingLotArray = parking.data
-        self.resultTableViewController.parkingLotArray = parking.data
+        self.searchResultsController.parkingLotArray = parking.data
         
         DispatchQueue.main.async {
-            self.resultTableViewController.tableView.reloadData()
+            self.searchResultsController.tableView.reloadData()
+            self.nearAreaCollectionView.reloadData()
         }
     }
     
@@ -92,31 +135,53 @@ extension ViewController: UISearchResultsUpdating {
             self.filteredServiceAreaArray = self.serviceAreaArray.filter{ $0.contains(text) }
         }
         
-        if let resultVC = searchController.searchResultsController as? ResultTableViewController {
+        if let resultVC = searchController.searchResultsController as? SearchResultsController {
             resultVC.filteredServiceAreaArray = self.filteredServiceAreaArray
             resultVC.tableView.reloadData()
         }
     }
 }
 
-// MARK: UITableView Delegate, DataSource
+// MARK: searchResultsController's UITableView Delegate 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
-        
-        if isFiltering {
-            count = self.resultTableViewController.filteredServiceAreaArray.count
+
+        if tableView == searchResultsController.tableView {
+            if isFiltering {
+                count = self.searchResultsController.filteredServiceAreaArray.count
+            }
         }
         
         return count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
 
+    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        
+        cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+        
         if isFiltering {
-            cell.textLabel?.text = self.resultTableViewController.filteredServiceAreaArray[indexPath.row]
+            cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
         }
+        
+        return cell
+
+    }
+}
+
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.serviceAreaArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as! NearAreaCollectionViewCell
+        
+        cell.profileImageView.image = UIImage(named: "샘플이미지")
+        cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
+        cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
+        cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
         
         return cell
     }

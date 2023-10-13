@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ResultTableViewController: UIViewController {
+class SearchResultsController: UIViewController {
     let tableView = UITableView()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
@@ -44,7 +44,7 @@ class ResultTableViewController: UIViewController {
 }
 
 // MARK: UITableView DataSource
-extension ResultTableViewController: UITableViewDataSource, UITableViewDelegate {
+extension SearchResultsController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredServiceAreaArray.count
     }
