@@ -12,7 +12,6 @@ class LabelStackView: UIStackView {
     
     let leftLabel: UILabel = {
         let label = UILabel()
-//        label.backgroundColor = .systemGreen
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
@@ -20,7 +19,6 @@ class LabelStackView: UIStackView {
     
     let rightLabel: UILabel = {
         let label = UILabel()
-//        label.backgroundColor = .systemBlue
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         return label
