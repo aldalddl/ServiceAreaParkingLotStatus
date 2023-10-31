@@ -50,14 +50,13 @@ class LabelStackView: UIStackView {
         self.distribution = .fill
         self.spacing = 20
         self.axis = .vertical
-        
-        self.addArrangedSubview(labelStackView)
-
-        labelStackView.addArrangedSubview(leftLabel)
-        labelStackView.addArrangedSubview(rightLabel)
     }
     
+    // MARK: Layout
     func layout() {
+        self.addArrangedSubview(labelStackView)
         
+        labelStackView.addArrangedSubview(leftLabel)
+        labelStackView.addArrangedSubview(rightLabel)
     }
 }

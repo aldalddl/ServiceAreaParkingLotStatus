@@ -44,14 +44,12 @@ class CarCountCollectionViewCell: UICollectionViewCell {
         self.layer.shadowOpacity = 0.5
         self.layer.shadowRadius = 4
         self.layer.shadowOffset = CGSize(width: 3, height: 3)
-        
-//        carIcon.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 0.6326572848)
-//        carLabel.backgroundColor = #colorLiteral(red: 0.9272031784, green: 0.8204885125, blue: 0.5319427252, alpha: 0.8028249172)
-        self.addSubview(carIcon)
-        self.addSubview(carLabel)
     }
     
     func layout() {
+        self.addSubview(carIcon)
+        self.addSubview(carLabel)
+        
         self.snp.makeConstraints { make in
             make.width.equalTo(100)
             make.height.equalTo(80)

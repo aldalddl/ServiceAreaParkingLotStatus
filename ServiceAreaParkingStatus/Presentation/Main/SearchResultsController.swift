@@ -26,7 +26,6 @@ class SearchResultsController: UIViewController {
     }
     
     func tableViewSetup() {
-        self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .systemBackground
@@ -34,6 +33,8 @@ class SearchResultsController: UIViewController {
     
     // MARK: Layout
     func tableViewLayout() {
+        self.view.addSubview(tableView)
+
         tableView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()

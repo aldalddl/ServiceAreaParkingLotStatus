@@ -61,8 +61,6 @@ class ViewController: UIViewController {
         searchViewController = UISearchController(searchResultsController: searchResultsController)
         searchResultsController.tableView.delegate = self
 
-        view.addSubview(nearAreaStackView)
-        nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
         nearAreaCollectionView.dataSource = self
     }
     
@@ -84,6 +82,9 @@ class ViewController: UIViewController {
     
     // MARK: Layout
     func layout() {
+        view.addSubview(nearAreaStackView)
+        nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
+        
         nearAreaStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             make.left.equalToSuperview().inset(20)

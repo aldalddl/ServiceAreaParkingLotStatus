@@ -23,7 +23,6 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .systemGray6
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-//        label.backgroundColor = .systemBlue
         return label
     }()
     
@@ -31,7 +30,6 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .systemGray5
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-//        label.backgroundColor = .systemPink
         return label
     }()
     
@@ -48,7 +46,6 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         view.distribution = .fill
         view.spacing = 5
         view.axis = .vertical
-//        view.backgroundColor = .systemGreen
         return view
     }()
     
@@ -85,7 +82,9 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         self.contentView.backgroundColor = .systemGray
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = 15
-        
+    }
+    
+    func layout() {
         profileLabelStackView.addArrangedSubview(nameLabel)
         profileLabelStackView.addArrangedSubview(highwaylineLabel)
         
@@ -96,9 +95,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         totalStackView.addArrangedSubview(locationLabel)
         
         self.contentView.addSubview(totalStackView)
-    }
-    
-    func layout() {
+        
         totalStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
             make.left.equalToSuperview().inset(20)
