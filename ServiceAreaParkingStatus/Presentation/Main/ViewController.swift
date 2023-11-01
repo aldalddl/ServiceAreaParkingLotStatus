@@ -66,17 +66,6 @@ class ViewController: UIViewController {
         nearAreaStackView.rightLabel.text = "더보기"
     }
     
-    func searchControllerSetup() {
-        self.navigationItem.searchController = searchViewController
-        
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
-        
-        searchViewController.searchBar.placeholder = "휴게소 이름 입력"
-        searchViewController.searchResultsUpdater = self
-    }
-    
     // MARK: Layout
     func layout() {
         view.addSubview(nearAreaStackView)
@@ -91,6 +80,20 @@ class ViewController: UIViewController {
         nearAreaCollectionView.snp.makeConstraints { make in
             make.height.equalTo(150)
         }
+    }
+}
+
+// MARK: UISearchController Setup
+extension ViewController {
+    func searchControllerSetup() {
+        self.navigationItem.searchController = searchViewController
+        
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
+        
+        searchViewController.searchBar.placeholder = "휴게소 이름 입력"
+        searchViewController.searchResultsUpdater = self
     }
 }
 
