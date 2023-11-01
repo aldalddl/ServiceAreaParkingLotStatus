@@ -156,16 +156,13 @@ extension ViewController: UITableViewDelegate {
     }
 
     private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        
-        cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
         
         if isFiltering {
             cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
         }
         
         return cell
-
     }
 }
 
