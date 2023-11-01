@@ -108,8 +108,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.width.equalTo(totalStackView.snp.width).multipliedBy(0.4).priority(.init(999))
-            make.width.equalTo(profileImageView.snp.height).multipliedBy(1.0/1.0).priority(.init(1000))
+            make.width.equalTo(profileImageView.snp.height).priority(.init(1000))
         }
     }
 }
