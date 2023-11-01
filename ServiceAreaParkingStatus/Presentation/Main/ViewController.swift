@@ -50,7 +50,6 @@ class ViewController: UIViewController {
         setup()
         layout()
         searchControllerSetup()
-        stackViewSetup()
         parkingManagerSetup()
     }
     
@@ -62,6 +61,9 @@ class ViewController: UIViewController {
         searchResultsController.tableView.delegate = self
 
         nearAreaCollectionView.dataSource = self
+        
+        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
+        nearAreaStackView.rightLabel.text = "더보기"
     }
     
     func searchControllerSetup() {
@@ -73,11 +75,6 @@ class ViewController: UIViewController {
         
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchResultsUpdater = self
-    }
-    
-    func stackViewSetup() {
-        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
-        nearAreaStackView.rightLabel.text = "더보기"
     }
     
     // MARK: Layout
