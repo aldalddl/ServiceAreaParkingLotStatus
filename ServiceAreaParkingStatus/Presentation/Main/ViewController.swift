@@ -148,10 +148,8 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
 
-        if tableView == searchResultsController.tableView {
-            if isFiltering {
-                count = self.searchResultsController.filteredServiceAreaArray.count
-            }
+        if tableView == searchResultsController.tableView && isFiltering {
+            count = self.searchResultsController.filteredServiceAreaArray.count
         }
         
         return count
