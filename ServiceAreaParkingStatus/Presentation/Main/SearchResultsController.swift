@@ -18,7 +18,7 @@ class SearchResultsController: UIViewController {
 
         setup()
         tableViewSetup()
-        tableViewLayout()
+        layout()
     }
     
     func setup() {
@@ -32,7 +32,7 @@ class SearchResultsController: UIViewController {
     }
     
     // MARK: Layout
-    func tableViewLayout() {
+    func layout() {
         self.view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
