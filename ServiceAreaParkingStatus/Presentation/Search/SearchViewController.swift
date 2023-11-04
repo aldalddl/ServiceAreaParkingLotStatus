@@ -54,11 +54,12 @@ class SearchViewController: UIViewController {
         self.view.backgroundColor = .systemBackground
         highwayLineLabel.text = "노선: " + highwayLine
         highwayCenterLabel.text = "본부: " + highwayCenter
-        self.view.addSubview(highwayLineLabel)
-        self.view.addSubview(highwayCenterLabel)
     }
     
     func layout() {
+        self.view.addSubview(highwayLineLabel)
+        self.view.addSubview(highwayCenterLabel)
+        
         collectionView.snp.makeConstraints { make in
             make.height.equalTo(400)
             make.left.equalToSuperview().inset(20)

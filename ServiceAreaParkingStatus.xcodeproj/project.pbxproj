@@ -10,6 +10,10 @@
 		477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */; };
 		477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */; };
 		477CAEE82AD3F6BA00470F0F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE72AD3F6BA00470F0F /* SearchViewController.swift */; };
+		477CAEEB2AD400B200470F0F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEEA2AD400B200470F0F /* SettingViewController.swift */; };
+		477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEEF2AD538F600470F0F /* NearAreaCollectionViewCell.swift */; };
+		477CAEF92AD80E9600470F0F /* LabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEF82AD80E9600470F0F /* LabelStackView.swift */; };
+		477CAEFB2AD80EE000470F0F /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */; };
 		478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750072AB9B086003E7F6A /* SceneDelegate.swift */; };
 		4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750292ABC8232003E7F6A /* ParkingManager.swift */; };
 		4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502B2ABC8E74003E7F6A /* ParkingData.swift */; };
@@ -29,6 +33,10 @@
 		477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewCell.swift; sourceTree = "<group>"; };
 		477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		477CAEE72AD3F6BA00470F0F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		477CAEEA2AD400B200470F0F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		477CAEEF2AD538F600470F0F /* NearAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearAreaCollectionViewCell.swift; sourceTree = "<group>"; };
+		477CAEF82AD80E9600470F0F /* LabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStackView.swift; sourceTree = "<group>"; };
+		477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceAreaParkingStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		478750072AB9B086003E7F6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		478750132AB9B086003E7F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +71,23 @@
 				477CAEE72AD3F6BA00470F0F /* SearchViewController.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		477CAEE92AD400A600470F0F /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				477CAEEA2AD400B200470F0F /* SettingViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		477CAEF72AD80C3A00470F0F /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				477CAEF82AD80E9600470F0F /* LabelStackView.swift */,
+				477CAEEF2AD538F600470F0F /* NearAreaCollectionViewCell.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		47874FF92AB9B086003E7F6A = {
@@ -108,6 +133,7 @@
 				478750312ABEE29C003E7F6A /* Common */,
 				4787502E2ABEE291003E7F6A /* Main */,
 				477CAEE62AD3F68400470F0F /* Search */,
+				477CAEE92AD400A600470F0F /* Setting */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -126,7 +152,9 @@
 		4787502E2ABEE291003E7F6A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				477CAEF72AD80C3A00470F0F /* CustomView */,
 				4787502F2ABEE291003E7F6A /* ViewController.swift */,
+				477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -229,14 +257,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477CAEFB2AD80EE000470F0F /* SearchResultsController.swift in Sources */,
 				477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */,
 				47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */,
 				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
+				477CAEEB2AD400B200470F0F /* SettingViewController.swift in Sources */,
 				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
 				478750302ABEE291003E7F6A /* ViewController.swift in Sources */,
+				477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */,
 				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
 				477CAEE82AD3F6BA00470F0F /* SearchViewController.swift in Sources */,
 				4787503F2AC03636003E7F6A /* Car.swift in Sources */,
+				477CAEF92AD80E9600470F0F /* LabelStackView.swift in Sources */,
 				477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
 				4787503D2AC02A19003E7F6A /* CarCountView.swift in Sources */,
