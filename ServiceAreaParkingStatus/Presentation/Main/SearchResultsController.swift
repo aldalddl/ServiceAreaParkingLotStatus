@@ -29,6 +29,7 @@ class SearchResultsController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .systemBackground
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     // MARK: Layout
