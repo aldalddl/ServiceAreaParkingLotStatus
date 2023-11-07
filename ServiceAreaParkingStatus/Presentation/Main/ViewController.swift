@@ -63,11 +63,14 @@ class ViewController: UIViewController {
     func setup() {
         self.view.backgroundColor = .background
         
-        searchViewController = UISearchController(searchResultsController: searchResultsController)
-        searchResultsController.tableView.delegate = self
+        navigationController?.additionalSafeAreaInsets.top = 20
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
+        navigationItem.rightBarButtonItem?.tintColor = .secondary
 
         nearAreaCollectionView.dataSource = self
-        
+
         nearAreaStackView.leftLabel.text = "내 근처 휴게소"
         nearAreaStackView.rightLabel.text = "더보기"
         
@@ -75,7 +78,7 @@ class ViewController: UIViewController {
         parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
-        parkingStatusTableView.backgroundColor = .gray
+        parkingStatusTableView.backgroundColor = .background
     }
     
     // MARK: Layout
@@ -104,7 +107,7 @@ class ViewController: UIViewController {
         }
         
         parkingStatusTableView.snp.makeConstraints { make in
-            make.height.equalTo(200)
+            make.height.equalTo(300)
             make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(20)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
@@ -115,17 +118,16 @@ class ViewController: UIViewController {
 // MARK: UISearchController Setup
 extension ViewController {
     func searchControllerSetup() {
-        self.navigationItem.searchController = searchViewController
-        navigationController?.additionalSafeAreaInsets.top = 20
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
-        navigationItem.rightBarButtonItem?.tintColor = .secondary
+        searchViewController = UISearchController(searchResultsController: searchResultsController)
         
+        self.navigationItem.searchController = searchViewController
+    
         searchViewController.searchBar.searchTextField.backgroundColor = .searchbar
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchBar.tintColor = .primary
         searchViewController.searchResultsUpdater = self
+
+        searchResultsController.tableView.delegate = self
     }
 }
 
