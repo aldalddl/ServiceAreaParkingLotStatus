@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     var searchViewController = UISearchController()
     var parkingManager = ParkingManager()
     var nearAreaStackView = LabelStackView()
+    var parkingStatusStackView = LabelStackView()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
     }
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.text = "휴게소 주차 현황"
         return label
@@ -40,8 +41,13 @@ class ViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         view.showsHorizontalScrollIndicator = false
         view.contentInset = .zero
+        view.backgroundColor = .background
         view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: "NearAreaCollectionViewCell")
         return view
+    }()
+    var parkingStatusTableView: UITableView = {
+        let tableView = UITableView()
+        return tableView
     }()
         
     override func viewDidLoad() {
@@ -55,7 +61,7 @@ class ViewController: UIViewController {
     
     // MARK: Setup
     func setup() {
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .background
         
         searchViewController = UISearchController(searchResultsController: searchResultsController)
         searchResultsController.tableView.delegate = self
@@ -64,12 +70,21 @@ class ViewController: UIViewController {
         
         nearAreaStackView.leftLabel.text = "내 근처 휴게소"
         nearAreaStackView.rightLabel.text = "더보기"
+        
+        parkingStatusStackView.leftLabel.text = "남은 주차 대수"
+        parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
+        parkingStatusTableView.delegate = self
+        parkingStatusTableView.dataSource = self
+        parkingStatusTableView.backgroundColor = .gray
     }
     
     // MARK: Layout
     func layout() {
         view.addSubview(nearAreaStackView)
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
+        
+        view.addSubview(parkingStatusStackView)
+        parkingStatusStackView.addSubview(parkingStatusTableView)
         
         nearAreaStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
@@ -79,6 +94,20 @@ class ViewController: UIViewController {
         
         nearAreaCollectionView.snp.makeConstraints { make in
             make.height.equalTo(150)
+            make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
+        }
+        
+        parkingStatusStackView.snp.makeConstraints { make in
+            make.top.equalTo(nearAreaStackView.snp.bottom).offset(50)
+            make.left.equalToSuperview().inset(20)
+            make.right.equalToSuperview().inset(20)
+        }
+        
+        parkingStatusTableView.snp.makeConstraints { make in
+            make.height.equalTo(200)
+            make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(20)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
         }
     }
 }
@@ -87,12 +116,15 @@ class ViewController: UIViewController {
 extension ViewController {
     func searchControllerSetup() {
         self.navigationItem.searchController = searchViewController
-        
+        navigationController?.additionalSafeAreaInsets.top = 20
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
+        navigationItem.rightBarButtonItem?.tintColor = .secondary
         
+        searchViewController.searchBar.searchTextField.backgroundColor = .searchbar
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
+        searchViewController.searchBar.tintColor = .primary
         searchViewController.searchResultsUpdater = self
     }
 }
@@ -143,8 +175,8 @@ extension ViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: searchResultsController's UITableView Delegate 
-extension ViewController: UITableViewDelegate {
+// MARK: searchResultsController's UITableView Delegate, DataSource
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
 
@@ -152,17 +184,38 @@ extension ViewController: UITableViewDelegate {
             count = self.searchResultsController.filteredServiceAreaArray.count
         }
         
+        if tableView == parkingStatusTableView {
+            count = Car.list.count
+        }
+        
         return count
     }
 
-    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
-        
-        if isFiltering {
-            cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == searchResultsController.tableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+            
+            if isFiltering {
+                cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
+            }
+            
+            return cell
         }
         
-        return cell
+        if tableView == parkingStatusTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as! ParkingStatusTableViewCell
+            
+            cell.carIconImageView.image = Car.list[indexPath.row].iconImageView.image
+            cell.carLabel.text = Car.list[indexPath.row].type
+            
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
     }
 }
 
