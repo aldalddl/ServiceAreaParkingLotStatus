@@ -51,7 +51,7 @@ class SearchViewController: UIViewController {
 
     
     func setup() {
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .searchbar
         highwayLineLabel.text = "노선: " + highwayLine
         highwayCenterLabel.text = "본부: " + highwayCenter
     }

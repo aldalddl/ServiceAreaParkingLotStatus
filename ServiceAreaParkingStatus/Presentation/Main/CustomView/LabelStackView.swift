@@ -12,7 +12,7 @@ class LabelStackView: UIStackView {
     
     let leftLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -45,7 +45,7 @@ class LabelStackView: UIStackView {
     
     // MARK: Setup
     func setup() {
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .background
         self.alignment = .fill
         self.distribution = .fill
         self.spacing = 20

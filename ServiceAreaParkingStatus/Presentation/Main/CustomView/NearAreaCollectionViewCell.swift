@@ -79,7 +79,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
     }
     
     func setup() {
-        self.contentView.backgroundColor = .systemGray
+        self.contentView.backgroundColor = .primary
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = 15
     }
