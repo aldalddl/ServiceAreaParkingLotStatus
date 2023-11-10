@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "disabledCar.png",
+      "filename" : "carForDisabled.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "carForDisabled@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "carForDisabled@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
