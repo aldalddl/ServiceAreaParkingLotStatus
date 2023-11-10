@@ -17,8 +17,8 @@ struct Car {
 
 extension Car {
     static var list = [
-        Car(type: "대형", remainNumber: nil, totalNumber: nil, iconImageView: UIImageView(image: UIImage(named: "carForLarge"))),
-        Car(type: "소형", remainNumber: nil, totalNumber: nil, iconImageView: UIImageView(image: UIImage(named: "carForSmall"))),
+        Car(type: "대형", remainNumber: nil, totalNumber: nil, iconImageView: UIImageView(image: UIImage(systemName: "bus.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal))),
+        Car(type: "소형", remainNumber: nil, totalNumber: nil, iconImageView: UIImageView(image: UIImage(systemName: "car.fill")?.withTintColor(.black, renderingMode: .alwaysOriginal))),
         Car(type: "장애인 전용", remainNumber: nil, totalNumber: nil, iconImageView: UIImageView(image: UIImage(named: "carForDisabled")))
     ]
 }
