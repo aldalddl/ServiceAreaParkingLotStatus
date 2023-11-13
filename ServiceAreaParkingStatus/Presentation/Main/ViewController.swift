@@ -33,8 +33,9 @@ class ViewController: UIViewController {
     var nearAreaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8.0
-        layout.itemSize = CGSize(width: 250, height: 150)
+        layout.minimumInteritemSpacing = 50.0
+        layout.minimumLineSpacing = 13.0
+        layout.itemSize = CGSize(width: 332, height: 150)
         
         var view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
@@ -124,7 +125,9 @@ extension ViewController {
         searchViewController = UISearchController(searchResultsController: searchResultsController)
         
         self.navigationItem.searchController = searchViewController
-    
+        
+        let image = UIImage()
+        searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
         searchViewController.searchBar.searchTextField.backgroundColor = .searchbar
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchBar.tintColor = .primary
