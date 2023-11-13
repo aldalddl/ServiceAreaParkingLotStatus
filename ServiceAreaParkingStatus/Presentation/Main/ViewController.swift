@@ -12,17 +12,19 @@ class ViewController: UIViewController {
     var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
     var parkingManager = ParkingManager()
-    var nearAreaStackView = LabelStackView()
-    var parkingStatusStackView = LabelStackView()
+    var nearAreaStackView = LabelListStackView()
+    var parkingStatusStackView = LabelListStackView()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
+    
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
         let isActive = searchViewController?.isActive ?? false
         let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -30,22 +32,43 @@ class ViewController: UIViewController {
         label.text = "휴게소 주차 현황"
         return label
     }()
-    var nearAreaCollectionView: UICollectionView = {
+    
+    enum ScrollViewElements {
+        static let itemSize = CGSize(width: 332, height: 150)
+        static let itemSpacing = 13.0
+        
+        static var insetX: CGFloat {
+            (UIScreen.main.bounds.width - Self.itemSize.width) / 2.0
+        }
+        static var collectionViewContentInset: UIEdgeInsets {
+            UIEdgeInsets(top: 0, left: Self.insetX, bottom: 0, right: Self.insetX)
+        }
+    }
+    
+    var nearAreaCollectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 50.0
-        layout.minimumLineSpacing = 13.0
-        layout.itemSize = CGSize(width: 332, height: 150)
-        
-        var view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = ScrollViewElements.itemSpacing
+        layout.itemSize = ScrollViewElements.itemSize
+        return layout
+    }()
+    
+    lazy var nearAreaCollectionView: UICollectionView = {
+        var view = UICollectionView(frame: .zero, collectionViewLayout: self.nearAreaCollectionViewFlowLayout)
         view.isScrollEnabled = true
+        view.isPagingEnabled = false
         view.showsVerticalScrollIndicator = true
         view.showsHorizontalScrollIndicator = false
-        view.contentInset = .zero
-        view.backgroundColor = .background
-        view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: "NearAreaCollectionViewCell")
+        view.clipsToBounds = true
+        view.contentInsetAdjustmentBehavior = .never
+        view.decelerationRate = .fast
+        view.backgroundColor = .clear
+        view.contentInset = ScrollViewElements.collectionViewContentInset
+        view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
     }()
+    
     var parkingStatusTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -71,8 +94,9 @@ class ViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
         navigationItem.rightBarButtonItem?.tintColor = .secondary
 
+        nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
-
+        
         nearAreaStackView.leftLabel.text = "내 근처 휴게소"
         nearAreaStackView.rightLabel.text = "더보기"
         
@@ -87,29 +111,32 @@ class ViewController: UIViewController {
     func layout() {
         view.addSubview(nearAreaStackView)
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
+        view.addSubview(nearAreaCollectionView)
         
         view.addSubview(parkingStatusStackView)
-        view.addSubview(parkingStatusTableView)
+        parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
         
         navigationController?.additionalSafeAreaInsets.top = 20
         
         nearAreaStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
         }
         
         nearAreaCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(150)
+            make.height.equalTo(ScrollViewElements.itemSize.height)
             make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+        }
+
+        parkingStatusStackView.snp.makeConstraints { make in
+            make.top.equalTo(nearAreaCollectionView.snp.bottom).offset(35)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
         }
         
-        parkingStatusStackView.snp.makeConstraints { make in
-            make.top.equalTo(nearAreaStackView.snp.bottom).offset(35)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-        }
-//        parkingStatusTableView.backgroundColor = .systemGreen
         parkingStatusTableView.snp.makeConstraints { make in
             make.height.equalTo(400)
             make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(5)
@@ -224,7 +251,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.carIconImageView.image = Car.list[indexPath.row].iconImageView.image
             cell.carLabel.text = Car.list[indexPath.row].type
-            
+            cell.numberOfCarLabel.text = "120 / 130"
             return cell
         }
         
@@ -236,7 +263,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.serviceAreaArray.count
     }
@@ -250,5 +277,13 @@ extension ViewController: UICollectionViewDataSource {
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
         
         return cell
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
+        let cellWidth = ScrollViewElements.itemSize.width + ScrollViewElements.itemSpacing
+        let index = round(scrolledOffsetX / cellWidth)
+        
+        targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 }
