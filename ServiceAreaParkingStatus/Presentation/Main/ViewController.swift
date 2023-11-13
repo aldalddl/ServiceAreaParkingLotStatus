@@ -57,6 +57,7 @@ class ViewController: UIViewController {
         setup()
         layout()
         searchControllerSetup()
+        searchControllerLayout()
         parkingManagerSetup()
     }
     
@@ -64,7 +65,6 @@ class ViewController: UIViewController {
     func setup() {
         self.view.backgroundColor = .background
         
-        navigationController?.additionalSafeAreaInsets.top = 20
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
@@ -90,8 +90,10 @@ class ViewController: UIViewController {
         view.addSubview(parkingStatusStackView)
         view.addSubview(parkingStatusTableView)
         
+        navigationController?.additionalSafeAreaInsets.top = 20
+        
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
         }
@@ -102,14 +104,14 @@ class ViewController: UIViewController {
         }
         
         parkingStatusStackView.snp.makeConstraints { make in
-            make.top.equalTo(nearAreaStackView.snp.bottom).offset(50)
+            make.top.equalTo(nearAreaStackView.snp.bottom).offset(35)
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
         }
-        
+//        parkingStatusTableView.backgroundColor = .systemGreen
         parkingStatusTableView.snp.makeConstraints { make in
-            make.height.equalTo(300)
-            make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(20)
+            make.height.equalTo(400)
+            make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(5)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
         }
@@ -129,6 +131,15 @@ extension ViewController {
         searchViewController.searchResultsUpdater = self
 
         searchResultsController.tableView.delegate = self
+    }
+    
+    func searchControllerLayout() {
+        searchViewController.searchBar.searchTextField.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.left.equalToSuperview().inset(20)
+            make.right.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(20)
+        }
     }
 }
 
@@ -218,7 +229,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 95.0
+        return 100.0
     }
 }
 
