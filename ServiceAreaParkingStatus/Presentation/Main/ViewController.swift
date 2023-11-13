@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         return label
     }()
     
-    enum ScrollViewElements {
+    enum CollectionViewSize {
         static let itemSize = CGSize(width: 332, height: 150)
         static let itemSpacing = 13.0
         
@@ -49,8 +49,8 @@ class ViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = ScrollViewElements.itemSpacing
-        layout.itemSize = ScrollViewElements.itemSize
+        layout.minimumLineSpacing = CollectionViewSize.itemSpacing
+        layout.itemSize = CollectionViewSize.itemSize
         return layout
     }()
     
@@ -64,7 +64,7 @@ class ViewController: UIViewController {
         view.contentInsetAdjustmentBehavior = .never
         view.decelerationRate = .fast
         view.backgroundColor = .clear
-        view.contentInset = ScrollViewElements.collectionViewContentInset
+        view.contentInset = CollectionViewSize.collectionViewContentInset
         view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
     }()
@@ -100,7 +100,8 @@ class ViewController: UIViewController {
         nearAreaStackView.leftLabel.text = "내 근처 휴게소"
         nearAreaStackView.rightLabel.text = "더보기"
         
-        parkingStatusStackView.leftLabel.text = "남은 주차 대수"
+        parkingStatusStackView.leftLabel.text = "남은 주차 자릿수"
+        
         parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
@@ -109,30 +110,29 @@ class ViewController: UIViewController {
     
     // MARK: Layout
     func layout() {
+        navigationController?.additionalSafeAreaInsets.top = 20
+        
         view.addSubview(nearAreaStackView)
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
-        view.addSubview(nearAreaCollectionView)
-        
+
         view.addSubview(parkingStatusStackView)
         parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
         
-        navigationController?.additionalSafeAreaInsets.top = 20
-        
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
         }
         
         nearAreaCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(ScrollViewElements.itemSize.height)
+            make.height.equalTo(CollectionViewSize.itemSize.height)
             make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
         }
 
         parkingStatusStackView.snp.makeConstraints { make in
-            make.top.equalTo(nearAreaCollectionView.snp.bottom).offset(35)
+            make.top.equalTo(nearAreaStackView.snp.bottom).offset(55)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
         }
@@ -142,11 +142,12 @@ class ViewController: UIViewController {
             make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(5)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(10)
         }
     }
 }
 
-// MARK: UISearchController Setup
+// MARK: UISearchController Setup, Layout
 extension ViewController {
     func searchControllerSetup() {
         searchViewController = UISearchController(searchResultsController: searchResultsController)
@@ -169,6 +170,11 @@ extension ViewController {
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
             make.top.equalToSuperview().inset(20)
+        }
+        
+        searchViewController.searchBar.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
         }
     }
 }
@@ -219,7 +225,7 @@ extension ViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: searchResultsController's UITableView Delegate, DataSource
+// MARK: UITableView Delegate, DataSource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
@@ -252,6 +258,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.carIconImageView.image = Car.list[indexPath.row].iconImageView.image
             cell.carLabel.text = Car.list[indexPath.row].type
             cell.numberOfCarLabel.text = "120 / 130"
+            
             return cell
         }
         
@@ -263,6 +270,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: UICollectionView DataSource, DelegateFlowLayout
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.serviceAreaArray.count
@@ -281,7 +289,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
-        let cellWidth = ScrollViewElements.itemSize.width + ScrollViewElements.itemSpacing
+        let cellWidth = CollectionViewSize.itemSize.width + CollectionViewSize.itemSpacing
         let index = round(scrolledOffsetX / cellWidth)
         
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
