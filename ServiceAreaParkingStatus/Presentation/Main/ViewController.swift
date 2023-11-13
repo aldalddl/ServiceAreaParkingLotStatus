@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     }()
     var parkingStatusTableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         return tableView
     }()
         
@@ -87,10 +88,10 @@ class ViewController: UIViewController {
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
         
         view.addSubview(parkingStatusStackView)
-        parkingStatusStackView.addSubview(parkingStatusTableView)
+        view.addSubview(parkingStatusTableView)
         
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(30)
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
         }
@@ -217,7 +218,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 95.0
     }
 }
 
