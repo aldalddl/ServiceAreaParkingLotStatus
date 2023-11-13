@@ -172,11 +172,6 @@ extension ViewController {
             make.right.equalToSuperview().inset(20)
             make.top.equalToSuperview().inset(20)
         }
-        
-//        searchViewController.searchBar.snp.makeConstraints { make in
-//            make.height.equalTo(50)
-//            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-//        }
     }
 }
 
@@ -210,7 +205,6 @@ extension ViewController: ParkingManagerDelegate {
         parkingManager.fetchParking()
     }
 }
-
 
 // MARK: UISearchController ResultsUpdating
 extension ViewController: UISearchResultsUpdating {
