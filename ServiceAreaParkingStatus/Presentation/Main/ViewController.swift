@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
+    var numberOfCar = [0, 0, 0]
     
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
@@ -172,10 +173,10 @@ extension ViewController {
             make.top.equalToSuperview().inset(20)
         }
         
-        searchViewController.searchBar.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-        }
+//        searchViewController.searchBar.snp.makeConstraints { make in
+//            make.height.equalTo(50)
+//            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+//        }
     }
 }
 
@@ -257,7 +258,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.carIconImageView.image = Car.list[indexPath.row].iconImageView.image
             cell.carLabel.text = Car.list[indexPath.row].type
-            cell.numberOfCarLabel.text = "120 / 130"
+            cell.numberOfCarLabel.text = String(numberOfCar[indexPath.row])
             
             return cell
         }
@@ -284,6 +285,15 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
         
+        self.numberOfCar.removeAll()
+        self.numberOfCar.append(self.parkingLotArray[indexPath.row].대형)
+        self.numberOfCar.append(self.parkingLotArray[indexPath.row].소형)
+        self.numberOfCar.append(self.parkingLotArray[indexPath.row].장애인)
+        
+        DispatchQueue.main.async {
+            self.parkingStatusTableView.reloadData()
+        }
+
         return cell
     }
     
