@@ -274,9 +274,11 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as! NearAreaCollectionViewCell
         
+        // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
         cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
+        // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
         
         self.numberOfCar.removeAll()
