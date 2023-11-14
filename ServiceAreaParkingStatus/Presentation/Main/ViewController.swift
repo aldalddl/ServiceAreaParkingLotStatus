@@ -64,7 +64,7 @@ class ViewController: UIViewController {
         view.clipsToBounds = true
         view.contentInsetAdjustmentBehavior = .never
         view.decelerationRate = .fast
-        view.backgroundColor = .clear
+        view.backgroundColor = .background
         view.contentInset = CollectionViewSize.collectionViewContentInset
         view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
