@@ -34,24 +34,21 @@ class ViewController: UIViewController {
         return label
     }()
     
-    enum CollectionViewSize {
-        static let itemSize = CGSize(width: 332, height: 150)
-        static let itemSpacing = 13.0
-        
-        static var insetX: CGFloat {
-            (UIScreen.main.bounds.width - Self.itemSize.width) / 2.0
-        }
-        static var collectionViewContentInset: UIEdgeInsets {
-            UIEdgeInsets(top: 0, left: Self.insetX, bottom: 0, right: Self.insetX)
-        }
+    let collectionViewItemSize = CGSize(width: 332, height: 150)
+    let collectionViewItemSpacing = 13.0
+    var collectionViewInsetX: CGFloat {
+        (UIScreen.main.bounds.width - collectionViewItemSize.width) / 2.0
+    }
+    var collectionViewContentInset: UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: collectionViewInsetX, bottom: 0, right: collectionViewInsetX)
     }
     
-    var nearAreaCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+    lazy var nearAreaCollectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = CollectionViewSize.itemSpacing
-        layout.itemSize = CollectionViewSize.itemSize
+        layout.minimumLineSpacing = collectionViewItemSpacing
+        layout.itemSize = collectionViewItemSize
         return layout
     }()
     
@@ -65,7 +62,7 @@ class ViewController: UIViewController {
         view.contentInsetAdjustmentBehavior = .never
         view.decelerationRate = .fast
         view.backgroundColor = .background
-        view.contentInset = CollectionViewSize.collectionViewContentInset
+        view.contentInset = collectionViewContentInset
         view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
     }()
@@ -129,7 +126,7 @@ class ViewController: UIViewController {
         }
         
         nearAreaCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(CollectionViewSize.itemSize.height)
+            make.height.equalTo(collectionViewItemSize.height)
             make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
             make.left.right.equalToSuperview()
         }
@@ -298,7 +295,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
-        let cellWidth = CollectionViewSize.itemSize.width + CollectionViewSize.itemSpacing
+        let cellWidth = collectionViewItemSize.width + collectionViewItemSpacing
         let index = round(scrolledOffsetX / cellWidth)
         
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
