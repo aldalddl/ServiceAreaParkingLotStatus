@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
-    var numberOfCar = [0, 0, 0]
+    var numberOfCar = [CarType: Int]()
     
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
@@ -88,6 +88,10 @@ class ViewController: UIViewController {
     
     // MARK: Setup
     func setup() {
+        for car in CarType.allCases {
+            numberOfCar[car] = 0
+        }
+        
         self.view.backgroundColor = .background
         
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -230,7 +234,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if tableView == parkingStatusTableView {
-            count = Car.list.count
+            count = Car.typeList.count
         }
         
         return count
@@ -250,9 +254,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == parkingStatusTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as! ParkingStatusTableViewCell
             
-            cell.carIconImageView.image = Car.list[indexPath.row].iconImageView.image
-            cell.carLabel.text = Car.list[indexPath.row].type
-            cell.numberOfCarLabel.text = String(numberOfCar[indexPath.row])
+            cell.carIconImageView.image = UIImage(systemName: "photo")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+            
+            if let image = CarType.allCases[indexPath.row].image {
+                cell.carIconImageView.image = image
+            }
+            
+            cell.carLabel.text = CarType.allCases[indexPath.row].name
+            cell.numberOfCarLabel.text = String(numberOfCar[CarType.allCases[indexPath.row]] ?? 0)
             
             return cell
         }
@@ -281,10 +290,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
         
-        self.numberOfCar.removeAll()
-        self.numberOfCar.append(self.parkingLotArray[indexPath.row].대형)
-        self.numberOfCar.append(self.parkingLotArray[indexPath.row].소형)
-        self.numberOfCar.append(self.parkingLotArray[indexPath.row].장애인)
+        self.numberOfCar.keys.forEach { self.numberOfCar[$0] = 0 }
+        self.numberOfCar[CarType.large] = self.parkingLotArray[indexPath.row].대형
+        self.numberOfCar[CarType.small] = self.parkingLotArray[indexPath.row].소형
+        self.numberOfCar[CarType.disabled] = self.parkingLotArray[indexPath.row].장애인
         
         DispatchQueue.main.async {
             self.parkingStatusTableView.reloadData()
