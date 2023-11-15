@@ -99,10 +99,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(totalStackView)
         
         totalStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
+            make.top.left.right.bottom.equalToSuperview().inset(20)
         }
         
         locationLabel.snp.makeConstraints { make in

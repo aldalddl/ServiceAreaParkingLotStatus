@@ -44,8 +44,7 @@ class SearchViewController: UIViewController {
     
     func collectionViewLayout() {
         collectionView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.centerX.centerY.equalToSuperview()
         }
     }
 
@@ -62,8 +61,7 @@ class SearchViewController: UIViewController {
         
         collectionView.snp.makeConstraints { make in
             make.height.equalTo(400)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
+            make.left.right.equalToSuperview().inset(20)
         }
         
         highwayLineLabel.snp.makeConstraints { make in
@@ -86,9 +84,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCell.id, for: indexPath) as! CarCountCollectionViewCell
         
-        let carType = Car.list[indexPath.row].type
-        cell.carIcon.image = UIImage(named: carType)
-        cell.carLabel.text = carType + ": \(carCountArray[indexPath.row])"
+        cell.carIcon.image = UIImage(systemName: "photo")
+        
+        if let image = CarType.allCases[indexPath.row].image {
+            cell.carIcon.image = image
+        }
+        
+        cell.carLabel.text = CarType.allCases[indexPath.row].name
 
         return cell
     }

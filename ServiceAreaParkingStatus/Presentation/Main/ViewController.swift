@@ -125,28 +125,24 @@ class ViewController: UIViewController {
         
         nearAreaStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
         
         nearAreaCollectionView.snp.makeConstraints { make in
             make.height.equalTo(CollectionViewSize.itemSize.height)
             make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
 
         parkingStatusStackView.snp.makeConstraints { make in
             make.top.equalTo(nearAreaStackView.snp.bottom).offset(55)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
         
         parkingStatusTableView.snp.makeConstraints { make in
             make.height.equalTo(400)
             make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(5)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(10)
         }
     }
@@ -172,9 +168,7 @@ extension ViewController {
     func searchControllerLayout() {
         searchViewController.searchBar.searchTextField.snp.makeConstraints { make in
             make.height.equalTo(50)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(20)
+            make.top.left.right.equalToSuperview().inset(20)
         }
     }
 }

@@ -60,8 +60,7 @@ class LabelListStackView: UIStackView {
         labelStackView.addArrangedSubview(rightLabel)
         
         labelStackView.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
+            make.left.right.equalToSuperview().inset(20)
         }
     }
 }
