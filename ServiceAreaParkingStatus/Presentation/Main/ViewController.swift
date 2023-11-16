@@ -225,7 +225,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if tableView == parkingStatusTableView {
-            count = Car.typeList.count
+            count = CarType.allCases.count
         }
         
         return count

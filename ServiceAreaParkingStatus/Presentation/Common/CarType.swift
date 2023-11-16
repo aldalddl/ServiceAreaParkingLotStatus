@@ -36,12 +36,6 @@ enum CarType: CaseIterable {
 }
 
 struct Car {
-    static let typeList = [
-        Car(type: .large, remainNumber: 0, totalNumber: 0),
-        Car(type: .small, remainNumber: 0, totalNumber: 0),
-        Car(type: .disabled, remainNumber: 0, totalNumber: 0)
-    ]
-    
     let type: CarType
     let remainNumber: Int?
     let totalNumber: Int?
