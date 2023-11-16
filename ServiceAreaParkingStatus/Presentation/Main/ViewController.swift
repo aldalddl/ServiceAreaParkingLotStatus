@@ -76,6 +76,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for car in CarType.allCases {
+            numberOfCar[car] = 0
+        }
+        
         setup()
         layout()
         searchControllerSetup()
@@ -85,10 +89,6 @@ class ViewController: UIViewController {
     
     // MARK: Setup
     func setup() {
-        for car in CarType.allCases {
-            numberOfCar[car] = 0
-        }
-        
         self.view.backgroundColor = .background
         
         navigationItem.hidesSearchBarWhenScrolling = false
