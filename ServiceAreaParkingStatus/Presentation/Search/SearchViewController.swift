@@ -82,7 +82,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCell.id, for: indexPath) as! CarCountCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCell.id, for: indexPath) as? CarCountCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
         cell.carIcon.image = UIImage(systemName: "photo")
         

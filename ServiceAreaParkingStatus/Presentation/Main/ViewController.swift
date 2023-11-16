@@ -237,7 +237,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
         } else if tableView == parkingStatusTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as! ParkingStatusTableViewCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as? ParkingStatusTableViewCell else {
+                return UITableViewCell()
+            }
             
             cell.carIconImageView.image = UIImage(systemName: "photo")?.withTintColor(.black, renderingMode: .alwaysOriginal)
             
@@ -268,7 +270,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as! NearAreaCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as? NearAreaCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
