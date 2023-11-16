@@ -44,7 +44,7 @@ class SearchViewController: UIViewController {
     
     func collectionViewLayout() {
         collectionView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+            make.center.equalToSuperview()
         }
     }
 
