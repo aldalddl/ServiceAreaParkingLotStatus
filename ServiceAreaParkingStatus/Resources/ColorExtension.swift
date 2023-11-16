@@ -13,6 +13,6 @@ extension UIColor {
     static let secondary = UIColor(named: "Secondary")
     static let background = UIColor(named: "Background")
     static let lightBackground = UIColor(named: "LightBackground")
-    static let button = UIColor(named: "Button")
-    static let searchbar = UIColor(named: "Searchbar")
+    static let buttonBGColor = UIColor(named: "Button")
+    static let searchbarBGColor = UIColor(named: "Searchbar")
 }
