@@ -10,9 +10,9 @@ import UIKit
 
 extension UIColor {
     static let primary = UIColor(named: "Primary")
+    static let secondary = UIColor(named: "Secondary")
     static let background = UIColor(named: "Background")
     static let lightBackground = UIColor(named: "LightBackground")
     static let button = UIColor(named: "Button")
     static let searchbar = UIColor(named: "Searchbar")
-    static let secondary = UIColor(named: "Secondary")
 }
