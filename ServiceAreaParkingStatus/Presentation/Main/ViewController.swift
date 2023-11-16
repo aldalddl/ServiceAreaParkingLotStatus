@@ -42,18 +42,14 @@ class ViewController: UIViewController {
     var collectionViewContentInset: UIEdgeInsets {
         UIEdgeInsets(top: 0, left: collectionViewInsetX, bottom: 0, right: collectionViewInsetX)
     }
-    
-    lazy var nearAreaCollectionViewFlowLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = collectionViewItemSpacing
-        layout.itemSize = collectionViewItemSize
-        return layout
-    }()
-    
     lazy var nearAreaCollectionView: UICollectionView = {
-        var view = UICollectionView(frame: .zero, collectionViewLayout: self.nearAreaCollectionViewFlowLayout)
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = collectionViewItemSpacing
+        flowLayout.itemSize = collectionViewItemSize
+        
+        var view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         view.isScrollEnabled = true
         view.isPagingEnabled = false
         view.showsVerticalScrollIndicator = true
