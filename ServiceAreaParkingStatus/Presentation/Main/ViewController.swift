@@ -218,14 +218,14 @@ extension ViewController: UISearchResultsUpdating {
 // MARK: UITableView Delegate, DataSource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
+        var count = Int()
 
         if tableView == searchResultsController.tableView && isFiltering {
             count = self.searchResultsController.filteredServiceAreaArray.count
-        }
-        
-        if tableView == parkingStatusTableView {
+        } else if tableView == parkingStatusTableView {
             count = CarType.allCases.count
+        } else {
+            count = 0
         }
         
         return count
@@ -240,9 +240,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             return cell
-        }
-        
-        if tableView == parkingStatusTableView {
+        } else if tableView == parkingStatusTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as! ParkingStatusTableViewCell
             
             cell.carIconImageView.image = UIImage(systemName: "photo")?.withTintColor(.black, renderingMode: .alwaysOriginal)
@@ -255,6 +253,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.numberOfCarLabel.text = String(numberOfCar[CarType.allCases[indexPath.row]] ?? 0)
             
             return cell
+        } else {
+            print("UITableView cellForRowAt error")
         }
         
         return UITableViewCell()
