@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
-    var numberOfCar = [CarType: Int]()
+    var pagingIndex = 0
     
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
@@ -72,9 +72,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for car in CarType.allCases {
-            numberOfCar[car] = 0
-        }
+//        for car in CarType.allCases {
+//            numberOfCar[car] = 0
+//        }
         
         setup()
         layout()
@@ -187,6 +187,7 @@ extension ViewController: ParkingManagerDelegate {
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
+            self.parkingStatusTableView.reloadData()
             self.nearAreaCollectionView.reloadData()
         }
     }
@@ -220,7 +221,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             count = self.searchResultsController.filteredServiceAreaArray.count
             return count
         } else if tableView == parkingStatusTableView {
-            count = CarType.allCases.count
+            if parkingLotArray.isEmpty {
+                return 0
+            }
+            count = self.parkingLotArray[self.pagingIndex].numberOfCar.count
             return count
         }
         
@@ -247,8 +251,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.carIconImageView.image = image
             }
             
+            if parkingLotArray.isEmpty {
+                return UITableViewCell()
+            }
+            
             cell.carLabel.text = CarType.allCases[indexPath.row].name
-            cell.numberOfCarLabel.text = String(numberOfCar[CarType.allCases[indexPath.row]] ?? 0)
+            cell.numberOfCarLabel.text = String(parkingLotArray[self.pagingIndex].numberOfCar[indexPath.row])
             
             return cell
         }
@@ -278,15 +286,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
-        
-        self.numberOfCar.keys.forEach { self.numberOfCar[$0] = 0 }
-        self.numberOfCar[CarType.large] = self.parkingLotArray[indexPath.row].대형
-        self.numberOfCar[CarType.small] = self.parkingLotArray[indexPath.row].소형
-        self.numberOfCar[CarType.disabled] = self.parkingLotArray[indexPath.row].장애인
-        
-        DispatchQueue.main.async {
-            self.parkingStatusTableView.reloadData()
-        }
 
         return cell
     }
@@ -297,5 +296,11 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         let index = round(scrolledOffsetX / cellWidth)
         
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
+        
+        if pagingIndex != Int(index) {
+            self.parkingStatusTableView.reloadData()
+        }
+        
+        pagingIndex = Int(index)
     }
 }
