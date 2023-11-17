@@ -72,10 +72,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        for car in CarType.allCases {
-//            numberOfCar[car] = 0
-//        }
-        
         setup()
         layout()
         searchControllerSetup()
