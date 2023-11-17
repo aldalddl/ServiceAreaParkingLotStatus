@@ -150,7 +150,7 @@ extension ViewController {
         
         let image = UIImage()
         searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
-        searchViewController.searchBar.searchTextField.backgroundColor = .searchbar
+        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchBar.tintColor = .primary
         searchViewController.searchResultsUpdater = self
@@ -214,14 +214,14 @@ extension ViewController: UISearchResultsUpdating {
 // MARK: UITableView Delegate, DataSource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = Int()
+        var count = 0
 
         if tableView == searchResultsController.tableView && isFiltering {
             count = self.searchResultsController.filteredServiceAreaArray.count
+            return count
         } else if tableView == parkingStatusTableView {
             count = CarType.allCases.count
-        } else {
-            count = 0
+            return count
         }
         
         return count
@@ -251,8 +251,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.numberOfCarLabel.text = String(numberOfCar[CarType.allCases[indexPath.row]] ?? 0)
             
             return cell
-        } else {
-            print("UITableView cellForRowAt error")
         }
         
         return UITableViewCell()
