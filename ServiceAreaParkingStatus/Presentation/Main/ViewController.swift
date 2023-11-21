@@ -12,36 +12,61 @@ class ViewController: UIViewController {
     var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
     var parkingManager = ParkingManager()
-    var nearAreaStackView = LabelStackView()
+    var nearAreaStackView = LabelListStackView()
+    var parkingStatusStackView = LabelListStackView()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingLotArray = [Parking]()
+    var pagingIndex = 0
+    
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
         let isActive = searchViewController?.isActive ?? false
         let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
         return isActive && isSearchBarHasText
     }
+    
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.text = "휴게소 주차 현황"
         return label
     }()
-    var nearAreaCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8.0
-        layout.itemSize = CGSize(width: 250, height: 150)
+    
+    let collectionViewItemSize = CGSize(width: 332, height: 150)
+    let collectionViewItemSpacing = 13.0
+    var collectionViewInsetX: CGFloat {
+        (UIScreen.main.bounds.width - collectionViewItemSize.width) / 2.0
+    }
+    var collectionViewContentInset: UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: collectionViewInsetX, bottom: 0, right: collectionViewInsetX)
+    }
+    lazy var nearAreaCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = collectionViewItemSpacing
+        flowLayout.itemSize = collectionViewItemSize
         
-        var view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        var view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         view.isScrollEnabled = true
+        view.isPagingEnabled = false
         view.showsVerticalScrollIndicator = true
         view.showsHorizontalScrollIndicator = false
-        view.contentInset = .zero
-        view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: "NearAreaCollectionViewCell")
+        view.clipsToBounds = true
+        view.contentInsetAdjustmentBehavior = .never
+        view.decelerationRate = .fast
+        view.backgroundColor = .background
+        view.contentInset = collectionViewContentInset
+        view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
+    }()
+    
+    var parkingStatusTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        return tableView
     }()
         
     override func viewDidLoad() {
@@ -50,50 +75,90 @@ class ViewController: UIViewController {
         setup()
         layout()
         searchControllerSetup()
+        searchControllerLayout()
         parkingManagerSetup()
     }
     
     // MARK: Setup
     func setup() {
-        self.view.backgroundColor = .systemBackground
-        
-        searchViewController = UISearchController(searchResultsController: searchResultsController)
-        searchResultsController.tableView.delegate = self
-
-        nearAreaCollectionView.dataSource = self
-        
-        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
-        nearAreaStackView.rightLabel.text = "더보기"
-    }
-    
-    // MARK: Layout
-    func layout() {
-        view.addSubview(nearAreaStackView)
-        nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
-        
-        nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-        }
-        
-        nearAreaCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(150)
-        }
-    }
-}
-
-// MARK: UISearchController Setup
-extension ViewController {
-    func searchControllerSetup() {
-        self.navigationItem.searchController = searchViewController
+        self.view.backgroundColor = .background
         
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
+        navigationItem.rightBarButtonItem?.tintColor = .secondary
+
+        nearAreaCollectionView.delegate = self
+        nearAreaCollectionView.dataSource = self
         
+        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
+        nearAreaStackView.rightLabel.text = "더보기"
+        
+        parkingStatusStackView.leftLabel.text = "남은 주차 자릿수"
+        
+        parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
+        parkingStatusTableView.delegate = self
+        parkingStatusTableView.dataSource = self
+        parkingStatusTableView.backgroundColor = .background
+    }
+    
+    // MARK: Layout
+    func layout() {
+        navigationController?.additionalSafeAreaInsets.top = 20
+        
+        view.addSubview(nearAreaStackView)
+        nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
+
+        view.addSubview(parkingStatusStackView)
+        parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
+        
+        nearAreaStackView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
+            make.left.right.equalToSuperview()
+        }
+        
+        nearAreaCollectionView.snp.makeConstraints { make in
+            make.height.equalTo(collectionViewItemSize.height)
+            make.top.equalTo(nearAreaStackView.labelStackView.snp.bottom).offset(20)
+            make.left.right.equalToSuperview()
+        }
+
+        parkingStatusStackView.snp.makeConstraints { make in
+            make.top.equalTo(nearAreaStackView.snp.bottom).offset(55)
+            make.left.right.equalToSuperview()
+        }
+        
+        parkingStatusTableView.snp.makeConstraints { make in
+            make.height.equalTo(400)
+            make.top.equalTo(parkingStatusStackView.labelStackView.snp.bottom).offset(5)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(10)
+        }
+    }
+}
+
+// MARK: UISearchController Setup, Layout
+extension ViewController {
+    func searchControllerSetup() {
+        searchViewController = UISearchController(searchResultsController: searchResultsController)
+        
+        self.navigationItem.searchController = searchViewController
+        
+        let image = UIImage()
+        searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
+        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
+        searchViewController.searchBar.tintColor = .primary
         searchViewController.searchResultsUpdater = self
+
+        searchResultsController.tableView.delegate = self
+    }
+    
+    func searchControllerLayout() {
+        searchViewController.searchBar.searchTextField.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.top.left.right.equalToSuperview().inset(20)
+        }
     }
 }
 
@@ -118,6 +183,7 @@ extension ViewController: ParkingManagerDelegate {
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
+            self.parkingStatusTableView.reloadData()
             self.nearAreaCollectionView.reloadData()
         }
     }
@@ -127,7 +193,6 @@ extension ViewController: ParkingManagerDelegate {
         parkingManager.fetchParking()
     }
 }
-
 
 // MARK: UISearchController ResultsUpdating
 extension ViewController: UISearchResultsUpdating {
@@ -143,42 +208,95 @@ extension ViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: searchResultsController's UITableView Delegate 
-extension ViewController: UITableViewDelegate {
+// MARK: UITableView Delegate, DataSource
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
 
         if tableView == searchResultsController.tableView && isFiltering {
             count = self.searchResultsController.filteredServiceAreaArray.count
+            return count
+        } else if tableView == parkingStatusTableView {
+            if parkingLotArray.isEmpty {
+                return 0
+            }
+            count = self.parkingLotArray[self.pagingIndex].numberOfCar.count
+            return count
         }
         
         return count
     }
 
-    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
-        
-        if isFiltering {
-            cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == searchResultsController.tableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+            
+            if isFiltering {
+                cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
+            }
+            
+            return cell
+        } else if tableView == parkingStatusTableView {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ParkingStatusTableViewCell.id, for: indexPath) as? ParkingStatusTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.carIconImageView.image = UIImage(systemName: "photo")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+            
+            if let image = CarType.allCases[indexPath.row].image {
+                cell.carIconImageView.image = image
+            }
+            
+            if parkingLotArray.isEmpty {
+                return UITableViewCell()
+            }
+            
+            cell.carLabel.text = CarType.allCases[indexPath.row].name
+            cell.numberOfCarLabel.text = String(parkingLotArray[self.pagingIndex].numberOfCar[indexPath.row])
+            
+            return cell
         }
         
-        return cell
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+// MARK: UICollectionView DataSource, DelegateFlowLayout
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.serviceAreaArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as! NearAreaCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NearAreaCollectionViewCell.id, for: indexPath) as? NearAreaCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
+        // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
         cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
+        // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
-        
+
         return cell
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let scrolledOffsetX = targetContentOffset.pointee.x + scrollView.contentInset.left
+        let cellWidth = collectionViewItemSize.width + collectionViewItemSpacing
+        let index = round(scrolledOffsetX / cellWidth)
+        
+        targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
+        
+        if pagingIndex != Int(index) {
+            self.parkingStatusTableView.reloadData()
+        }
+        
+        pagingIndex = Int(index)
     }
 }

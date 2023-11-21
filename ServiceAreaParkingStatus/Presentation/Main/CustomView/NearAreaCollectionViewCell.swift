@@ -1,5 +1,5 @@
 //
-//  ServiceAreaCell.swift
+//  NearAreaCollectionViewCell.swift
 //  ServiceAreaParkingStatus
 //
 //  Created by 강민지 on 2023/10/10.
@@ -40,7 +40,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var profileLabelStackView: UIStackView = {
+    var labelStackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .fill
         view.distribution = .fill
@@ -49,7 +49,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    var profileStackView: UIStackView = {
+    var profileImageLabelStackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .center
         view.distribution = .fill
@@ -78,37 +78,36 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Setup
     func setup() {
-        self.contentView.backgroundColor = .systemGray
+        self.contentView.backgroundColor = .primary
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = 15
     }
     
+    // MARK: Layout
     func layout() {
-        profileLabelStackView.addArrangedSubview(nameLabel)
-        profileLabelStackView.addArrangedSubview(highwaylineLabel)
+        labelStackView.addArrangedSubview(nameLabel)
+        labelStackView.addArrangedSubview(highwaylineLabel)
         
-        profileStackView.addArrangedSubview(profileImageView)
-        profileStackView.addArrangedSubview(profileLabelStackView)
+        profileImageLabelStackView.addArrangedSubview(profileImageView)
+        profileImageLabelStackView.addArrangedSubview(labelStackView)
         
-        totalStackView.addArrangedSubview(profileStackView)
+        totalStackView.addArrangedSubview(profileImageLabelStackView)
         totalStackView.addArrangedSubview(locationLabel)
         
         self.contentView.addSubview(totalStackView)
         
         totalStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
+            make.top.left.right.bottom.equalToSuperview().inset(20)
         }
         
         locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(totalStackView.snp.height).multipliedBy(0.4)
+            make.height.equalTo(totalStackView.snp.height).multipliedBy(0.3)
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.width.equalTo(profileImageView.snp.height).priority(.init(1000))
+            make.width.equalTo(profileImageLabelStackView.snp.width).multipliedBy(0.4)
         }
     }
 }

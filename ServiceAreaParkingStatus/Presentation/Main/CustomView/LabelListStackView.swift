@@ -1,5 +1,5 @@
 //
-//  ViewBlockWithLabel.swift
+//  LabelListStackView.swift
 //  ServiceAreaParkingStatus
 //
 //  Created by 강민지 on 2023/10/12.
@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-class LabelStackView: UIStackView {
+class LabelListStackView: UIStackView {
     
     let leftLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }()
@@ -54,9 +54,13 @@ class LabelStackView: UIStackView {
     
     // MARK: Layout
     func layout() {
-        self.addArrangedSubview(labelStackView)
+        self.addSubview(labelStackView)
         
         labelStackView.addArrangedSubview(leftLabel)
         labelStackView.addArrangedSubview(rightLabel)
+        
+        labelStackView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(20)
+        }
     }
 }

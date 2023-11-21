@@ -19,6 +19,10 @@ struct Parking: Codable {
     let 본부: 본부
     let 소형, 장애인, 합계: Int
     let 휴게소명: String
+    
+    var numberOfCar: [Int] {
+        return [self.대형, self.소형, self.장애인]
+    }
 }
 
 enum 노선: String, Codable {

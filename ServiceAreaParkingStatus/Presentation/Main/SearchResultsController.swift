@@ -37,10 +37,8 @@ class SearchResultsController: UIViewController {
         self.view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
         }
     }
 }
