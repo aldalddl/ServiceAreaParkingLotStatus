@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import TagListView
 
 class NearAreaCollectionViewCell: UICollectionViewCell {
     static let id = "NearAreaCollectionViewCell"
@@ -33,6 +34,23 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var lineTag: TagListView = {
+        let tag = TagListView()
+        tag.alignment = .left
+        tag.textFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        tag.textColor = .white
+        tag.tagBackgroundColor = .tagListColor ?? .systemBlue
+        tag.cornerRadius = 15
+        tag.shadowColor = .systemGray
+        tag.shadowOpacity = 0.2
+        tag.shadowRadius = 15
+        tag.shadowOffset = CGSize(width: 5, height: 5)
+        tag.paddingX = 14
+        tag.paddingY = 8
+        tag.marginX = 10
+        return tag
+    }()
+    
     var locationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .systemGray6
@@ -51,19 +69,19 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
     
     var profileImageLabelStackView: UIStackView = {
         let view = UIStackView()
+        view.axis = .horizontal
         view.alignment = .center
         view.distribution = .fill
         view.spacing = 15.0
-        view.axis = .horizontal
         return view
     }()
     
     var totalStackView: UIStackView = {
         let view = UIStackView()
+        view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = 10.0
-        view.axis = .vertical
         return view
     }()
     
@@ -94,6 +112,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         profileImageLabelStackView.addArrangedSubview(labelStackView)
         
         totalStackView.addArrangedSubview(profileImageLabelStackView)
+        totalStackView.addArrangedSubview(lineTag)
         totalStackView.addArrangedSubview(locationLabel)
         
         self.contentView.addSubview(totalStackView)
@@ -102,12 +121,12 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
             make.top.left.right.bottom.equalToSuperview().inset(20)
         }
         
-        locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(totalStackView.snp.height).multipliedBy(0.3)
-        }
-        
         profileImageView.snp.makeConstraints { make in
             make.width.equalTo(profileImageLabelStackView.snp.width).multipliedBy(0.4)
+        }
+        
+        locationLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
         }
     }
 }
