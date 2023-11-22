@@ -69,19 +69,19 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
     
     var profileImageLabelStackView: UIStackView = {
         let view = UIStackView()
+        view.axis = .horizontal
         view.alignment = .center
         view.distribution = .fill
         view.spacing = 15.0
-        view.axis = .horizontal
         return view
     }()
     
     var totalStackView: UIStackView = {
         let view = UIStackView()
+        view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = 10.0
-        view.axis = .vertical
         return view
     }()
     
@@ -121,12 +121,12 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
             make.top.left.right.bottom.equalToSuperview().inset(20)
         }
         
-        locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(totalStackView.snp.height).multipliedBy(0.3)
-        }
-        
         profileImageView.snp.makeConstraints { make in
             make.width.equalTo(profileImageLabelStackView.snp.width).multipliedBy(0.4)
+        }
+        
+        locationLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
         }
     }
 }

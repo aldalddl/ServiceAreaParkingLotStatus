@@ -29,12 +29,12 @@ class ViewController: UIViewController {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         label.text = "휴게소 주차 현황"
         return label
     }()
     
-    let collectionViewItemSize = CGSize(width: 332, height: 150)
+    let collectionViewItemSize = CGSize(width: 332, height: 170)
     let collectionViewItemSpacing = 13.0
     var collectionViewInsetX: CGFloat {
         (UIScreen.main.bounds.width - collectionViewItemSize.width) / 2.0
@@ -100,6 +100,8 @@ class ViewController: UIViewController {
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
         parkingStatusTableView.backgroundColor = .background
+        parkingStatusTableView.contentInset.top = 8
+        parkingStatusTableView.contentInset.bottom = 35
     }
     
     // MARK: Layout
@@ -113,7 +115,7 @@ class ViewController: UIViewController {
         parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
         
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(95)
             make.left.right.equalToSuperview()
         }
         
@@ -124,7 +126,7 @@ class ViewController: UIViewController {
         }
 
         parkingStatusStackView.snp.makeConstraints { make in
-            make.top.equalTo(nearAreaStackView.snp.bottom).offset(55)
+            make.top.equalTo(nearAreaStackView.snp.bottom).offset(60)
             make.left.right.equalToSuperview()
         }
         

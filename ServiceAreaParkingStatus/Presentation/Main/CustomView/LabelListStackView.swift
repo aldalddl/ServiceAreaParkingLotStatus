@@ -13,14 +13,14 @@ class LabelListStackView: UIStackView {
     let leftLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
     let rightLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
     }()
     
@@ -60,7 +60,7 @@ class LabelListStackView: UIStackView {
         labelStackView.addArrangedSubview(rightLabel)
         
         labelStackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
+            make.left.right.equalToSuperview().inset(31)
         }
     }
 }
