@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import TagListView
 
 class NearAreaCollectionViewCell: UICollectionViewCell {
     static let id = "NearAreaCollectionViewCell"
@@ -31,6 +32,23 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         label.textColor = .systemGray5
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
+    }()
+    
+    var lineTag: TagListView = {
+        let tag = TagListView()
+        tag.alignment = .left
+        tag.textFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        tag.textColor = .white
+        tag.tagBackgroundColor = .tagListColor ?? .systemBlue
+        tag.cornerRadius = 15
+        tag.shadowColor = .systemGray
+        tag.shadowOpacity = 0.2
+        tag.shadowRadius = 15
+        tag.shadowOffset = CGSize(width: 5, height: 5)
+        tag.paddingX = 14
+        tag.paddingY = 8
+        tag.marginX = 10
+        return tag
     }()
     
     var locationLabel: UILabel = {
@@ -94,6 +112,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         profileImageLabelStackView.addArrangedSubview(labelStackView)
         
         totalStackView.addArrangedSubview(profileImageLabelStackView)
+        totalStackView.addArrangedSubview(lineTag)
         totalStackView.addArrangedSubview(locationLabel)
         
         self.contentView.addSubview(totalStackView)
