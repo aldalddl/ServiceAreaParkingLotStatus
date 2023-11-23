@@ -282,7 +282,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
         cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].노선.rawValue
+        
+        cell.lineTag.removeAllTags()
         cell.lineTag.addTags([self.parkingLotArray[indexPath.row].본부.rawValue, self.parkingLotArray[indexPath.row].노선.rawValue])
+        
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
 
