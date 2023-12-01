@@ -1,16 +1,20 @@
 PODS:
+  - SwiftLint (0.54.0)
   - TagListView (1.4.1)
 
 DEPENDENCIES:
+  - SwiftLint
   - TagListView (~> 1.0)
 
 SPEC REPOS:
   trunk:
+    - SwiftLint
     - TagListView
 
 SPEC CHECKSUMS:
+  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: dbb3c606ce49edda69c95ef4550918137f74cc30
+PODFILE CHECKSUM: c5194a96db41c42cb19bd4b05e83135a18ebcf4c
 
 COCOAPODS: 1.12.0

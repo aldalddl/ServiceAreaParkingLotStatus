@@ -28,6 +28,7 @@
 		478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */; };
 		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 		47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */; };
+		47CDC0D02B19FD4D00BC9ADE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */; };
 		B0E3758ED5C2FF9F4453205F /* Pods_ServiceAreaParkingStatus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3395FB52652C2EBF0C82D6DC /* Pods_ServiceAreaParkingStatus.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceAreaParkingStatus++Bundle.swift"; sourceTree = "<group>"; };
 		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C59B464168E4A0F0732359F3 /* Pods-ServiceAreaParkingStatus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceAreaParkingStatus.release.xcconfig"; path = "Target Support Files/Pods-ServiceAreaParkingStatus/Pods-ServiceAreaParkingStatus.release.xcconfig"; sourceTree = "<group>"; };
 		CE6486D656D28EDC621BC993 /* Pods-ServiceAreaParkingStatus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceAreaParkingStatus.debug.xcconfig"; path = "Target Support Files/Pods-ServiceAreaParkingStatus/Pods-ServiceAreaParkingStatus.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 		47874FF92AB9B086003E7F6A = {
 			isa = PBXGroup;
 			children = (
+				47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */,
 				478750042AB9B086003E7F6A /* ServiceAreaParkingStatus */,
 				478750032AB9B086003E7F6A /* Products */,
 				43E30A63FF89EEF547964A16 /* Pods */,
@@ -217,6 +220,7 @@
 			buildConfigurationList = 478750162AB9B086003E7F6A /* Build configuration list for PBXNativeTarget "ServiceAreaParkingStatus" */;
 			buildPhases = (
 				A31888DA19498E7F5EF1FC4D /* [CP] Check Pods Manifest.lock */,
+				472E13D92B19A0A0009B8A1A /* SwiftLint Script */,
 				47874FFE2AB9B086003E7F6A /* Sources */,
 				47874FFF2AB9B086003E7F6A /* Frameworks */,
 				478750002AB9B086003E7F6A /* Resources */,
@@ -275,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47CDC0D02B19FD4D00BC9ADE /* .swiftlint.yml in Resources */,
 				478750362ABEE34A003E7F6A /* LaunchScreen.storyboard in Resources */,
 				478750382ABEE5FF003E7F6A /* Assets.xcassets in Resources */,
 				478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */,
@@ -284,6 +289,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		472E13D92B19A0A0009B8A1A /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		612C7F271C01597E5EB41A50 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
