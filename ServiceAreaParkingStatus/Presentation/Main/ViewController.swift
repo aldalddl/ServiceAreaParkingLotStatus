@@ -179,7 +179,7 @@ extension ViewController: ParkingManagerDelegate {
     }
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
-        self.serviceAreaArray = parking.data.map{ $0.serviceArea }
+        self.serviceAreaArray = parking.data.map { $0.serviceArea }
         self.parkingLotArray = parking.data
         self.searchResultsController.parkingLotArray = parking.data
         
