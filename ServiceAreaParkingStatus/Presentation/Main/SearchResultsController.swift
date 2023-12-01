@@ -63,8 +63,8 @@ extension SearchResultsController: UITableViewDataSource, UITableViewDelegate {
         searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].large)
         searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].small)
         searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].disbled)
-        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].line.rawValue)
-        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].center.rawValue)
+        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].line)
+        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].center)
         
         self.navigationController?.pushViewController(searceViewController, animated: true)
     }
