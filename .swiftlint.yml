@@ -5,4 +5,3 @@ disabled_rules: # 실행에서 제외할 룰 식별자
 #  - Source
 excluded: # 린트 과정에서 무시할 파일. included 보다 우선순위
   - Pods
-  - TagListView
