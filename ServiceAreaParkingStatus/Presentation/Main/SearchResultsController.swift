@@ -11,7 +11,7 @@ import UIKit
 class SearchResultsController: UIViewController {
     let tableView = UITableView()
     var filteredServiceAreaArray = [String]()
-    var parkingLotArray = [ParkingModel]()
+    var parkingDataArray = [ParkingModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +60,11 @@ extension SearchResultsController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searceViewController = SearchViewController()
         
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].large)
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].small)
-        searceViewController.carCountArray.append(self.parkingLotArray[indexPath.row].disbled)
-        searceViewController.highwayLine.append(self.parkingLotArray[indexPath.row].line)
-        searceViewController.highwayCenter.append(self.parkingLotArray[indexPath.row].center)
+        searceViewController.carCountArray.append(self.parkingDataArray[indexPath.row].large)
+        searceViewController.carCountArray.append(self.parkingDataArray[indexPath.row].small)
+        searceViewController.carCountArray.append(self.parkingDataArray[indexPath.row].disbled)
+        searceViewController.highwayLine.append(self.parkingDataArray[indexPath.row].line)
+        searceViewController.highwayCenter.append(self.parkingDataArray[indexPath.row].center)
         
         self.navigationController?.pushViewController(searceViewController, animated: true)
     }
