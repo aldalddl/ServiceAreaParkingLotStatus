@@ -14,9 +14,9 @@ class ViewController: UIViewController {
     var parkingManager = ParkingManager()
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
-    var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
     var parkingDataArray = [ParkingModel]()
+    var serviceAreaArray = [String: String]()
     var pagingIndex = 0
     
     var isFiltering: Bool {
@@ -179,9 +179,21 @@ extension ViewController: ParkingManagerDelegate {
     }
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
-        self.serviceAreaArray = parking.data.map { $0.serviceArea }
         self.parkingDataArray = parking.data
         self.searchResultsController.parkingDataArray = parking.data
+        
+        let serviceAreaNameArray = parking.data.map { $0.serviceArea }
+        
+        for serviceAreaName in serviceAreaNameArray {
+            if serviceAreaName.contains("(") {
+                let serviceAreaWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
+                let serviceArea = serviceAreaWithLine[0]
+                let line = serviceAreaWithLine[1]
+                self.serviceAreaArray[serviceArea] = line + " 방면"
+            } else {
+                self.serviceAreaArray[serviceAreaName] = ""
+            }
+        }
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
@@ -200,7 +212,7 @@ extension ViewController: ParkingManagerDelegate {
 extension ViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.filter{ $0.contains(text) }
+            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter{ $0.contains(text) }
         }
         
         if let resultVC = searchController.searchResultsController as? SearchResultsController {
@@ -280,8 +292,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
-        cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
-        cell.highwaylineLabel.text = self.parkingDataArray[indexPath.row].line
+        
+        let index = self.serviceAreaArray.index(self.serviceAreaArray.startIndex, offsetBy: indexPath.row)
+        cell.nameLabel.text = self.serviceAreaArray[index].key
+        cell.highwaylineLabel.text = self.serviceAreaArray[index].value
         
         cell.lineTag.removeAllTags()
         cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
