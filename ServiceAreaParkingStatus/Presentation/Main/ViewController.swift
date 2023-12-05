@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     var parkingStatusStackView = LabelListStackView()
     var serviceAreaArray = [String]()
     var filteredServiceAreaArray = [String]()
-    var parkingLotArray = [ParkingModel]()
+    var parkingDataArray = [ParkingModel]()
     var pagingIndex = 0
     
     var isFiltering: Bool {
@@ -180,8 +180,8 @@ extension ViewController: ParkingManagerDelegate {
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
         self.serviceAreaArray = parking.data.map { $0.serviceArea }
-        self.parkingLotArray = parking.data
-        self.searchResultsController.parkingLotArray = parking.data
+        self.parkingDataArray = parking.data
+        self.searchResultsController.parkingDataArray = parking.data
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
@@ -219,10 +219,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             count = self.searchResultsController.filteredServiceAreaArray.count
             return count
         } else if tableView == parkingStatusTableView {
-            if parkingLotArray.isEmpty {
+            if parkingDataArray.isEmpty {
                 return 0
             }
-            count = self.parkingLotArray[self.pagingIndex].numberOfCar.count
+            count = self.parkingDataArray[self.pagingIndex].numberOfCar.count
             return count
         }
         
@@ -249,12 +249,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.carIconImageView.image = image
             }
             
-            if parkingLotArray.isEmpty {
+            if parkingDataArray.isEmpty {
                 return UITableViewCell()
             }
             
             cell.carLabel.text = CarType.allCases[indexPath.row].name
-            cell.numberOfCarLabel.text = String(parkingLotArray[self.pagingIndex].numberOfCar[indexPath.row])
+            cell.numberOfCarLabel.text = String(parkingDataArray[self.pagingIndex].numberOfCar[indexPath.row])
             
             return cell
         }
@@ -281,10 +281,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
-        cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].line
+        cell.highwaylineLabel.text = self.parkingDataArray[indexPath.row].line
         
         cell.lineTag.removeAllTags()
-        cell.lineTag.addTags([self.parkingLotArray[indexPath.row].center, self.parkingLotArray[indexPath.row].line])
+        cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
