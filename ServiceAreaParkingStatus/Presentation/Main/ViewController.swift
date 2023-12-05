@@ -14,9 +14,9 @@ class ViewController: UIViewController {
     var parkingManager = ParkingManager()
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
-    var filteredServiceAreaArray = [String]()
     var parkingDataArray = [ParkingModel]()
     var serviceAreaArray = [String: String]()
+    var filteredServiceAreaArray = [String]() // UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
     var pagingIndex = 0
     
     var isFiltering: Bool {
@@ -183,17 +183,7 @@ extension ViewController: ParkingManagerDelegate {
         self.searchResultsController.parkingDataArray = parking.data
         
         let serviceAreaNameArray = parking.data.map { $0.serviceArea }
-        
-        for serviceAreaName in serviceAreaNameArray {
-            if serviceAreaName.contains("(") {
-                let serviceAreaWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
-                let serviceArea = serviceAreaWithLine[0]
-                let line = serviceAreaWithLine[1]
-                self.serviceAreaArray[serviceArea] = line + " 방면"
-            } else {
-                self.serviceAreaArray[serviceAreaName] = ""
-            }
-        }
+        changeDataFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
@@ -205,6 +195,19 @@ extension ViewController: ParkingManagerDelegate {
     func parkingManagerSetup() {
         parkingManager.delegate = self
         parkingManager.fetchParking()
+    }
+    
+    func changeDataFormat(serviceAreaNameArray: [String]) {
+        for serviceAreaName in serviceAreaNameArray {
+            if serviceAreaName.contains("(") {
+                let serviceAreaWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
+                let serviceArea = serviceAreaWithLine[0]
+                let line = serviceAreaWithLine[1]
+                self.serviceAreaArray[serviceArea] = line + " 방면"
+            } else {
+                self.serviceAreaArray[serviceAreaName] = ""
+            }
+        }
     }
 }
 
