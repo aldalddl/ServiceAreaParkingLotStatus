@@ -212,7 +212,7 @@ extension ViewController: ParkingManagerDelegate {
 extension ViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter{ $0.contains(text) }
+            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter { $0.contains(text) }
         }
         
         if let resultVC = searchController.searchResultsController as? SearchResultsController {
