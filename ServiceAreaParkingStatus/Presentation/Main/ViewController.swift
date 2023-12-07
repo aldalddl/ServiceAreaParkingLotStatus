@@ -186,7 +186,7 @@ extension ViewController: ParkingManagerDelegate {
         self.searchResultsController.parkingDataArray = parking.data
         
         let serviceAreaNameArray = parking.data.map { $0.serviceArea }
-        changeDataFormat(serviceAreaNameArray: serviceAreaNameArray)
+        self.serviceAreaArray = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
@@ -200,17 +200,21 @@ extension ViewController: ParkingManagerDelegate {
         parkingManager.fetchParking()
     }
     
-    func changeDataFormat(serviceAreaNameArray: [String]) {
+    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [String: String] {
+        var changedServiceAreaName = [String: String]()
+        
         for serviceAreaName in serviceAreaNameArray {
             if serviceAreaName.contains("(") {
-                let serviceAreaWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
-                let serviceArea = serviceAreaWithLine[0]
-                let line = serviceAreaWithLine[1]
-                self.serviceAreaArray[serviceArea] = line + " 방면"
+                let nameWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
+                let name = nameWithLine[0]
+                let line = nameWithLine[1]
+                changedServiceAreaName[name] = line + " 방면"
             } else {
-                self.serviceAreaArray[serviceAreaName] = ""
+                changedServiceAreaName[serviceAreaName] = ""
             }
         }
+        
+        return changedServiceAreaName
     }
 }
 
