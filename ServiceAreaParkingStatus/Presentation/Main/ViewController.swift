@@ -11,15 +11,16 @@ import SnapKit
 class ViewController: UIViewController {
     var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
-    var parkingManager = ParkingManager()
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
+    var pagingIndex = 0
+
+    var parkingManager = ParkingManager()
     var parkingDataArray = [ParkingModel]()
     /// [휴게소명: 방면]
     var serviceAreaArray = [String: String]()
     /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
     var filteredServiceAreaArray = [String]()
-    var pagingIndex = 0
     
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
