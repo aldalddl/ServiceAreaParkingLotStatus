@@ -15,8 +15,10 @@ class ViewController: UIViewController {
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
     var parkingDataArray = [ParkingModel]()
-    var serviceAreaArray = [String: String]() // [휴게소명: 방면]
-    var filteredServiceAreaArray = [String]() // UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
+    /// [휴게소명: 방면]
+    var serviceAreaArray = [String: String]()
+    /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
+    var filteredServiceAreaArray = [String]()
     var pagingIndex = 0
     
     var isFiltering: Bool {
