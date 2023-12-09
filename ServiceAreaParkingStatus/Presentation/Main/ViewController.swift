@@ -11,13 +11,16 @@ import SnapKit
 class ViewController: UIViewController {
     var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
-    var parkingManager = ParkingManager()
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
-    var serviceAreaArray = [String]()
-    var filteredServiceAreaArray = [String]()
-    var parkingLotArray = [ParkingModel]()
     var pagingIndex = 0
+
+    var parkingManager = ParkingManager()
+    var parkingDataArray = [ParkingModel]()
+    /// [휴게소명: 방면]
+    var serviceAreaArray = [String: String]()
+    /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
+    var filteredServiceAreaArray = [String]()
     
     var isFiltering: Bool {
         let searchViewController = self.navigationItem.searchController
@@ -179,9 +182,11 @@ extension ViewController: ParkingManagerDelegate {
     }
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
-        self.serviceAreaArray = parking.data.map { $0.serviceArea }
-        self.parkingLotArray = parking.data
-        self.searchResultsController.parkingLotArray = parking.data
+        self.parkingDataArray = parking.data
+        self.searchResultsController.parkingDataArray = parking.data
+        
+        let serviceAreaNameArray = parking.data.map { $0.serviceArea }
+        self.serviceAreaArray = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
             self.searchResultsController.tableView.reloadData()
@@ -194,13 +199,30 @@ extension ViewController: ParkingManagerDelegate {
         parkingManager.delegate = self
         parkingManager.fetchParking()
     }
+    
+    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [String: String] {
+        var changedServiceAreaName = [String: String]()
+        
+        for serviceAreaName in serviceAreaNameArray {
+            if serviceAreaName.contains("(") {
+                let nameWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
+                let name = nameWithLine[0]
+                let line = nameWithLine[1]
+                changedServiceAreaName[name] = line + " 방면"
+            } else {
+                changedServiceAreaName[serviceAreaName] = ""
+            }
+        }
+        
+        return changedServiceAreaName
+    }
 }
 
 // MARK: UISearchController ResultsUpdating
 extension ViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.filter{ $0.contains(text) }
+            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter { $0.contains(text) }
         }
         
         if let resultVC = searchController.searchResultsController as? SearchResultsController {
@@ -219,10 +241,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             count = self.searchResultsController.filteredServiceAreaArray.count
             return count
         } else if tableView == parkingStatusTableView {
-            if parkingLotArray.isEmpty {
+            if parkingDataArray.isEmpty {
                 return 0
             }
-            count = self.parkingLotArray[self.pagingIndex].numberOfCar.count
+            count = self.parkingDataArray[self.pagingIndex].numberOfCar.count
             return count
         }
         
@@ -249,12 +271,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.carIconImageView.image = image
             }
             
-            if parkingLotArray.isEmpty {
+            if parkingDataArray.isEmpty {
                 return UITableViewCell()
             }
             
             cell.carLabel.text = CarType.allCases[indexPath.row].name
-            cell.numberOfCarLabel.text = String(parkingLotArray[self.pagingIndex].numberOfCar[indexPath.row])
+            cell.numberOfCarLabel.text = String(parkingDataArray[self.pagingIndex].numberOfCar[indexPath.row])
             
             return cell
         }
@@ -280,11 +302,13 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
-        cell.nameLabel.text = self.serviceAreaArray[indexPath.row]
-        cell.highwaylineLabel.text = self.parkingLotArray[indexPath.row].line
+        
+        let index = self.serviceAreaArray.index(self.serviceAreaArray.startIndex, offsetBy: indexPath.row)
+        cell.nameLabel.text = self.serviceAreaArray[index].key
+        cell.highwaylineLabel.text = self.serviceAreaArray[index].value
         
         cell.lineTag.removeAllTags()
-        cell.lineTag.addTags([self.parkingLotArray[indexPath.row].center, self.parkingLotArray[indexPath.row].line])
+        cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
