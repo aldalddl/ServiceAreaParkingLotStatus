@@ -90,7 +90,7 @@ extension SettingViewController: UITableViewDelegate {
         
         let footerLabel: UILabel = {
             let label = UILabel()
-            label.adjustsFontSizeToFitWidth = true
+            label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
             label.textColor = .gray
             label.text = description
             return label
