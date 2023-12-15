@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     var searchResultsController = SearchResultsController()
     var searchViewController = UISearchController()
     var nearAreaStackView = LabelListStackView()
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.text = "휴게소 주차 현황"
         return label
     }()
@@ -86,11 +86,14 @@ class ViewController: UIViewController {
     func setup() {
         self.view.backgroundColor = .background
         
-        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
         navigationItem.rightBarButtonItem?.tintColor = .secondary
-
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: self, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = .primary
+        
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
         
@@ -143,7 +146,7 @@ class ViewController: UIViewController {
 }
 
 // MARK: UISearchController Setup, Layout
-extension ViewController {
+extension MainViewController {
     func searchControllerSetup() {
         searchViewController = UISearchController(searchResultsController: searchResultsController)
         
@@ -168,7 +171,7 @@ extension ViewController {
 }
 
 // MARK: Button Action
-extension ViewController {
+extension MainViewController {
     @objc func settingButtonClicked(_ sender: UIBarButtonItem) {
         let settingViewController = SettingViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
@@ -176,7 +179,7 @@ extension ViewController {
 }
 
 // MARK: API Response
-extension ViewController: ParkingManagerDelegate {
+extension MainViewController: ParkingManagerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
@@ -219,7 +222,7 @@ extension ViewController: ParkingManagerDelegate {
 }
 
 // MARK: UISearchController ResultsUpdating
-extension ViewController: UISearchResultsUpdating {
+extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
             self.filteredServiceAreaArray = self.serviceAreaArray.values.filter { $0.contains(text) }
@@ -233,7 +236,7 @@ extension ViewController: UISearchResultsUpdating {
 }
 
 // MARK: UITableView Delegate, DataSource
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
 
@@ -290,7 +293,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: UICollectionView DataSource, DelegateFlowLayout
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.serviceAreaArray.count
     }
