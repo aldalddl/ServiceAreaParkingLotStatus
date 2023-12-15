@@ -12,13 +12,12 @@
 		477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */; };
 		477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */; };
 		477CAEE82AD3F6BA00470F0F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE72AD3F6BA00470F0F /* SearchViewController.swift */; };
-		477CAEEB2AD400B200470F0F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEEA2AD400B200470F0F /* SettingViewController.swift */; };
 		477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEEF2AD538F600470F0F /* NearAreaCollectionViewCell.swift */; };
 		477CAEFB2AD80EE000470F0F /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */; };
 		478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750072AB9B086003E7F6A /* SceneDelegate.swift */; };
 		4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750292ABC8232003E7F6A /* ParkingManager.swift */; };
 		4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502B2ABC8E74003E7F6A /* ParkingData.swift */; };
-		478750302ABEE291003E7F6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502F2ABEE291003E7F6A /* ViewController.swift */; };
+		478750302ABEE291003E7F6A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787502F2ABEE291003E7F6A /* MainViewController.swift */; };
 		478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750322ABEE29C003E7F6A /* SearchBar.swift */; };
 		478750362ABEE34A003E7F6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 478750352ABEE34A003E7F6A /* LaunchScreen.storyboard */; };
 		478750382ABEE5FF003E7F6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 478750372ABEE5FF003E7F6A /* Assets.xcassets */; };
@@ -26,6 +25,11 @@
 		4787503F2AC03636003E7F6A /* CarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4787503E2AC03636003E7F6A /* CarType.swift */; };
 		478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478750442AC0964C003E7F6A /* ParkingInfo.plist */; };
 		478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */; };
+		47AACD4C2B21A0B9009D4732 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */; };
+		47AACD532B21AB03009D4732 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD522B21AB03009D4732 /* SettingSection.swift */; };
+		47AACD552B21AB54009D4732 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD542B21AB54009D4732 /* SettingTableViewCell.swift */; };
+		47AACD572B2987E1009D4732 /* SettingSectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */; };
+		47AACD592B2C37BA009D4732 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD582B2C37BA009D4732 /* Constants.swift */; };
 		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 		47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */; };
 		47CDC0D02B19FD4D00BC9ADE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */; };
@@ -34,13 +38,11 @@
 
 /* Begin PBXFileReference section */
 		3395FB52652C2EBF0C82D6DC /* Pods_ServiceAreaParkingStatus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceAreaParkingStatus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4718730A2B05AB4B00486EF4 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		477638322AFA32FB0090B539 /* ParkingStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingStatusTableViewCell.swift; sourceTree = "<group>"; };
 		477638382AFE17380090B539 /* LabelListStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListStackView.swift; sourceTree = "<group>"; };
 		477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewCell.swift; sourceTree = "<group>"; };
 		477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		477CAEE72AD3F6BA00470F0F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		477CAEEA2AD400B200470F0F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		477CAEEF2AD538F600470F0F /* NearAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearAreaCollectionViewCell.swift; sourceTree = "<group>"; };
 		477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		478750022AB9B086003E7F6A /* ServiceAreaParkingStatus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServiceAreaParkingStatus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,13 +50,18 @@
 		478750132AB9B086003E7F6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		478750292ABC8232003E7F6A /* ParkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingManager.swift; sourceTree = "<group>"; };
 		4787502B2ABC8E74003E7F6A /* ParkingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingData.swift; sourceTree = "<group>"; };
-		4787502F2ABEE291003E7F6A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4787502F2ABEE291003E7F6A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		478750322ABEE29C003E7F6A /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		478750352ABEE34A003E7F6A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		478750372ABEE5FF003E7F6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4787503E2AC03636003E7F6A /* CarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarType.swift; sourceTree = "<group>"; };
 		478750442AC0964C003E7F6A /* ParkingInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ParkingInfo.plist; sourceTree = "<group>"; };
 		478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceAreaParkingStatus++Bundle.swift"; sourceTree = "<group>"; };
+		47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		47AACD522B21AB03009D4732 /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
+		47AACD542B21AB54009D4732 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionHeaderFooterView.swift; sourceTree = "<group>"; };
+		47AACD582B2C37BA009D4732 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -81,7 +88,6 @@
 				CE6486D656D28EDC621BC993 /* Pods-ServiceAreaParkingStatus.debug.xcconfig */,
 				C59B464168E4A0F0732359F3 /* Pods-ServiceAreaParkingStatus.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -96,7 +102,8 @@
 		477CAEE92AD400A600470F0F /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				477CAEEA2AD400B200470F0F /* SettingViewController.swift */,
+				47AACD512B21AAD2009D4732 /* CustomView */,
+				47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -177,7 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				477CAEF72AD80C3A00470F0F /* CustomView */,
-				4787502F2ABEE291003E7F6A /* ViewController.swift */,
+				4787502F2ABEE291003E7F6A /* MainViewController.swift */,
 				477CAEFA2AD80EE000470F0F /* SearchResultsController.swift */,
 			);
 			path = Main;
@@ -190,6 +197,7 @@
 				477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */,
 				477CAEE32AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift */,
 				4787503E2AC03636003E7F6A /* CarType.swift */,
+				47AACD582B2C37BA009D4732 /* Constants.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -202,6 +210,16 @@
 				47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		47AACD512B21AAD2009D4732 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				47AACD522B21AB03009D4732 /* SettingSection.swift */,
+				47AACD542B21AB54009D4732 /* SettingTableViewCell.swift */,
+				47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		F77F30AC0793B4A5767CF7D3 /* Frameworks */ = {
@@ -357,17 +375,21 @@
 				477CAEE52AD3E8F600470F0F /* CarCountCollectionViewFlowLayout.swift in Sources */,
 				47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */,
 				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
-				477CAEEB2AD400B200470F0F /* SettingViewController.swift in Sources */,
 				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
+				47AACD572B2987E1009D4732 /* SettingSectionHeaderFooterView.swift in Sources */,
 				47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */,
-				478750302ABEE291003E7F6A /* ViewController.swift in Sources */,
+				478750302ABEE291003E7F6A /* MainViewController.swift in Sources */,
 				477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */,
 				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
 				477CAEE82AD3F6BA00470F0F /* SearchViewController.swift in Sources */,
+				47AACD592B2C37BA009D4732 /* Constants.swift in Sources */,
 				4787503F2AC03636003E7F6A /* CarType.swift in Sources */,
 				477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */,
+				47AACD552B21AB54009D4732 /* SettingTableViewCell.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
 				477638392AFE17380090B539 /* LabelListStackView.swift in Sources */,
+				47AACD532B21AB03009D4732 /* SettingSection.swift in Sources */,
+				47AACD4C2B21A0B9009D4732 /* SettingViewController.swift in Sources */,
 				477638332AFA32FB0090B539 /* ParkingStatusTableViewCell.swift in Sources */,
 				478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */,
 			);

@@ -16,4 +16,5 @@ extension UIColor {
     static let buttonBGColor = UIColor(named: "Button")
     static let searchbarBGColor = UIColor(named: "Searchbar")
     static let tagListColor = UIColor(named: "Tag")
+    static let cellBGColor = UIColor(named: "Cell")
 }
