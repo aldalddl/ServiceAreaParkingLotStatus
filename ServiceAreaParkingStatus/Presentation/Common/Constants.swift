@@ -7,7 +7,9 @@
 
 import Foundation
 
-let currentVersion: String = {
-    guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return "Undefined" }
-    return "\(version)"
-}()
+struct AppInfoData {
+    static let currentVersion: String = {
+        guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return "Undefined" }
+        return "\(version)"
+    }()
+}

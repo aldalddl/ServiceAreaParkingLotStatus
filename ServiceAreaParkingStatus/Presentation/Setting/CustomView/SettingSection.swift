@@ -67,7 +67,7 @@ enum Information: Int, CaseIterable {
         case .version:
             let cell = SettingInfoCell()
             cell.textLabel?.text = self.description
-            cell.subLabel.text = currentVersion
+            cell.subLabel.text = AppInfoData.currentVersion
             return cell
         case .developer:
             let cell = SettingDisclosureCell()
