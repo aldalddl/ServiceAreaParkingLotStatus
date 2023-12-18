@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class SettingViewController: UIViewController {
-    var settingTableView: UITableView = {
+    let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .background
         return tableView
