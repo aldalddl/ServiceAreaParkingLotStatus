@@ -57,24 +57,7 @@ extension SettingViewController: UITableViewDelegate {
             return UITableViewHeaderFooterView()
         }
         
-        let headerView = UIView()
-        
-        let headerLabel: UILabel = {
-            let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-            label.textColor = .black
-            label.text = description
-            return label
-        }()
-        
-        headerView.addSubview(headerLabel)
-        
-        headerLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(5)
-            make.bottom.equalToSuperview().inset(20)
-        }
-
-        return headerView
+        return SettingTableViewSectionHeaderView(description: description)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -85,25 +68,8 @@ extension SettingViewController: UITableViewDelegate {
         guard let description = SettingSection(rawValue: section)?.footerDescription.description else {
             return UITableViewHeaderFooterView()
         }
-        
-        let footerView = UIView()
-        
-        let footerLabel: UILabel = {
-            let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-            label.textColor = .gray
-            label.text = description
-            return label
-        }()
-        
-        footerView.addSubview(footerLabel)
-        
-        footerLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(5)
-            make.bottom.equalToSuperview().inset(18)
-        }
-        
-        return footerView
+ 
+        return SettingTableViewSectionFooterView(description: description)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
