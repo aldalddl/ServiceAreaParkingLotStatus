@@ -12,7 +12,7 @@ import SnapKit
 class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.backgroundColor = .background
+        tableView.backgroundColor = .backgroundColor
         return tableView
     }()
     
@@ -32,7 +32,7 @@ class SettingViewController: UIViewController {
     }
     
     func setup() {
-        view.backgroundColor = .background
+        view.backgroundColor = .backgroundColor
         
         navigationItem.titleView = titleLabel
 

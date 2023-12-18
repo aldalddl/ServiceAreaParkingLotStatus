@@ -60,7 +60,7 @@ class MainViewController: UIViewController {
         view.clipsToBounds = true
         view.contentInsetAdjustmentBehavior = .never
         view.decelerationRate = .fast
-        view.backgroundColor = .background
+        view.backgroundColor = .backgroundColor
         view.contentInset = collectionViewContentInset
         view.register(NearAreaCollectionViewCell.self, forCellWithReuseIdentifier: NearAreaCollectionViewCell.id)
         return view
@@ -84,15 +84,15 @@ class MainViewController: UIViewController {
     
     // MARK: Setup
     func setup() {
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = .backgroundColor
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(settingButtonClicked(_ :)))
-        navigationItem.rightBarButtonItem?.tintColor = .secondary
+        navigationItem.rightBarButtonItem?.tintColor = .secondaryColor
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: self, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = .primary
+        navigationItem.backBarButtonItem?.tintColor = .primaryColor
         
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
@@ -105,7 +105,7 @@ class MainViewController: UIViewController {
         parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
-        parkingStatusTableView.backgroundColor = .background
+        parkingStatusTableView.backgroundColor = .backgroundColor
         parkingStatusTableView.contentInset.top = 8
         parkingStatusTableView.contentInset.bottom = 35
     }
@@ -156,7 +156,7 @@ extension MainViewController {
         searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
         searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
-        searchViewController.searchBar.tintColor = .primary
+        searchViewController.searchBar.tintColor = .primaryColor
         searchViewController.searchResultsUpdater = self
 
         searchResultsController.tableView.delegate = self

@@ -39,7 +39,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         tag.alignment = .left
         tag.textFont = UIFont.systemFont(ofSize: 12, weight: .regular)
         tag.textColor = .white
-        tag.tagBackgroundColor = .tagListColor ?? .systemBlue
+        tag.tagBackgroundColor = .tagListBGColor ?? .systemBlue
         tag.cornerRadius = 15
         tag.shadowColor = .systemGray
         tag.shadowOpacity = 0.2
@@ -98,7 +98,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
     
     // MARK: Setup
     func setup() {
-        self.contentView.backgroundColor = .primary
+        self.contentView.backgroundColor = .primaryColor
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = 15
     }

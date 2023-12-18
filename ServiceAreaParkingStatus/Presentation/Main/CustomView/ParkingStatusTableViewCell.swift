@@ -46,8 +46,8 @@ class ParkingStatusTableViewCell: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = .background
-        self.contentView.backgroundColor = .background
+        self.backgroundColor = .backgroundColor
+        self.contentView.backgroundColor = .backgroundColor
         self.contentView.layer.cornerRadius = 15
         self.contentView.layer.shadowColor = UIColor.systemGray.cgColor
         self.contentView.layer.shadowOpacity = 0.2

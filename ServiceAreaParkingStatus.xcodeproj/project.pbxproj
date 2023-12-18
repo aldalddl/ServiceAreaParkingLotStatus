@@ -26,12 +26,12 @@
 		478750452AC0964C003E7F6A /* ParkingInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478750442AC0964C003E7F6A /* ParkingInfo.plist */; };
 		478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */; };
 		47AACD4C2B21A0B9009D4732 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */; };
-		47AACD532B21AB03009D4732 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD522B21AB03009D4732 /* SettingSection.swift */; };
-		47AACD572B2987E1009D4732 /* SettingSectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */; };
+		47AACD532B21AB03009D4732 /* SettingTableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD522B21AB03009D4732 /* SettingTableViewSection.swift */; };
 		47AACD592B2C37BA009D4732 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD582B2C37BA009D4732 /* Constants.swift */; };
 		47AACD5C2B2FF2A8009D4732 /* SettingDisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD5B2B2FF2A8009D4732 /* SettingDisclosureCell.swift */; };
 		47AACD5E2B2FF2CB009D4732 /* SettingInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD5D2B2FF2CB009D4732 /* SettingInfoCell.swift */; };
 		47AACD602B2FF301009D4732 /* SettingToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD5F2B2FF301009D4732 /* SettingToggleCell.swift */; };
+		47AACD622B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */; };
 		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 		47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */; };
 		47CDC0D02B19FD4D00BC9ADE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */; };
@@ -60,12 +60,12 @@
 		478750442AC0964C003E7F6A /* ParkingInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ParkingInfo.plist; sourceTree = "<group>"; };
 		478750472AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceAreaParkingStatus++Bundle.swift"; sourceTree = "<group>"; };
 		47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		47AACD522B21AB03009D4732 /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
-		47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionHeaderFooterView.swift; sourceTree = "<group>"; };
+		47AACD522B21AB03009D4732 /* SettingTableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewSection.swift; sourceTree = "<group>"; };
 		47AACD582B2C37BA009D4732 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		47AACD5B2B2FF2A8009D4732 /* SettingDisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDisclosureCell.swift; sourceTree = "<group>"; };
 		47AACD5D2B2FF2CB009D4732 /* SettingInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInfoCell.swift; sourceTree = "<group>"; };
 		47AACD5F2B2FF301009D4732 /* SettingToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingToggleCell.swift; sourceTree = "<group>"; };
+		47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewSectionHeaderFooterView.swift; sourceTree = "<group>"; };
 		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -220,8 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				47AACD5A2B2FF28D009D4732 /* CustomTableViewCell */,
-				47AACD522B21AB03009D4732 /* SettingSection.swift */,
-				47AACD562B2987E1009D4732 /* SettingSectionHeaderFooterView.swift */,
+				47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */,
+				47AACD522B21AB03009D4732 /* SettingTableViewSection.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -390,20 +390,20 @@
 				47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */,
 				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
 				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
-				47AACD572B2987E1009D4732 /* SettingSectionHeaderFooterView.swift in Sources */,
 				47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */,
 				478750302ABEE291003E7F6A /* MainViewController.swift in Sources */,
 				477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */,
 				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
 				477CAEE82AD3F6BA00470F0F /* SearchViewController.swift in Sources */,
 				47AACD5C2B2FF2A8009D4732 /* SettingDisclosureCell.swift in Sources */,
+				47AACD622B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift in Sources */,
 				47AACD592B2C37BA009D4732 /* Constants.swift in Sources */,
 				4787503F2AC03636003E7F6A /* CarType.swift in Sources */,
 				477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */,
 				478750082AB9B086003E7F6A /* SceneDelegate.swift in Sources */,
 				477638392AFE17380090B539 /* LabelListStackView.swift in Sources */,
 				47AACD602B2FF301009D4732 /* SettingToggleCell.swift in Sources */,
-				47AACD532B21AB03009D4732 /* SettingSection.swift in Sources */,
+				47AACD532B21AB03009D4732 /* SettingTableViewSection.swift in Sources */,
 				47AACD4C2B21A0B9009D4732 /* SettingViewController.swift in Sources */,
 				477638332AFA32FB0090B539 /* ParkingStatusTableViewCell.swift in Sources */,
 				478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */,

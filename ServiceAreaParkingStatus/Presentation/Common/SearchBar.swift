@@ -20,7 +20,7 @@ class SearchBar: UISearchBar {
     }
     
     func setup() {
-        self.backgroundColor = .background
+        self.backgroundColor = .backgroundColor
         self.placeholder = "휴게소 이름을 입력하세요"
     }
 

@@ -12,7 +12,7 @@ import SnapKit
 class SettingToggleCell: UITableViewCell {
     lazy var toggleButton: UISwitch = {
         let toggle = UISwitch()
-        toggle.onTintColor = .primary
+        toggle.onTintColor = .primaryColor
         toggle.addTarget(self, action: #selector(switchToggleButton), for: .valueChanged)
         return toggle
     }()
