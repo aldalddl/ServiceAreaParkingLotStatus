@@ -44,10 +44,8 @@ class SettingToggleCell: UITableViewCell {
     }
 }
 
-func goToSetting() {
-    guard let bundleId = Bundle.main.bundleIdentifier else { return }
-    
-    guard let settingURL = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") else { return }
+func goToSetting() {    
+    guard let settingURL = URL(string: AppSettingInfo.locationSettingUrl) else { return }
     
     if UIApplication.shared.canOpenURL(settingURL) {
         UIApplication.shared.open(settingURL) { (success) in
