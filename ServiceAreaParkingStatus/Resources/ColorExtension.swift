@@ -9,11 +9,12 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    static let primary = UIColor(named: "Primary")
-    static let secondary = UIColor(named: "Secondary")
-    static let background = UIColor(named: "Background")
-    static let lightBackground = UIColor(named: "LightBackground")
-    static let buttonBGColor = UIColor(named: "Button")
-    static let searchbarBGColor = UIColor(named: "Searchbar")
-    static let tagListColor = UIColor(named: "Tag")
+    static let primaryColor = UIColor(named: "PrimaryColor")
+    static let secondaryColor = UIColor(named: "SecondaryColor")
+    static let backgroundColor = UIColor(named: "BackgroundColor")
+    static let lightBackgroundColor = UIColor(named: "LightBackgroundColor")
+    static let buttonBGColor = UIColor(named: "ButtonBGColor")
+    static let searchbarBGColor = UIColor(named: "SearchbarBGColor")
+    static let tagListBGColor = UIColor(named: "TagListBGColor")
+    static let cellBGColor = UIColor(named: "CellBGColor")
 }
