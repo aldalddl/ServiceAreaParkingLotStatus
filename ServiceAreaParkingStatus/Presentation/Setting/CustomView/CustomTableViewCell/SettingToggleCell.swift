@@ -35,12 +35,23 @@ class SettingToggleCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO: 설정 앱 - 해당 앱 - 위치 권한 페이지로 이동하도록 구현
     @objc func switchToggleButton(_ sender: UISwitch) {
         if sender.isOn {
-            print("위치 접근 허용")
+            goToSetting()
         } else {
-            print("위치 접근 거부")
+            goToSetting()
+        }
+    }
+}
+
+func goToSetting() {
+    guard let bundleId = Bundle.main.bundleIdentifier else { return }
+    
+    guard let settingURL = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") else { return }
+    
+    if UIApplication.shared.canOpenURL(settingURL) {
+        UIApplication.shared.open(settingURL) { (success) in
+            print("Setting opened: \(success)")
         }
     }
 }
