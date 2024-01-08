@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import CoreLocation
+import MaterialComponents.MaterialBottomSheet
 
 class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
@@ -75,8 +76,17 @@ class SettingViewController: UIViewController {
             }
         }
     }
+    
+    private func openButtomSheet() {
+        let bottomViewController = DeveloperInfoViewController()
+        let bottomSheet = MDCBottomSheetController(contentViewController: bottomViewController)
+
+        present(bottomSheet, animated: true, completion: nil)
+    }
 }
 
+
+// MARK: SettingTableView Delegate
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let description = SettingSection(rawValue: section)?.headerDescription else {
@@ -103,6 +113,7 @@ extension SettingViewController: UITableViewDelegate {
     }
 }
 
+// MARK: SettingTableView Datasource
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingSection.allCases.count
@@ -159,6 +170,20 @@ extension SettingViewController: UITableViewDataSource {
             return Information(rawValue: indexPath.row)?.cell ?? UITableViewCell()
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = SettingSection(rawValue: indexPath.section) else { return }
+        
+        switch section {
+        case .information:
+            if Information.init(rawValue: indexPath.row) == .developer {
+                openButtomSheet()
+            }
+        case .location:
+            print("location")
+        }
+    }
+}
 
 // MARK: CLLoCationManager Delegate
 extension SettingViewController: CLLocationManagerDelegate {
