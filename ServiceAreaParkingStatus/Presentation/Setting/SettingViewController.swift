@@ -13,6 +13,7 @@ class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .backgroundColor
+        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: "SettingToggleCell")
         return tableView
     }()
     
@@ -47,6 +48,16 @@ class SettingViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
+    private func goToSetting() {
+        guard let settingURL = URL(string: AppSettingInfo.locationSettingUrl) else { return }
+        
+        if UIApplication.shared.canOpenURL(settingURL) {
+            UIApplication.shared.open(settingURL) { (success) in
+                print("Setting opened: \(success)")
+            }
         }
     }
 }
@@ -98,7 +109,14 @@ extension SettingViewController: UITableViewDataSource {
         
         switch section {
         case .location:
-            return Location.allowLocation.cell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingToggleCell", for: indexPath) as? SettingToggleCell else {
+                return UITableViewCell()
+            }
+            cell.switchCallback = { isOn in
+                self.goToSetting()
+            }
+            
+            return cell
         case .information:
             return Information(rawValue: indexPath.row)?.cell ?? UITableViewCell()
         }

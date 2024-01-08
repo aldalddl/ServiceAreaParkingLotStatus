@@ -39,15 +39,6 @@ enum Location: Int, CaseIterable {
             return "위치 접근 허용"
         }
     }
-    
-    var cell: UITableViewCell {
-        switch self {
-        case .allowLocation:
-            let cell = SettingToggleCell()
-            cell.textLabel?.text = self.description
-            return cell
-        }
-    }
 }
 
 enum Information: Int, CaseIterable {

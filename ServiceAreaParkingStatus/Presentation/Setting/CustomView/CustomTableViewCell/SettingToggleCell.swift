@@ -10,12 +10,14 @@ import UIKit
 import SnapKit
 
 class SettingToggleCell: UITableViewCell {
-    lazy var toggleButton: UISwitch = {
+    public var toggleButton: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .primaryColor
-        toggle.addTarget(self, action: #selector(switchToggleButton), for: .valueChanged)
+        toggle.isEnabled = true
         return toggle
     }()
+    
+    var switchCallback: ((Bool) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -29,6 +31,8 @@ class SettingToggleCell: UITableViewCell {
             make.right.equalToSuperview().inset(18)
             make.centerY.equalToSuperview()
         }
+        
+        toggleButton.addTarget(self, action: #selector(switchToggleButton), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -36,20 +40,6 @@ class SettingToggleCell: UITableViewCell {
     }
     
     @objc func switchToggleButton(_ sender: UISwitch) {
-        if sender.isOn {
-            goToSetting()
-        } else {
-            goToSetting()
-        }
-    }
-}
-
-func goToSetting() {    
-    guard let settingURL = URL(string: AppSettingInfo.locationSettingUrl) else { return }
-    
-    if UIApplication.shared.canOpenURL(settingURL) {
-        UIApplication.shared.open(settingURL) { (success) in
-            print("Setting opened: \(success)")
-        }
+        switchCallback?(sender.isOn)
     }
 }
