@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import CoreLocation
 
 class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
@@ -24,6 +25,8 @@ class SettingViewController: UIViewController {
         label.text = "환경설정"
         return label
     }()
+    
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,12 @@ class SettingViewController: UIViewController {
         layout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.settingTableView.reloadData()
+        }
+    }
+
     func setup() {
         view.backgroundColor = .backgroundColor
         
@@ -39,6 +48,12 @@ class SettingViewController: UIViewController {
 
         settingTableView.delegate = self
         settingTableView.dataSource = self
+                
+        locationManager.delegate = self
+                        
+        DispatchQueue.main.async {
+            self.settingTableView.reloadData()
+        }
     }
     
     func layout() {
@@ -112,6 +127,29 @@ extension SettingViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingToggleCell", for: indexPath) as? SettingToggleCell else {
                 return UITableViewCell()
             }
+
+            // MARK: authorizationStatus 에 따른 toggle switch on/off 세팅
+            let authorizationStatus: CLAuthorizationStatus = locationManager.authorizationStatus
+            
+            switch authorizationStatus {
+            case .notDetermined:
+                print(".notDetermined")
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+                cell.toggleButton.isOn = false
+            case .denied, .restricted:
+                print(".denied, .restricted")
+                cell.toggleButton.isOn = false
+            case .authorizedWhenInUse:
+                print(".authorizedWhenInUse")
+                locationManager.startUpdatingLocation()
+                cell.toggleButton.isOn = true
+            default:
+                print("default")
+            }
+            
+            cell.textLabel?.text = Location.allowLocation.description
+            
             cell.switchCallback = { isOn in
                 self.goToSetting()
             }
@@ -119,6 +157,14 @@ extension SettingViewController: UITableViewDataSource {
             return cell
         case .information:
             return Information(rawValue: indexPath.row)?.cell ?? UITableViewCell()
+        }
+    }
+
+// MARK: CLLoCationManager Delegate
+extension SettingViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        DispatchQueue.main.async {
+            self.settingTableView.reloadData()
         }
     }
 }
