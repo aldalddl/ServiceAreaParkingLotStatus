@@ -10,10 +10,11 @@ import UIKit
 import SnapKit
 
 class SettingToggleCell: UITableViewCell {
-    public var toggleButton: UISwitch = {
+    var toggleButton: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .primaryColor
         toggle.isEnabled = true
+        toggle.addTarget(SettingToggleCell.self, action: #selector(switchToggleButton), for: .valueChanged)
         return toggle
     }()
     
@@ -31,8 +32,6 @@ class SettingToggleCell: UITableViewCell {
             make.right.equalToSuperview().inset(18)
             make.centerY.equalToSuperview()
         }
-        
-        toggleButton.addTarget(self, action: #selector(switchToggleButton), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) {
