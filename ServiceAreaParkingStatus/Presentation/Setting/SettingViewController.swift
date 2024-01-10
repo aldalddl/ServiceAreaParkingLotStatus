@@ -51,10 +51,6 @@ class SettingViewController: UIViewController {
         settingTableView.dataSource = self
                 
         locationManager.delegate = self
-                        
-        DispatchQueue.main.async {
-            self.settingTableView.reloadData()
-        }
     }
     
     func layout() {
@@ -187,9 +183,4 @@ extension SettingViewController: UITableViewDataSource {
 
 // MARK: CLLoCationManager Delegate
 extension SettingViewController: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        DispatchQueue.main.async {
-            self.settingTableView.reloadData()
-        }
-    }
 }
