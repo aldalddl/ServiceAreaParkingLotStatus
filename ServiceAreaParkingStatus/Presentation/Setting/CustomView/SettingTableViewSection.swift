@@ -39,15 +39,6 @@ enum Location: Int, CaseIterable {
             return "위치 접근 허용"
         }
     }
-    
-    var cell: UITableViewCell {
-        switch self {
-        case .allowLocation:
-            let cell = SettingToggleCell()
-            cell.textLabel?.text = self.description
-            return cell
-        }
-    }
 }
 
 enum Information: Int, CaseIterable {
@@ -59,20 +50,6 @@ enum Information: Int, CaseIterable {
             return "버전"
         case .developer:
             return "개발자 정보"
-        }
-    }
-    
-    var cell: UITableViewCell {
-        switch self {
-        case .version:
-            let cell = SettingInfoCell()
-            cell.textLabel?.text = self.description
-            cell.subLabel.text = AppInfoData.currentVersion
-            return cell
-        case .developer:
-            let cell = SettingDisclosureCell()
-            cell.textLabel?.text = self.description
-            return cell
         }
     }
 }

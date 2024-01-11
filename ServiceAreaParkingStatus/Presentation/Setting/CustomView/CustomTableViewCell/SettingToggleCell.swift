@@ -10,12 +10,15 @@ import UIKit
 import SnapKit
 
 class SettingToggleCell: UITableViewCell {
-    lazy var toggleButton: UISwitch = {
+    var toggleButton: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .primaryColor
-        toggle.addTarget(self, action: #selector(switchToggleButton), for: .valueChanged)
+        toggle.isEnabled = true
+        toggle.addTarget(SettingToggleCell.self, action: #selector(switchToggleButton), for: .valueChanged)
         return toggle
     }()
+    
+    var switchCallback: ((Bool) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -35,12 +38,7 @@ class SettingToggleCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO: 설정 앱 - 해당 앱 - 위치 권한 페이지로 이동하도록 구현
     @objc func switchToggleButton(_ sender: UISwitch) {
-        if sender.isOn {
-            print("위치 접근 허용")
-        } else {
-            print("위치 접근 거부")
-        }
+        switchCallback?(sender.isOn)
     }
 }

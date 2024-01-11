@@ -32,6 +32,7 @@
 		47AACD5E2B2FF2CB009D4732 /* SettingInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD5D2B2FF2CB009D4732 /* SettingInfoCell.swift */; };
 		47AACD602B2FF301009D4732 /* SettingToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD5F2B2FF301009D4732 /* SettingToggleCell.swift */; };
 		47AACD622B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */; };
+		47AACD642B3410F8009D4732 /* DeveloperInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AACD632B3410F8009D4732 /* DeveloperInfoViewController.swift */; };
 		47B0C10A2ACD5F0600F27E41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */; };
 		47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */; };
 		47CDC0D02B19FD4D00BC9ADE /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */; };
@@ -66,6 +67,7 @@
 		47AACD5D2B2FF2CB009D4732 /* SettingInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInfoCell.swift; sourceTree = "<group>"; };
 		47AACD5F2B2FF301009D4732 /* SettingToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingToggleCell.swift; sourceTree = "<group>"; };
 		47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewSectionHeaderFooterView.swift; sourceTree = "<group>"; };
+		47AACD632B3410F8009D4732 /* DeveloperInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoViewController.swift; sourceTree = "<group>"; };
 		47B0C1092ACD5F0600F27E41 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47B46B1D2AF7D2FA00DC0958 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		47CDC0CF2B19FD4D00BC9ADE /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				47AACD5A2B2FF28D009D4732 /* CustomTableViewCell */,
 				47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */,
 				47AACD522B21AB03009D4732 /* SettingTableViewSection.swift */,
+				47AACD632B3410F8009D4732 /* DeveloperInfoViewController.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				477638332AFA32FB0090B539 /* ParkingStatusTableViewCell.swift in Sources */,
 				478750482AC096DD003E7F6A /* ServiceAreaParkingStatus++Bundle.swift in Sources */,
 				47AACD5E2B2FF2CB009D4732 /* SettingInfoCell.swift in Sources */,
+				47AACD642B3410F8009D4732 /* DeveloperInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

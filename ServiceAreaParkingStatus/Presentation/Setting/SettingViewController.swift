@@ -8,11 +8,16 @@
 import Foundation
 import UIKit
 import SnapKit
+import CoreLocation
+import MaterialComponents.MaterialBottomSheet
 
 class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .backgroundColor
+        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: "SettingToggleCell")
+        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: "SettingInfoCell")
+        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: "SettingDisclosureCell")
         return tableView
     }()
     
@@ -23,6 +28,8 @@ class SettingViewController: UIViewController {
         label.text = "환경설정"
         return label
     }()
+    
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +38,12 @@ class SettingViewController: UIViewController {
         layout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.settingTableView.reloadData()
+        }
+    }
+
     func setup() {
         view.backgroundColor = .backgroundColor
         
@@ -38,6 +51,8 @@ class SettingViewController: UIViewController {
 
         settingTableView.delegate = self
         settingTableView.dataSource = self
+                
+        locationManager.delegate = self
     }
     
     func layout() {
@@ -49,8 +64,27 @@ class SettingViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+    
+    private func goToSetting() {
+        guard let settingURL = URL(string: AppSettingInfo.locationSettingUrl) else { return }
+        
+        if UIApplication.shared.canOpenURL(settingURL) {
+            UIApplication.shared.open(settingURL) { (success) in
+                print("Setting opened: \(success)")
+            }
+        }
+    }
+    
+    private func openButtomSheet() {
+        let bottomViewController = DeveloperInfoViewController()
+        let bottomSheet = MDCBottomSheetController(contentViewController: bottomViewController)
+
+        present(bottomSheet, animated: true, completion: nil)
+    }
 }
 
+
+// MARK: SettingTableView Delegate
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let description = SettingSection(rawValue: section)?.headerDescription else {
@@ -77,6 +111,7 @@ extension SettingViewController: UITableViewDelegate {
     }
 }
 
+// MARK: SettingTableView Datasource
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingSection.allCases.count
@@ -98,9 +133,67 @@ extension SettingViewController: UITableViewDataSource {
         
         switch section {
         case .location:
-            return Location.allowLocation.cell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingToggleCell", for: indexPath) as? SettingToggleCell else {
+                return UITableViewCell()
+            }
+
+            // MARK: authorizationStatus 에 따른 toggle switch on/off 세팅
+            let authorizationStatus: CLAuthorizationStatus = locationManager.authorizationStatus
+            
+            switch authorizationStatus {
+            case .notDetermined:
+                print(".notDetermined")
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.requestWhenInUseAuthorization()
+                cell.toggleButton.isOn = false
+            case .denied, .restricted:
+                print(".denied, .restricted")
+                cell.toggleButton.isOn = false
+            case .authorizedWhenInUse:
+                print(".authorizedWhenInUse")
+                locationManager.startUpdatingLocation()
+                cell.toggleButton.isOn = true
+            default:
+                print("default")
+            }
+            
+            cell.textLabel?.text = Location.allowLocation.description
+            
+            cell.switchCallback = { isOn in
+                self.goToSetting()
+            }
+            
+            return cell
         case .information:
-            return Information(rawValue: indexPath.row)?.cell ?? UITableViewCell()
+            guard let informationRow = Information(rawValue: indexPath.row) else { return UITableViewCell() }
+            switch informationRow {
+            case .version:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingInfoCell", for: indexPath) as? SettingInfoCell else { return UITableViewCell() }
+                cell.subLabel.text = AppInfoData.currentVersion
+                cell.textLabel?.text = informationRow.description
+                return cell
+            case .developer:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingDisclosureCell", for: indexPath) as? SettingDisclosureCell else { return UITableViewCell() }
+                cell.textLabel?.text = informationRow.description
+                return cell
+            }
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = SettingSection(rawValue: indexPath.section) else { return }
+        
+        switch section {
+        case .information:
+            if Information.init(rawValue: indexPath.row) == .developer {
+                openButtomSheet()
+            }
+        case .location:
+            print("location")
+        }
+    }
+}
+
+// MARK: CLLoCationManager Delegate
+extension SettingViewController: CLLocationManagerDelegate {
 }
