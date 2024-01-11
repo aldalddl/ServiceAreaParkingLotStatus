@@ -16,6 +16,8 @@ class SettingViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .backgroundColor
         tableView.register(SettingToggleCell.self, forCellReuseIdentifier: "SettingToggleCell")
+        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: "SettingInfoCell")
+        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: "SettingDisclosureCell")
         return tableView
     }()
     
@@ -163,7 +165,18 @@ extension SettingViewController: UITableViewDataSource {
             
             return cell
         case .information:
-            return Information(rawValue: indexPath.row)?.cell ?? UITableViewCell()
+            guard let informationRow = Information(rawValue: indexPath.row) else { return UITableViewCell() }
+            switch informationRow {
+            case .version:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingInfoCell", for: indexPath) as? SettingInfoCell else { return UITableViewCell() }
+                cell.subLabel.text = AppInfoData.currentVersion
+                cell.textLabel?.text = informationRow.description
+                return cell
+            case .developer:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingDisclosureCell", for: indexPath) as? SettingDisclosureCell else { return UITableViewCell() }
+                cell.textLabel?.text = informationRow.description
+                return cell
+            }
         }
     }
     

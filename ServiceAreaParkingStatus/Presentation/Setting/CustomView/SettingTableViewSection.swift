@@ -52,18 +52,4 @@ enum Information: Int, CaseIterable {
             return "개발자 정보"
         }
     }
-    
-    var cell: UITableViewCell {
-        switch self {
-        case .version:
-            let cell = SettingInfoCell()
-            cell.textLabel?.text = self.description
-            cell.subLabel.text = AppInfoData.currentVersion
-            return cell
-        case .developer:
-            let cell = SettingDisclosureCell()
-            cell.textLabel?.text = self.description
-            return cell
-        }
-    }
 }
