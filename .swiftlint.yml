@@ -1,7 +1,15 @@
-disabled_rules: # 실행에서 제외할 룰 식별자
+# 실행에서 제외할 룰 식별자
+disabled_rules:
   - trailing_whitespace
   - identifier_name
-#included: # 린트 과정에 포함할 파일 경로. 이 항목이 존재하면 `--path`는 무시됨
+  
+# 린트 과정에 포함할 파일 경로. 이 항목이 존재하면 `--path`는 무시됨
+#included:
 #  - Source
-excluded: # 린트 과정에서 무시할 파일. included 보다 우선순위
+
+# 린트 과정에서 무시할 파일. included 보다 우선순위
+excluded:
   - Pods
+
+# Customized Configurable Rules
+line_length: 200
