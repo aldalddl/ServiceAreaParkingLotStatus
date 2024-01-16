@@ -69,6 +69,30 @@ class DeveloperInfoViewController: UIViewController {
             make.bottom.equalToSuperview().inset(20)
         }
     }
+    
+    /// Toast Message 생성 메서드
+    func showToast(message: String) {
+        let toastLabel = UILabel(frame: CGRect(x: Int(self.view.frame.size.width)/2 - 75, y: Int(self.view.frame.size.height) - 100, width: 150, height: 35))
+        
+        toastLabel.backgroundColor = .black.withAlphaComponent(0.6)
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        
+        toastLabel.textColor = .white
+        toastLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.adjustsFontSizeToFitWidth = true
+        
+        self.view.addSubview(toastLabel)
+        
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseInOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { (_) in
+            toastLabel.removeFromSuperview()
+        })
+    }
 }
 
 extension DeveloperInfoViewController: UITableViewDataSource {
@@ -104,7 +128,7 @@ extension DeveloperInfoViewController: UITableViewDataSource {
             UIPasteboard.general.string = section.sourceString
             
             if let pastedString = UIPasteboard.general.string {
-                print(pastedString)
+                showToast(message: " 이메일 주소가 복사되었습니다 ")
             }
         }
         
