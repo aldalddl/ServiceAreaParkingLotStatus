@@ -67,7 +67,7 @@ class DeveloperInfoViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp.bottom).offset(30)
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().inset(20)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(20)
         }
     }
     
@@ -133,14 +133,6 @@ extension DeveloperInfoViewController: UITableViewDataSource {
 
 extension DeveloperInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 20
+        return 70
     }
 }
