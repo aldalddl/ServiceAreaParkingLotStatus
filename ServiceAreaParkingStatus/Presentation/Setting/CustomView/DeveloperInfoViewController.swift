@@ -23,6 +23,14 @@ class DeveloperInfoViewController: UIViewController {
         return label
     }()
     
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .backgroundColor
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,11 +43,15 @@ class DeveloperInfoViewController: UIViewController {
         
         titleLabel.text = DeveloperInfo.developerName
         subtitleLabel.text = DeveloperInfo.description
+        
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     func layout() {
         self.view.addSubview(titleLabel)
         self.view.addSubview(subtitleLabel)
+        self.view.addSubview(tableView)
 
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -51,7 +63,65 @@ class DeveloperInfoViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(30)
             make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
         }
+    }
+}
+
+extension DeveloperInfoViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return DeveloperInfoSection.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "DeveloperInfoCell")
+        guard let section = DeveloperInfoSection(rawValue: indexPath.section) else { return UITableViewCell() }
+        
+        cell.backgroundColor = .backgroundColor
+        
+        cell.textLabel?.text = section.nameLabel
+        cell.detailTextLabel?.text = section.desctiptionLabel
+        cell.imageView?.image = UIImage(named: section.iconImageName)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = DeveloperInfoSection(rawValue: indexPath.section) else { return }
+        
+        if section.rawValue != DeveloperInfoSection.allCases.count - 1 {
+            if let url = URL(string: section.sourceString) {
+                UIApplication.shared.open(url)
+            }
+        } else {
+            UIPasteboard.general.string = section.sourceString
+            
+            if let pastedString = UIPasteboard.general.string {
+                print(pastedString)
+            }
+        }
+        
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+    }
+}
+
+extension DeveloperInfoViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20
     }
 }
