@@ -114,7 +114,6 @@
 			children = (
 				47AACD512B21AAD2009D4732 /* CustomView */,
 				47AACD4B2B21A0B9009D4732 /* SettingViewController.swift */,
-				4706093A2B56C4D300582D16 /* DeveloperInfoSection.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -229,6 +228,7 @@
 				47AACD5A2B2FF28D009D4732 /* CustomTableViewCell */,
 				47AACD612B2FF77B009D4732 /* SettingTableViewSectionHeaderFooterView.swift */,
 				47AACD522B21AB03009D4732 /* SettingTableViewSection.swift */,
+				4706093A2B56C4D300582D16 /* DeveloperInfoSection.swift */,
 				47AACD632B3410F8009D4732 /* DeveloperInfoViewController.swift */,
 			);
 			path = CustomView;
