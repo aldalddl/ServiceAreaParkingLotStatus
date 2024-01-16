@@ -97,16 +97,12 @@ class DeveloperInfoViewController: UIViewController {
 
 extension DeveloperInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return DeveloperInfoSection.allCases.count
+        return DeveloperInfoRows.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "DeveloperInfoCell")
-        guard let section = DeveloperInfoSection(rawValue: indexPath.section) else { return UITableViewCell() }
+        guard let section = DeveloperInfoRows(rawValue: indexPath.row) else { return UITableViewCell() }
         
         cell.backgroundColor = .backgroundColor
         
@@ -118,9 +114,9 @@ extension DeveloperInfoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = DeveloperInfoSection(rawValue: indexPath.section) else { return }
+        guard let section = DeveloperInfoRows(rawValue: indexPath.row) else { return }
         
-        if section.rawValue != DeveloperInfoSection.allCases.count - 1 {
+        if section.rawValue != DeveloperInfoRows.allCases.count - 1 {
             if let url = URL(string: section.sourceString) {
                 UIApplication.shared.open(url)
             }

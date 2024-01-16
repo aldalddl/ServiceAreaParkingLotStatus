@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum DeveloperInfoSection: Int, CaseIterable {
+enum DeveloperInfoRows: Int, CaseIterable {
     case github, email
     
     var iconImageName: String {
