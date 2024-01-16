@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4706093B2B56C4D300582D16 /* DeveloperInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4706093A2B56C4D300582D16 /* DeveloperInfoSection.swift */; };
+		4706093D2B56EB5300582D16 /* DeveloperInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4706093C2B56EB5300582D16 /* DeveloperInfoCell.swift */; };
 		477638332AFA32FB0090B539 /* ParkingStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477638322AFA32FB0090B539 /* ParkingStatusTableViewCell.swift */; };
 		477638392AFE17380090B539 /* LabelListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477638382AFE17380090B539 /* LabelListStackView.swift */; };
 		477CAEE42AD3E8F600470F0F /* CarCountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		3395FB52652C2EBF0C82D6DC /* Pods_ServiceAreaParkingStatus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceAreaParkingStatus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4706093A2B56C4D300582D16 /* DeveloperInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoSection.swift; sourceTree = "<group>"; };
+		4706093C2B56EB5300582D16 /* DeveloperInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperInfoCell.swift; sourceTree = "<group>"; };
 		477638322AFA32FB0090B539 /* ParkingStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingStatusTableViewCell.swift; sourceTree = "<group>"; };
 		477638382AFE17380090B539 /* LabelListStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListStackView.swift; sourceTree = "<group>"; };
 		477CAEE22AD3E8F600470F0F /* CarCountCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarCountCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				47AACD5B2B2FF2A8009D4732 /* SettingDisclosureCell.swift */,
 				47AACD5D2B2FF2CB009D4732 /* SettingInfoCell.swift */,
 				47AACD5F2B2FF301009D4732 /* SettingToggleCell.swift */,
+				4706093C2B56EB5300582D16 /* DeveloperInfoCell.swift */,
 			);
 			path = CustomTableViewCell;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				4787502C2ABC8E74003E7F6A /* ParkingData.swift in Sources */,
 				4787502A2ABC8232003E7F6A /* ParkingManager.swift in Sources */,
 				47B46B1E2AF7D2FA00DC0958 /* ColorExtension.swift in Sources */,
+				4706093D2B56EB5300582D16 /* DeveloperInfoCell.swift in Sources */,
 				478750302ABEE291003E7F6A /* MainViewController.swift in Sources */,
 				477CAEF02AD538F600470F0F /* NearAreaCollectionViewCell.swift in Sources */,
 				478750332ABEE29C003E7F6A /* SearchBar.swift in Sources */,
