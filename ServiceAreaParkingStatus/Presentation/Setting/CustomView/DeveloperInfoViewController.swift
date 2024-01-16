@@ -126,10 +126,7 @@ extension DeveloperInfoViewController: UITableViewDataSource {
             }
         } else {
             UIPasteboard.general.string = section.sourceString
-            
-            if let pastedString = UIPasteboard.general.string {
-                showToast(message: " 이메일 주소가 복사되었습니다 ")
-            }
+            showToast(message: " 이메일 주소가 복사되었습니다 ")
         }
         
         tableView.cellForRow(at: indexPath)?.isSelected = false
