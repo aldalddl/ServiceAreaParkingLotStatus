@@ -78,7 +78,7 @@ class SettingViewController: UIViewController {
     private func openButtomSheet() {
         let bottomViewController = DeveloperInfoViewController()
         let bottomSheet = MDCBottomSheetController(contentViewController: bottomViewController)
-
+        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: 300)
         present(bottomSheet, animated: true, completion: nil)
     }
 }

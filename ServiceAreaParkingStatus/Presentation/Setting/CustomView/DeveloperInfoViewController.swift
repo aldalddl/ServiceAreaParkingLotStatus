@@ -9,16 +9,16 @@ import Foundation
 import UIKit
 
 class DeveloperInfoViewController: UIViewController {
-    var nameLabel: UILabel = {
+    var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.font = UIFont(name: "Avenir", size: 36)
         label.textColor = .black
         return label
     }()
     
-    var descriptionLabel: UILabel = {
+    var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
+        label.font = UIFont(name: "Avenir", size: 14)
         label.textColor = .gray
         return label
     }()
@@ -31,22 +31,26 @@ class DeveloperInfoViewController: UIViewController {
     }
     
     func setup() {
-        self.view.backgroundColor = .systemBlue
+        self.view.backgroundColor = .backgroundColor
         
-        nameLabel.text = DeveloperInfo.developerName
-        descriptionLabel.text = DeveloperInfo.description
+        titleLabel.text = DeveloperInfo.developerName
+        subtitleLabel.text = DeveloperInfo.description
     }
     
     func layout() {
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(descriptionLabel)
-        
-        nameLabel.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(subtitleLabel)
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.centerX.equalToSuperview()
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
             make.left.right.equalToSuperview()
         }
     }
