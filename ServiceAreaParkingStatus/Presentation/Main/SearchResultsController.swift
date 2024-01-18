@@ -29,7 +29,7 @@ class SearchResultsController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .systemBackground
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchResultsTableViewCell")
     }
     
     // MARK: Layout
@@ -50,7 +50,7 @@ extension SearchResultsController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultsTableViewCell", for: indexPath)
         
         cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row]
         

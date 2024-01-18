@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class SettingInfoCell: UITableViewCell {
+    static let id = "SettingInfoCell"
+    
     var subLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .regular)

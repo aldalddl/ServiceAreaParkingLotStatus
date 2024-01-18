@@ -15,9 +15,9 @@ class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .backgroundColor
-        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: "SettingToggleCell")
-        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: "SettingInfoCell")
-        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: "SettingDisclosureCell")
+        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: SettingToggleCell.id)
+        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: SettingInfoCell.id)
+        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: SettingDisclosureCell.id)
         return tableView
     }()
     

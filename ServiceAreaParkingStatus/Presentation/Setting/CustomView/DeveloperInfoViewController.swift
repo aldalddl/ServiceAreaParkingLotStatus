@@ -28,7 +28,7 @@ class DeveloperInfoViewController: UIViewController {
         tableView.backgroundColor = .backgroundColor
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-        tableView.register(DeveloperInfoCell.self, forCellReuseIdentifier: "DeveloperInfoCell")
+        tableView.register(DeveloperInfoCell.self, forCellReuseIdentifier: DeveloperInfoCell.id)
         return tableView
     }()
     
@@ -102,7 +102,7 @@ extension DeveloperInfoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DeveloperInfoCell", for: indexPath) as? DeveloperInfoCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DeveloperInfoCell.id, for: indexPath) as? DeveloperInfoCell else { return UITableViewCell() }
         
         guard let section = DeveloperInfoRows(rawValue: indexPath.row) else { return UITableViewCell() }
         

@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class DeveloperInfoCell: UITableViewCell {
+    static let id = "DeveloperInfoCell"
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
