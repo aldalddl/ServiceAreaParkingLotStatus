@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class SettingDisclosureCell: UITableViewCell {
+    static let id = "SettingDisclosureCell"
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         

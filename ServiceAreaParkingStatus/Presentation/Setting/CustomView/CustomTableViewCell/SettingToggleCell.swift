@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 class SettingToggleCell: UITableViewCell {
+    static let id = "SettingToggleCell"
+    
     var toggleButton: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .primaryColor

@@ -15,9 +15,9 @@ class SettingViewController: UIViewController {
     let settingTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .backgroundColor
-        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: "SettingToggleCell")
-        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: "SettingInfoCell")
-        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: "SettingDisclosureCell")
+        tableView.register(SettingToggleCell.self, forCellReuseIdentifier: SettingToggleCell.id)
+        tableView.register(SettingInfoCell.self, forCellReuseIdentifier: SettingInfoCell.id)
+        tableView.register(SettingDisclosureCell.self, forCellReuseIdentifier: SettingDisclosureCell.id)
         return tableView
     }()
     
@@ -78,7 +78,7 @@ class SettingViewController: UIViewController {
     private func openButtomSheet() {
         let bottomViewController = DeveloperInfoViewController()
         let bottomSheet = MDCBottomSheetController(contentViewController: bottomViewController)
-
+        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: 300)
         present(bottomSheet, animated: true, completion: nil)
     }
 }

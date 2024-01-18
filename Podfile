@@ -6,6 +6,7 @@ target 'ServiceAreaParkingStatus' do
   use_frameworks!
   pod 'TagListView', '~> 1.0'
   pod 'SwiftLint'
+  pod 'MaterialComponents/BottomSheet'
   # Pods for ServiceAreaParkingStatus
 
 end
