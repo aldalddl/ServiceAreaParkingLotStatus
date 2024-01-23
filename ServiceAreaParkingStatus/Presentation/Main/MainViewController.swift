@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    var searchResultsController = SearchResultsController()
-    var searchViewController = UISearchController()
     var nearAreaStackView = LabelListStackView()
     var parkingStatusStackView = LabelListStackView()
     var pagingIndex = 0
@@ -21,14 +19,7 @@ class MainViewController: UIViewController {
     var serviceAreaArray = [String: String]()
     /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
     var filteredServiceAreaArray = [String]()
-    
-    var isFiltering: Bool {
-        let searchViewController = self.navigationItem.searchController
-        let isActive = searchViewController?.isActive ?? false
-        let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
-        return isActive && isSearchBarHasText
-    }
-    
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -84,6 +75,17 @@ class MainViewController: UIViewController {
         searchBar.searchTextField.backgroundColor = .searchbarBGColor
         
         return searchBar
+    }()
+    let searchView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    let searchTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .systemBackground
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchResultsTableViewCell")
+        return tableView
     }()
         
     override func viewDidLoad() {
@@ -164,13 +166,37 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: SearchView Setup, Layout
+// MARK: SearchView Setup, Functions
 extension MainViewController {
     func searchViewSetup() {
         self.searchBar.setValue("취소", forKey: "cancelButtonText")
         self.searchBar.tintColor = .primaryColor
         
         self.searchBar.delegate = self
+        
+        self.searchTableView.delegate = self
+        self.searchTableView.dataSource = self
+    }
+    
+    func showSearchView() {
+        self.view.addSubview(self.searchView)
+        self.searchView.addSubview(self.searchTableView)
+        
+        self.searchView.snp.makeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.searchBar.snp.bottom).offset(30)
+        }
+
+        self.searchTableView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+        }
+    }
+
+    func closeSearchView() {
+        self.searchView.removeFromSuperview()
+        self.searchTableView.removeFromSuperview()
     }
 }
 
@@ -190,13 +216,12 @@ extension MainViewController: ParkingManagerDelegate {
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
         self.parkingDataArray = parking.data
-        self.searchResultsController.parkingDataArray = parking.data
         
         let serviceAreaNameArray = parking.data.map { $0.serviceArea }
         self.serviceAreaArray = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
-            self.searchResultsController.tableView.reloadData()
+            self.searchTableView.reloadData()
             self.parkingStatusTableView.reloadData()
             self.nearAreaCollectionView.reloadData()
         }
@@ -225,48 +250,46 @@ extension MainViewController: ParkingManagerDelegate {
     }
 }
 
-// MARK: UISearchController ResultsUpdating
-extension MainViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        if let text = searchController.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter { $0.contains(text) }
-        }
-        
-        if let resultVC = searchController.searchResultsController as? SearchResultsController {
-            resultVC.filteredServiceAreaArray = self.filteredServiceAreaArray
-            resultVC.tableView.reloadData()
-        }
-    }
-}
-
 // MARK: UISearchBar Delegate
 extension MainViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
+        
+        showSearchView()
+        self.searchTableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // TODO: 데이터 reload
+        updateSearchResults()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dismissKeyboard()
+        updateSearchResults()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.text = ""
-        
         self.searchBar.showsCancelButton = false
         
         dismissKeyboard()
+        closeSearchView()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        // TODO: 데이터 reload
+        self.searchTableView.reloadData()
     }
     
     func dismissKeyboard() {
         self.searchBar.resignFirstResponder()
+    }
+    
+    func updateSearchResults() {
+        if let text = self.searchBar.text {
+            self.filteredServiceAreaArray = self.serviceAreaArray.keys.filter { $0.contains(text) }
+        }
+        
+        self.searchTableView.reloadData()
     }
 }
 
@@ -275,8 +298,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
 
-        if tableView == searchResultsController.tableView && isFiltering {
-            count = self.searchResultsController.filteredServiceAreaArray.count
+        if tableView == searchTableView {
+            count = self.filteredServiceAreaArray.count
             return count
         } else if tableView == parkingStatusTableView {
             if parkingDataArray.isEmpty {
@@ -290,12 +313,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == searchResultsController.tableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+        if tableView == searchTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultsTableViewCell", for: indexPath)
             
-            if isFiltering {
-                cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
-            }
+            cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row]
             
             return cell
         } else if tableView == parkingStatusTableView {
