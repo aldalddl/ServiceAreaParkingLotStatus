@@ -71,14 +71,27 @@ class MainViewController: UIViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
+    
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        
+        searchBar.placeholder = "휴게소 이름 입력"
+        searchBar.backgroundImage = UIImage(named: "whiteColor")
+        searchBar.backgroundColor = .backgroundColor
+        
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.layer.cornerRadius = 10
+        searchBar.searchTextField.backgroundColor = .searchbarBGColor
+        
+        return searchBar
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
         layout()
-        searchControllerSetup()
-        searchControllerLayout()
+        searchViewSetup()
         parkingManagerSetup()
     }
     
@@ -112,7 +125,13 @@ class MainViewController: UIViewController {
     
     // MARK: Layout
     func layout() {
-        navigationController?.additionalSafeAreaInsets.top = 20
+        view.addSubview(searchBar)
+        
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.left.right.equalToSuperview().inset(10)
+            make.height.equalTo(50)
+        }
         
         view.addSubview(nearAreaStackView)
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
@@ -121,7 +140,7 @@ class MainViewController: UIViewController {
         parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
         
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(95)
+            make.top.equalTo(searchBar.snp.bottom).offset(80)
             make.left.right.equalToSuperview()
         }
         
@@ -145,30 +164,13 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: UISearchController Setup, Layout
+// MARK: SearchView Setup, Layout
 extension MainViewController {
-    func searchControllerSetup() {
-        searchViewController = UISearchController(searchResultsController: searchResultsController)
+    func searchViewSetup() {
+        self.searchBar.setValue("취소", forKey: "cancelButtonText")
+        self.searchBar.tintColor = .primaryColor
         
-        self.navigationItem.searchController = searchViewController
-        
-        searchViewController.searchBar.placeholder = "휴게소 이름 입력"
-        searchViewController.searchBar.tintColor = .primaryColor
-        
-        searchViewController.searchBar.searchTextField.borderStyle = .none
-        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
-        searchViewController.searchBar.searchTextField.layer.cornerRadius = 10
-        
-        searchViewController.searchResultsUpdater = self
-
-        searchResultsController.tableView.delegate = self
-    }
-    
-    func searchControllerLayout() {
-        searchViewController.searchBar.searchTextField.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.top.left.right.equalToSuperview().inset(20)
-        }
+        self.searchBar.delegate = self
     }
 }
 
@@ -234,6 +236,37 @@ extension MainViewController: UISearchResultsUpdating {
             resultVC.filteredServiceAreaArray = self.filteredServiceAreaArray
             resultVC.tableView.reloadData()
         }
+    }
+}
+
+// MARK: UISearchBar Delegate
+extension MainViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // TODO: 데이터 reload
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dismissKeyboard()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.text = ""
+        
+        self.searchBar.showsCancelButton = false
+        
+        dismissKeyboard()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        // TODO: 데이터 reload
+    }
+    
+    func dismissKeyboard() {
+        self.searchBar.resignFirstResponder()
     }
 }
 
