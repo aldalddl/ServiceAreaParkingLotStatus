@@ -9,8 +9,18 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    var nearAreaStackView = LabelListStackView()
-    var parkingStatusStackView = LabelListStackView()
+    let nearAreaStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "내 근처 휴게소"
+        stackView.rightLabel.text = "더보기"
+        return stackView
+    }()
+    
+    let parkingStatusStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "남은 주차 자릿수"
+        return stackView
+    }()
     var pagingIndex = 0
 
     var parkingManager = ParkingManager()
@@ -60,6 +70,10 @@ class MainViewController: UIViewController {
     var parkingStatusTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
+        tableView.backgroundColor = .backgroundColor
+        tableView.contentInset.top = 8
+        tableView.contentInset.bottom = 35
         return tableView
     }()
     
@@ -112,17 +126,8 @@ class MainViewController: UIViewController {
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
         
-        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
-        nearAreaStackView.rightLabel.text = "더보기"
-        
-        parkingStatusStackView.leftLabel.text = "남은 주차 자릿수"
-        
-        parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
-        parkingStatusTableView.backgroundColor = .backgroundColor
-        parkingStatusTableView.contentInset.top = 8
-        parkingStatusTableView.contentInset.bottom = 35
     }
     
     // MARK: Layout
