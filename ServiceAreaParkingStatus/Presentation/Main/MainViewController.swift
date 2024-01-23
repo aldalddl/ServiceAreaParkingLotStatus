@@ -152,11 +152,13 @@ extension MainViewController {
         
         self.navigationItem.searchController = searchViewController
         
-        let image = UIImage()
-        searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
-        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
         searchViewController.searchBar.placeholder = "휴게소 이름 입력"
         searchViewController.searchBar.tintColor = .primaryColor
+        
+        searchViewController.searchBar.searchTextField.borderStyle = .none
+        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
+        searchViewController.searchBar.searchTextField.layer.cornerRadius = 10
+        
         searchViewController.searchResultsUpdater = self
 
         searchResultsController.tableView.delegate = self
