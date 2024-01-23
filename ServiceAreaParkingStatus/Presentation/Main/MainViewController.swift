@@ -9,20 +9,6 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    let nearAreaStackView: LabelListStackView = {
-        let stackView = LabelListStackView()
-        stackView.leftLabel.text = "내 근처 휴게소"
-        stackView.rightLabel.text = "더보기"
-        return stackView
-    }()
-    
-    let parkingStatusStackView: LabelListStackView = {
-        let stackView = LabelListStackView()
-        stackView.leftLabel.text = "남은 주차 자릿수"
-        return stackView
-    }()
-    var pagingIndex = 0
-
     var parkingManager = ParkingManager()
     var parkingDataArray = [ParkingModel]()
     /// [휴게소명: 방면]
@@ -38,6 +24,34 @@ class MainViewController: UIViewController {
         return label
     }()
     
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        
+        searchBar.placeholder = "휴게소 이름 입력"
+        searchBar.backgroundImage = UIImage(named: "whiteColor")
+        searchBar.backgroundColor = .backgroundColor
+        
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.layer.cornerRadius = 10
+        searchBar.searchTextField.backgroundColor = .searchbarBGColor
+        
+        return searchBar
+    }()
+    
+    let nearAreaStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "내 근처 휴게소"
+        stackView.rightLabel.text = "더보기"
+        return stackView
+    }()
+    
+    let parkingStatusStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "남은 주차 자릿수"
+        return stackView
+    }()
+    
+    var pagingIndex = 0
     let collectionViewItemSize = CGSize(width: 332, height: 170)
     let collectionViewItemSpacing = 13.0
     var collectionViewInsetX: CGFloat {
@@ -67,7 +81,7 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var parkingStatusTableView: UITableView = {
+    let parkingStatusTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
@@ -77,19 +91,6 @@ class MainViewController: UIViewController {
         return tableView
     }()
     
-    let searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        
-        searchBar.placeholder = "휴게소 이름 입력"
-        searchBar.backgroundImage = UIImage(named: "whiteColor")
-        searchBar.backgroundColor = .backgroundColor
-        
-        searchBar.searchTextField.borderStyle = .none
-        searchBar.searchTextField.layer.cornerRadius = 10
-        searchBar.searchTextField.backgroundColor = .searchbarBGColor
-        
-        return searchBar
-    }()
     let searchView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray
@@ -305,12 +306,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
         if tableView == searchTableView {
             count = self.filteredServiceAreaArray.count
+            
             return count
         } else if tableView == parkingStatusTableView {
             if parkingDataArray.isEmpty {
                 return 0
             }
+            
             count = self.parkingDataArray[self.pagingIndex].numberOfCar.count
+            
             return count
         }
         
