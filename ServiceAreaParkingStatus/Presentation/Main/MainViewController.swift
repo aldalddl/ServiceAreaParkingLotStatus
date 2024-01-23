@@ -28,9 +28,11 @@ class MainViewController: UIViewController {
         let searchBar = UISearchBar()
         
         searchBar.placeholder = "휴게소 이름 입력"
+        searchBar.setValue("취소", forKey: "cancelButtonText")
         searchBar.backgroundImage = UIImage(named: "whiteColor")
         searchBar.backgroundColor = .backgroundColor
-        
+        searchBar.tintColor = .primaryColor
+
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.searchTextField.backgroundColor = .searchbarBGColor
@@ -93,12 +95,12 @@ class MainViewController: UIViewController {
     
     let searchView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .backgroundColor
         return view
     }()
     let searchTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .backgroundColor
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchResultsTableViewCell")
         return tableView
     }()
@@ -123,6 +125,8 @@ class MainViewController: UIViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .primaryColor
+        
+        searchBar.delegate = self
         
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
@@ -175,11 +179,6 @@ class MainViewController: UIViewController {
 // MARK: SearchView Setup, Functions
 extension MainViewController {
     func searchViewSetup() {
-        self.searchBar.setValue("취소", forKey: "cancelButtonText")
-        self.searchBar.tintColor = .primaryColor
-        
-        self.searchBar.delegate = self
-        
         self.searchTableView.delegate = self
         self.searchTableView.dataSource = self
     }
@@ -325,7 +324,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == searchTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultsTableViewCell", for: indexPath)
             
-            cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row]
+            cell.contentView.backgroundColor = .backgroundColor
+            
+            cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row] + " 휴게소"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             return cell
         } else if tableView == parkingStatusTableView {
@@ -353,7 +355,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        var height = 0.0
+        
+        if tableView == searchTableView {
+            height = 60.0
+        } else if tableView == parkingStatusTableView {
+            height = 100.0
+        }
+        
+        return height
     }
 }
 
