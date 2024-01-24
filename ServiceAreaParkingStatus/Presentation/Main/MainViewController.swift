@@ -202,6 +202,9 @@ extension MainViewController {
     func closeSearchView() {
         self.searchView.removeFromSuperview()
         self.searchTableView.removeFromSuperview()
+        
+        self.filteredServiceAreaArray.removeAll()
+        self.searchTableView.reloadData()
     }
 }
 
@@ -329,7 +332,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let key = Array(self.filteredServiceAreaArray)[indexPath.row].key
             let value = Array(self.filteredServiceAreaArray)[indexPath.row].value
             cell.textLabel?.text = "\(key) 휴게소 (\(value))"
-
             cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             return cell
