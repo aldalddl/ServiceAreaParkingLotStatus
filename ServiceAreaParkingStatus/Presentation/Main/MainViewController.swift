@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     /// [휴게소명: 방면]
     var serviceAreaArray = [String: String]()
     /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
-    var filteredServiceAreaArray = [String]()
+    var filteredServiceAreaArray = [String: String]()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -291,7 +291,7 @@ extension MainViewController: UISearchBarDelegate {
     
     func updateSearchResults() {
         if let text = self.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.keys.filter { $0.contains(text) }
+            self.filteredServiceAreaArray = self.serviceAreaArray.filter { $0.key.contains(text) }
         }
         
         self.searchTableView.reloadData()
@@ -326,7 +326,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.contentView.backgroundColor = .backgroundColor
             
-            cell.textLabel?.text = self.filteredServiceAreaArray[indexPath.row] + " 휴게소"
+            let key = Array(self.filteredServiceAreaArray)[indexPath.row].key
+            let value = Array(self.filteredServiceAreaArray)[indexPath.row].value
+            cell.textLabel?.text = "\(key) 휴게소 (\(value))"
+
             cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             return cell
