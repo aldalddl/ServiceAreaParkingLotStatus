@@ -12,14 +12,14 @@ class SearchBar: UISearchBar {
     override init(frame: CGRect) {
         super .init(frame: .zero)
         
-        setup()
+        setUp()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    func setUp() {
         self.backgroundColor = .backgroundColor
         self.placeholder = "휴게소 이름을 입력하세요"
     }

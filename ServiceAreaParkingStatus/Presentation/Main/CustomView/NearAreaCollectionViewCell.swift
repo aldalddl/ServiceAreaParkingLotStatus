@@ -88,7 +88,7 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setup()
+        setUp()
         layout()
     }
     
@@ -96,8 +96,8 @@ class NearAreaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Setup
-    func setup() {
+    // MARK: SetUp
+    func setUp() {
         self.contentView.backgroundColor = .primaryColor
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = 15

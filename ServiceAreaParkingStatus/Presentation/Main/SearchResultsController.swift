@@ -16,16 +16,17 @@ class SearchResultsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setup()
-        tableViewSetup()
+        setUp()
+        tableViewSetUp()
         layout()
     }
     
-    func setup() {
+    // MARK: SetUp
+    func setUp() {
         view.backgroundColor = .systemBackground
     }
     
-    func tableViewSetup() {
+    func tableViewSetUp() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .systemBackground

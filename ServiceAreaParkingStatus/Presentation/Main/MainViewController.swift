@@ -108,14 +108,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        setUp()
         layout()
-        searchViewSetup()
-        parkingManagerSetup()
+        searchViewSetUp()
+        parkingManagerSetUp()
     }
     
-    // MARK: Setup
-    func setup() {
+    // MARK: SetUp
+    func setUp() {
         self.view.backgroundColor = .backgroundColor
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
@@ -176,9 +176,9 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: SearchView Setup, Functions
+// MARK: SearchView SetUp, Functions
 extension MainViewController {
-    func searchViewSetup() {
+    func searchViewSetUp() {
         self.searchTableView.delegate = self
         self.searchTableView.dataSource = self
     }
@@ -235,7 +235,7 @@ extension MainViewController: ParkingManagerDelegate {
         }
     }
     
-    func parkingManagerSetup() {
+    func parkingManagerSetUp() {
         parkingManager.delegate = self
         parkingManager.fetchParking()
     }

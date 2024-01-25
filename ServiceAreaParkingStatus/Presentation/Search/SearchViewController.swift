@@ -29,13 +29,13 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionViewSetup()
+        collectionViewSetUp()
         collectionViewLayout()
-        setup()
+        setUp()
         layout()
     }
     
-    func collectionViewSetup() {
+    func collectionViewSetUp() {
         collectionView.register(CarCountCollectionViewCell.self, forCellWithReuseIdentifier: "CarCountCollectionViewCell")
         self.view.addSubview(collectionView)
         collectionView.delegate = self
@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
     }
 
     
-    func setup() {
+    func setUp() {
         self.view.backgroundColor = .searchbarBGColor
         highwayLineLabel.text = "노선: " + highwayLine
         highwayCenterLabel.text = "본부: " + highwayCenter
