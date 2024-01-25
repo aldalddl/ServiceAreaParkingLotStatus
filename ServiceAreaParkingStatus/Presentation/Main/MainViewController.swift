@@ -131,10 +131,8 @@ class MainViewController: UIViewController {
         navigationItem.backBarButtonItem?.tintColor = .primaryColor
         
         searchBar.delegate = self
-        
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
-        
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
     }

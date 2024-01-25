@@ -51,7 +51,6 @@ class SettingViewController: UIViewController {
 
         settingTableView.delegate = self
         settingTableView.dataSource = self
-                
         locationManager.delegate = self
     }
     
