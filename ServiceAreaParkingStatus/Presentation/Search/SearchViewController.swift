@@ -15,6 +15,8 @@ class SearchViewController: UIViewController {
     var highwayCenter = String()
     var highwayLineLabel = UILabel()
     var highwayCenterLabel = UILabel()
+    var collectionViewCell = CarCountCollectionViewCell()
+    
     var collectionView: UICollectionView = {
         let layout = CarCountCollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -24,7 +26,6 @@ class SearchViewController: UIViewController {
         view.showsVerticalScrollIndicator = true
         return view
     }()
-    var collectionViewCell = CarCountCollectionViewCell()
     
     override func viewDidLoad() {
         super.viewDidLoad()

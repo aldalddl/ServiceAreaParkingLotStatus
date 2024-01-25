@@ -56,12 +56,15 @@ class MainViewController: UIViewController {
     var pagingIndex = 0
     let collectionViewItemSize = CGSize(width: 332, height: 170)
     let collectionViewItemSpacing = 13.0
+    
     var collectionViewInsetX: CGFloat {
         (UIScreen.main.bounds.width - collectionViewItemSize.width) / 2.0
     }
+    
     var collectionViewContentInset: UIEdgeInsets {
         UIEdgeInsets(top: 0, left: collectionViewInsetX, bottom: 0, right: collectionViewInsetX)
     }
+    
     lazy var nearAreaCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -98,6 +101,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = .backgroundColor
         return view
     }()
+    
     let searchTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .backgroundColor
