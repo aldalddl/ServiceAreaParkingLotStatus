@@ -362,15 +362,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height = 0.0
-        
         if tableView == searchTableView {
-            height = 60.0
+            return 60.0
         } else if tableView == parkingStatusTableView {
-            height = 100.0
+            return 100.0
+        } else {
+            return 0.0
         }
-        
-        return height
     }
 }
 
