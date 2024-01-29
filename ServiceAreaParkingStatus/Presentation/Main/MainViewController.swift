@@ -306,23 +306,17 @@ extension MainViewController: UISearchBarDelegate {
 // MARK: UITableView Delegate, DataSource
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
-
         if tableView == searchTableView {
-            count = self.filteredServiceAreaArray.count
-            
-            return count
+            return self.filteredServiceAreaArray.count            
         } else if tableView == parkingStatusTableView {
             if parkingDataArray.isEmpty {
                 return 0
             }
             
-            count = self.parkingDataArray[self.pagingIndex].numberOfCar.count
-            
-            return count
+            return self.parkingDataArray[self.pagingIndex].numberOfCar.count
+        } else {
+            return 0
         }
-        
-        return count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
