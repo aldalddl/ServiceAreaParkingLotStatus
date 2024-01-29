@@ -1,2 +1,2 @@
 # ServiceAreaParkingLotStatus
-휴게소 주차장 현황 파악 (남은 자릿수 확인용) iOS 앱
+휴게소 주차장 자릿수를 확인하는 iOS 애플리케이션
