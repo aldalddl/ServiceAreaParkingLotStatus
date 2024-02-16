@@ -12,9 +12,9 @@ class MainViewController: UIViewController {
     var parkingManager = ParkingManager()
     var parkingDataArray = [ParkingModel]()
     /// [휴게소명: 방면]
-    var serviceAreaArray = [String: String]()
+    var serviceAreaArray = [ServiceAreaName]()
     /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
-    var filteredServiceAreaArray = [String: String]()
+    var filteredServiceAreaArray = [ServiceAreaName]()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -242,17 +242,17 @@ extension MainViewController: ParkingManagerDelegate {
         parkingManager.fetchParking()
     }
     
-    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [String: String] {
-        var changedServiceAreaName = [String: String]()
+    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [ServiceAreaName] {
+        var changedServiceAreaName = [ServiceAreaName]()
         
         for serviceAreaName in serviceAreaNameArray {
             if serviceAreaName.contains("(") {
                 let nameWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
                 let name = nameWithLine[0]
                 let line = nameWithLine[1]
-                changedServiceAreaName[name] = line + " 방면"
+                changedServiceAreaName.append(ServiceAreaName(name: name, line: line + " 방면"))
             } else {
-                changedServiceAreaName[serviceAreaName] = ""
+                changedServiceAreaName.append(ServiceAreaName(name: serviceAreaName, line: ""))
             }
         }
         
@@ -296,7 +296,7 @@ extension MainViewController: UISearchBarDelegate {
     
     func updateSearchResults() {
         if let text = self.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.filter { $0.key.contains(text) }
+            self.filteredServiceAreaArray = self.serviceAreaArray.filter { $0.name.contains(text) }
         }
         
         self.searchTableView.reloadData()
@@ -325,9 +325,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.contentView.backgroundColor = .backgroundColor
             
-            let key = Array(self.filteredServiceAreaArray)[indexPath.row].key
-            let value = Array(self.filteredServiceAreaArray)[indexPath.row].value
-            cell.textLabel?.text = "\(key) 휴게소 (\(value))"
+            let filteredServiceArea = Array(self.filteredServiceAreaArray)[indexPath.row]
+            let name = filteredServiceArea.name
+            let line = filteredServiceArea.line
+            
+            cell.textLabel?.text = "\(name) 휴게소 (\(line))"
             cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             return cell
@@ -381,8 +383,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         
         let index = self.serviceAreaArray.index(self.serviceAreaArray.startIndex, offsetBy: indexPath.row)
-        cell.nameLabel.text = self.serviceAreaArray[index].key
-        cell.highwaylineLabel.text = self.serviceAreaArray[index].value
+        cell.nameLabel.text = self.serviceAreaArray[index].name
+        cell.highwaylineLabel.text = self.serviceAreaArray[index].line
         
         cell.lineTag.removeAllTags()
         cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
