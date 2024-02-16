@@ -27,7 +27,7 @@ class CarCountCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setup()
+        setUp()
         layout()
     }
     
@@ -35,7 +35,7 @@ class CarCountCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    func setUp() {
         self.backgroundColor = .systemBackground
         self.layer.borderColor = UIColor.systemBackground.cgColor
         self.layer.borderWidth = 1

@@ -31,7 +31,7 @@ class ParkingStatusTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        setup()
+        setUp()
         layout()
     }
     
@@ -45,7 +45,7 @@ class ParkingStatusTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
     }
     
-    func setup() {
+    func setUp() {
         self.backgroundColor = .backgroundColor
         self.contentView.backgroundColor = .backgroundColor
         self.contentView.layer.cornerRadius = 15

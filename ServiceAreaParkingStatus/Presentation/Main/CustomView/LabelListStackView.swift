@@ -35,7 +35,7 @@ class LabelListStackView: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setup()
+        setUp()
         layout()
     }
     
@@ -43,8 +43,8 @@ class LabelListStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Setup
-    func setup() {
+    // MARK: SetUp
+    func setUp() {
         self.backgroundColor = .systemBackground
         self.alignment = .fill
         self.distribution = .fill

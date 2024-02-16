@@ -34,7 +34,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        setUp()
         layout()
     }
     
@@ -44,14 +44,13 @@ class SettingViewController: UIViewController {
         }
     }
 
-    func setup() {
+    func setUp() {
         view.backgroundColor = .backgroundColor
         
         navigationItem.titleView = titleLabel
 
         settingTableView.delegate = self
         settingTableView.dataSource = self
-                
         locationManager.delegate = self
     }
     

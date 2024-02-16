@@ -35,11 +35,11 @@ class DeveloperInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setup()
+        setUp()
         layout()
     }
     
-    func setup() {
+    func setUp() {
         self.view.backgroundColor = .backgroundColor
         
         titleLabel.text = DeveloperInfo.developerName

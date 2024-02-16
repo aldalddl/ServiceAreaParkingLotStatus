@@ -9,26 +9,13 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    var searchResultsController = SearchResultsController()
-    var searchViewController = UISearchController()
-    var nearAreaStackView = LabelListStackView()
-    var parkingStatusStackView = LabelListStackView()
-    var pagingIndex = 0
-
     var parkingManager = ParkingManager()
     var parkingDataArray = [ParkingModel]()
     /// [휴게소명: 방면]
-    var serviceAreaArray = [String: String]()
+    var serviceAreaArray = [ServiceAreaName]()
     /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
-    var filteredServiceAreaArray = [String]()
-    
-    var isFiltering: Bool {
-        let searchViewController = self.navigationItem.searchController
-        let isActive = searchViewController?.isActive ?? false
-        let isSearchBarHasText = searchViewController?.searchBar.text?.isEmpty == false
-        return isActive && isSearchBarHasText
-    }
-    
+    var filteredServiceAreaArray = [ServiceAreaName]()
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -37,14 +24,47 @@ class MainViewController: UIViewController {
         return label
     }()
     
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        
+        searchBar.placeholder = "휴게소 이름 입력"
+        searchBar.setValue("취소", forKey: "cancelButtonText")
+        searchBar.backgroundImage = UIImage(named: "whiteColor")
+        searchBar.backgroundColor = .backgroundColor
+        searchBar.tintColor = .primaryColor
+
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.layer.cornerRadius = 10
+        searchBar.searchTextField.backgroundColor = .searchbarBGColor
+        
+        return searchBar
+    }()
+    
+    let nearAreaStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "내 근처 휴게소"
+        stackView.rightLabel.text = "더보기"
+        return stackView
+    }()
+    
+    let parkingStatusStackView: LabelListStackView = {
+        let stackView = LabelListStackView()
+        stackView.leftLabel.text = "남은 주차 자릿수"
+        return stackView
+    }()
+    
+    var pagingIndex = 0
     let collectionViewItemSize = CGSize(width: 332, height: 170)
     let collectionViewItemSpacing = 13.0
+    
     var collectionViewInsetX: CGFloat {
         (UIScreen.main.bounds.width - collectionViewItemSize.width) / 2.0
     }
+    
     var collectionViewContentInset: UIEdgeInsets {
         UIEdgeInsets(top: 0, left: collectionViewInsetX, bottom: 0, right: collectionViewInsetX)
     }
+    
     lazy var nearAreaCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -66,24 +86,40 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var parkingStatusTableView: UITableView = {
+    let parkingStatusTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
+        tableView.backgroundColor = .backgroundColor
+        tableView.contentInset.top = 8
+        tableView.contentInset.bottom = 35
+        return tableView
+    }()
+    
+    let searchView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .backgroundColor
+        return view
+    }()
+    
+    let searchTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .backgroundColor
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchResultsTableViewCell")
         return tableView
     }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        setUp()
         layout()
-        searchControllerSetup()
-        searchControllerLayout()
-        parkingManagerSetup()
+        searchViewSetUp()
+        parkingManagerSetUp()
     }
     
-    // MARK: Setup
-    func setup() {
+    // MARK: SetUp
+    func setUp() {
         self.view.backgroundColor = .backgroundColor
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
@@ -94,25 +130,22 @@ class MainViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .primaryColor
         
+        searchBar.delegate = self
         nearAreaCollectionView.delegate = self
         nearAreaCollectionView.dataSource = self
-        
-        nearAreaStackView.leftLabel.text = "내 근처 휴게소"
-        nearAreaStackView.rightLabel.text = "더보기"
-        
-        parkingStatusStackView.leftLabel.text = "남은 주차 자릿수"
-        
-        parkingStatusTableView.register(ParkingStatusTableViewCell.self, forCellReuseIdentifier: ParkingStatusTableViewCell.id)
         parkingStatusTableView.delegate = self
         parkingStatusTableView.dataSource = self
-        parkingStatusTableView.backgroundColor = .backgroundColor
-        parkingStatusTableView.contentInset.top = 8
-        parkingStatusTableView.contentInset.bottom = 35
     }
     
     // MARK: Layout
     func layout() {
-        navigationController?.additionalSafeAreaInsets.top = 20
+        view.addSubview(searchBar)
+        
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(20)
+            make.left.right.equalToSuperview().inset(10)
+            make.height.equalTo(50)
+        }
         
         view.addSubview(nearAreaStackView)
         nearAreaStackView.addArrangedSubview(nearAreaCollectionView)
@@ -121,7 +154,7 @@ class MainViewController: UIViewController {
         parkingStatusStackView.addArrangedSubview(parkingStatusTableView)
         
         nearAreaStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(95)
+            make.top.equalTo(searchBar.snp.bottom).offset(80)
             make.left.right.equalToSuperview()
         }
         
@@ -145,28 +178,35 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: UISearchController Setup, Layout
+// MARK: SearchView SetUp, Functions
 extension MainViewController {
-    func searchControllerSetup() {
-        searchViewController = UISearchController(searchResultsController: searchResultsController)
-        
-        self.navigationItem.searchController = searchViewController
-        
-        let image = UIImage()
-        searchViewController.searchBar.setSearchFieldBackgroundImage(image, for: .normal)
-        searchViewController.searchBar.searchTextField.backgroundColor = .searchbarBGColor
-        searchViewController.searchBar.placeholder = "휴게소 이름 입력"
-        searchViewController.searchBar.tintColor = .primaryColor
-        searchViewController.searchResultsUpdater = self
-
-        searchResultsController.tableView.delegate = self
+    func searchViewSetUp() {
+        self.searchTableView.delegate = self
+        self.searchTableView.dataSource = self
     }
     
-    func searchControllerLayout() {
-        searchViewController.searchBar.searchTextField.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.top.left.right.equalToSuperview().inset(20)
+    func showSearchView() {
+        self.view.addSubview(self.searchView)
+        self.searchView.addSubview(self.searchTableView)
+        
+        self.searchView.snp.makeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.searchBar.snp.bottom).offset(30)
         }
+
+        self.searchTableView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+        }
+    }
+
+    func closeSearchView() {
+        self.searchView.removeFromSuperview()
+        self.searchTableView.removeFromSuperview()
+        
+        self.filteredServiceAreaArray.removeAll()
+        self.searchTableView.reloadData()
     }
 }
 
@@ -186,34 +226,33 @@ extension MainViewController: ParkingManagerDelegate {
     
     func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
         self.parkingDataArray = parking.data
-        self.searchResultsController.parkingDataArray = parking.data
         
         let serviceAreaNameArray = parking.data.map { $0.serviceArea }
         self.serviceAreaArray = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
-            self.searchResultsController.tableView.reloadData()
+            self.searchTableView.reloadData()
             self.parkingStatusTableView.reloadData()
             self.nearAreaCollectionView.reloadData()
         }
     }
     
-    func parkingManagerSetup() {
+    func parkingManagerSetUp() {
         parkingManager.delegate = self
         parkingManager.fetchParking()
     }
     
-    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [String: String] {
-        var changedServiceAreaName = [String: String]()
+    func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [ServiceAreaName] {
+        var changedServiceAreaName = [ServiceAreaName]()
         
         for serviceAreaName in serviceAreaNameArray {
             if serviceAreaName.contains("(") {
                 let nameWithLine = serviceAreaName.components(separatedBy: ["(", ")"])
                 let name = nameWithLine[0]
                 let line = nameWithLine[1]
-                changedServiceAreaName[name] = line + " 방면"
+                changedServiceAreaName.append(ServiceAreaName(name: name, line: line + " 방면"))
             } else {
-                changedServiceAreaName[serviceAreaName] = ""
+                changedServiceAreaName.append(ServiceAreaName(name: serviceAreaName, line: ""))
             }
         }
         
@@ -221,46 +260,77 @@ extension MainViewController: ParkingManagerDelegate {
     }
 }
 
-// MARK: UISearchController ResultsUpdating
-extension MainViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        if let text = searchController.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.values.filter { $0.contains(text) }
+// MARK: UISearchBar Delegate
+extension MainViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+        
+        showSearchView()
+        self.searchTableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        updateSearchResults()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dismissKeyboard()
+        updateSearchResults()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.text = ""
+        self.searchBar.showsCancelButton = false
+        
+        dismissKeyboard()
+        closeSearchView()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchTableView.reloadData()
+    }
+    
+    func dismissKeyboard() {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func updateSearchResults() {
+        if let text = self.searchBar.text {
+            self.filteredServiceAreaArray = self.serviceAreaArray.filter { $0.name.contains(text) }
         }
         
-        if let resultVC = searchController.searchResultsController as? SearchResultsController {
-            resultVC.filteredServiceAreaArray = self.filteredServiceAreaArray
-            resultVC.tableView.reloadData()
-        }
+        self.searchTableView.reloadData()
     }
 }
 
 // MARK: UITableView Delegate, DataSource
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
-
-        if tableView == searchResultsController.tableView && isFiltering {
-            count = self.searchResultsController.filteredServiceAreaArray.count
-            return count
+        if tableView == searchTableView {
+            return self.filteredServiceAreaArray.count            
         } else if tableView == parkingStatusTableView {
             if parkingDataArray.isEmpty {
                 return 0
             }
-            count = self.parkingDataArray[self.pagingIndex].numberOfCar.count
-            return count
+            
+            return self.parkingDataArray[self.pagingIndex].numberOfCar.count
+        } else {
+            return 0
         }
-        
-        return count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == searchResultsController.tableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NearAreaCollectionViewCell", for: indexPath)
+        if tableView == searchTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultsTableViewCell", for: indexPath)
             
-            if isFiltering {
-                cell.textLabel?.text = self.searchResultsController.filteredServiceAreaArray[indexPath.row]
-            }
+            cell.contentView.backgroundColor = .backgroundColor
+            
+            let filteredServiceArea = Array(self.filteredServiceAreaArray)[indexPath.row]
+            let name = filteredServiceArea.name
+            let line = filteredServiceArea.line
+            
+            cell.textLabel?.text = "\(name) 휴게소 (\(line))"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             return cell
         } else if tableView == parkingStatusTableView {
@@ -288,7 +358,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        if tableView == searchTableView {
+            return 60.0
+        } else if tableView == parkingStatusTableView {
+            return 100.0
+        } else {
+            return 0.0
+        }
     }
 }
 
@@ -307,8 +383,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         
         let index = self.serviceAreaArray.index(self.serviceAreaArray.startIndex, offsetBy: indexPath.row)
-        cell.nameLabel.text = self.serviceAreaArray[index].key
-        cell.highwaylineLabel.text = self.serviceAreaArray[index].value
+        cell.nameLabel.text = self.serviceAreaArray[index].name
+        cell.highwaylineLabel.text = self.serviceAreaArray[index].line
         
         cell.lineTag.removeAllTags()
         cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
