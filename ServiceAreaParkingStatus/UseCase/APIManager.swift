@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol ParkingManagerDelegate {
-    func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData)
+protocol APIManagerDelegate {
+    func didUpdateParking(_ parkingManager: APIManager, parking: ParkingData)
     func didFailWithError(error: Error)
 }
 
-struct ParkingManager {
+struct APIManager {
     
     let key = Bundle.main.apiKey
     var url = "https://api.odcloud.kr/api/15043716/v1/uddi:82a523ae-4e2d-4c59-9371-93fece61d290?page=1&perPage=12"
-    var delegate: ParkingManagerDelegate?
+    var delegate: APIManagerDelegate?
     
     func fetchParking() {
         let urlString = url + "&serviceKey=\(key)"

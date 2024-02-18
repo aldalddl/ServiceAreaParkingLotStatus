@@ -9,12 +9,10 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    var parkingManager = ParkingManager()
-    var parkingDataArray = [ParkingModel]()
-    /// [휴게소명: 방면]
-    var serviceAreaArray = [ServiceAreaName]()
-    /// UISearchController ResultsUpdating 에서 검색된 휴게소명을 담는 변수
-    var filteredServiceAreaArray = [ServiceAreaName]()
+    var apiManager = APIManager()
+    var serviceAreaTotalInfoList = [ParkingModel]()
+    var serviceAreaNameList = [ServiceAreaName]()
+    var filteredServiceAreaNameList = [ServiceAreaName]()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -205,7 +203,7 @@ extension MainViewController {
         self.searchView.removeFromSuperview()
         self.searchTableView.removeFromSuperview()
         
-        self.filteredServiceAreaArray.removeAll()
+        self.filteredServiceAreaNameList.removeAll()
         self.searchTableView.reloadData()
     }
 }
@@ -219,16 +217,16 @@ extension MainViewController {
 }
 
 // MARK: API Response
-extension MainViewController: ParkingManagerDelegate {
+extension MainViewController: APIManagerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
     
-    func didUpdateParking(_ parkingManager: ParkingManager, parking: ParkingData) {
-        self.parkingDataArray = parking.data
+    func didUpdateParking(_ parkingManager: APIManager, parking: ParkingData) {
+        self.serviceAreaTotalInfoList = parking.data
         
         let serviceAreaNameArray = parking.data.map { $0.serviceArea }
-        self.serviceAreaArray = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
+        self.serviceAreaNameList = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {
             self.searchTableView.reloadData()
@@ -238,8 +236,8 @@ extension MainViewController: ParkingManagerDelegate {
     }
     
     func parkingManagerSetUp() {
-        parkingManager.delegate = self
-        parkingManager.fetchParking()
+        apiManager.delegate = self
+        apiManager.fetchParking()
     }
     
     func changeServiceAreaNameFormat(serviceAreaNameArray: [String]) -> [ServiceAreaName] {
@@ -296,7 +294,7 @@ extension MainViewController: UISearchBarDelegate {
     
     func updateSearchResults() {
         if let text = self.searchBar.text {
-            self.filteredServiceAreaArray = self.serviceAreaArray.filter { $0.name.contains(text) }
+            self.filteredServiceAreaNameList = self.serviceAreaNameList.filter { $0.name.contains(text) }
         }
         
         self.searchTableView.reloadData()
@@ -307,13 +305,13 @@ extension MainViewController: UISearchBarDelegate {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == searchTableView {
-            return self.filteredServiceAreaArray.count            
+            return self.filteredServiceAreaNameList.count            
         } else if tableView == parkingStatusTableView {
-            if parkingDataArray.isEmpty {
+            if serviceAreaTotalInfoList.isEmpty {
                 return 0
             }
             
-            return self.parkingDataArray[self.pagingIndex].numberOfCar.count
+            return self.serviceAreaTotalInfoList[self.pagingIndex].numberOfCar.count
         } else {
             return 0
         }
@@ -325,7 +323,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.contentView.backgroundColor = .backgroundColor
             
-            let filteredServiceArea = Array(self.filteredServiceAreaArray)[indexPath.row]
+            let filteredServiceArea = Array(self.filteredServiceAreaNameList)[indexPath.row]
             let name = filteredServiceArea.name
             let line = filteredServiceArea.line
             
@@ -344,12 +342,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.carIconImageView.image = image
             }
             
-            if parkingDataArray.isEmpty {
+            if serviceAreaTotalInfoList.isEmpty {
                 return UITableViewCell()
             }
             
             cell.carLabel.text = CarType.allCases[indexPath.row].name
-            cell.numberOfCarLabel.text = String(parkingDataArray[self.pagingIndex].numberOfCar[indexPath.row])
+            cell.numberOfCarLabel.text = String(serviceAreaTotalInfoList[self.pagingIndex].numberOfCar[indexPath.row])
             
             return cell
         }
@@ -371,7 +369,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: UICollectionView DataSource, DelegateFlowLayout
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.serviceAreaArray.count
+        return self.serviceAreaNameList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -382,12 +380,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.profileImageView.image = UIImage(named: "샘플이미지")
         
-        let index = self.serviceAreaArray.index(self.serviceAreaArray.startIndex, offsetBy: indexPath.row)
-        cell.nameLabel.text = self.serviceAreaArray[index].name
-        cell.highwaylineLabel.text = self.serviceAreaArray[index].line
+        let index = self.serviceAreaNameList.index(self.serviceAreaNameList.startIndex, offsetBy: indexPath.row)
+        cell.nameLabel.text = self.serviceAreaNameList[index].name
+        cell.highwaylineLabel.text = self.serviceAreaNameList[index].line
         
         cell.lineTag.removeAllTags()
-        cell.lineTag.addTags([self.parkingDataArray[indexPath.row].center, self.parkingDataArray[indexPath.row].line])
+        cell.lineTag.addTags([self.serviceAreaTotalInfoList[indexPath.row].center, self.serviceAreaTotalInfoList[indexPath.row].line])
         
         // TODO: 샘플 데이터를 서버 데이터로 대체하는 작업 필요
         cell.locationLabel.text = "경기도 구리시 수도권 제1순환고속도로 32"
