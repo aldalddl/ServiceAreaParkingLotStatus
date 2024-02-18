@@ -8,6 +8,6 @@
 import Foundation
 
 struct ServiceAreaName {
-    var name: String
-    var line: String
+    let name: String
+    let line: String
 }
