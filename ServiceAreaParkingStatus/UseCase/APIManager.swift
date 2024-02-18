@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIManagerDelegate {
-    func didUpdateParking(_ parkingManager: APIManager, parking: ParkingData)
+    func didUpdateParking(_ parkingManager: APIManager, data: APIData)
     func didFailWithError(error: Error)
 }
 
@@ -33,7 +33,7 @@ struct APIManager {
                 }
                 if let safeData = data {
                     if let parking = self.parseJSON(safeData) {
-                        self.delegate?.didUpdateParking(self, parking: parking)
+                        self.delegate?.didUpdateParking(self, data: parking)
                     }
                 }
             }
@@ -42,11 +42,11 @@ struct APIManager {
         }
     }
     
-    func parseJSON(_ parkingData: Data) -> ParkingData? {
+    func parseJSON(_ parkingData: Data) -> APIData? {
         let decoder = JSONDecoder()
         
         do {
-            let decodedData = try decoder.decode(ParkingData.self, from: parkingData)
+            let decodedData = try decoder.decode(APIData.self, from: parkingData)
             return decodedData
         } catch {
             delegate?.didFailWithError(error: error)

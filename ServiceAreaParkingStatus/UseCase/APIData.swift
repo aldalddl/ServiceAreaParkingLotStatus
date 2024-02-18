@@ -7,25 +7,13 @@
 
 import Foundation
 
-struct ParkingData: Codable {
+struct APIData: Codable {
     let currentCount: Int
-    let data: [ParkingModel]
+    let serviceAreaInfo: [ServiceAreaInfo]
     let matchCount, page, perPage, totalCount: Int
 }
 
-struct Parking: Codable {
-    let 노선: String
-    let 대형: Int
-    let 본부: String
-    let 소형, 장애인, 합계: Int
-    let 휴게소명: String
-    
-    var numberOfCar: [Int] {
-        return [self.대형, self.소형, self.장애인]
-    }
-}
-
-struct ParkingModel: Codable {
+struct ServiceAreaInfo: Codable {
     let line: String
     let center: String
     let serviceArea: String

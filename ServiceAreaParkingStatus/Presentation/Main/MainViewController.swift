@@ -10,7 +10,7 @@ import SnapKit
 
 class MainViewController: UIViewController {
     var apiManager = APIManager()
-    var serviceAreaTotalInfoList = [ParkingModel]()
+    var serviceAreaTotalInfoList = [ServiceAreaInfo]()
     var serviceAreaNameList = [ServiceAreaName]()
     var filteredServiceAreaNameList = [ServiceAreaName]()
 
@@ -222,10 +222,10 @@ extension MainViewController: APIManagerDelegate {
         print(error)
     }
     
-    func didUpdateParking(_ parkingManager: APIManager, parking: ParkingData) {
-        self.serviceAreaTotalInfoList = parking.data
+    func didUpdateParking(_ parkingManager: APIManager, data: APIData) {
+        self.serviceAreaTotalInfoList = data.serviceAreaInfo
         
-        let serviceAreaNameArray = parking.data.map { $0.serviceArea }
+        let serviceAreaNameArray = data.serviceAreaInfo.map { $0.serviceArea }
         self.serviceAreaNameList = changeServiceAreaNameFormat(serviceAreaNameArray: serviceAreaNameArray)
         
         DispatchQueue.main.async {

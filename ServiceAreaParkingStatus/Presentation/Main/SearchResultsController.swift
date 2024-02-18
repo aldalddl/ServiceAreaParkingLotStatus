@@ -11,7 +11,7 @@ import UIKit
 class SearchResultsController: UIViewController {
     let tableView = UITableView()
     var filteredServiceAreaArray = [String]()
-    var parkingDataArray = [ParkingModel]()
+    var parkingDataArray = [ServiceAreaInfo]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
